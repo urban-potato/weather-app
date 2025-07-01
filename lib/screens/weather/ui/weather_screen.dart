@@ -1,39 +1,32 @@
+import 'package:auto_route/annotations.dart';
 import 'package:flutter/material.dart';
 
+import '../../../shared/ui/custom_sliver_app_bar/index.dart';
 import 'widgets/additional_information_tile.dart';
 import 'widgets/hourly_forecast_tile.dart';
 import 'widgets/main_weather_widget.dart';
 
+@RoutePage()
 class WeatherScreen extends StatelessWidget {
   const WeatherScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return CustomScrollView(
+    return const CustomScrollView(
       slivers: [
-        SliverAppBar(
-          title: const Text(
-            'Krasnoyarsk',
-            style: TextStyle(fontWeight: FontWeight.w600),
-          ),
-          centerTitle: true,
-          // backgroundColor: theme.appBarTheme.foregroundColor,
-          backgroundColor: Colors.transparent,
-          actions: [IconButton(onPressed: () {}, icon: Icon(Icons.menu))],
-          leading: IconButton(onPressed: () {}, icon: Icon(Icons.add)),
-        ),
+        CustomSliverAppBar(locationName: 'Krasnoyarsk'),
         SliverPadding(
-          padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 82),
+          padding: EdgeInsets.symmetric(horizontal: 14, vertical: 82),
           sliver: SliverToBoxAdapter(child: MainWeatherWidget()),
         ),
 
         SliverPadding(
-          padding: const EdgeInsets.symmetric(horizontal: 14),
+          padding: EdgeInsets.symmetric(horizontal: 14),
           sliver: SliverToBoxAdapter(child: HourlyForecastTile()),
         ),
 
         SliverPadding(
-          padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 14),
+          padding: EdgeInsets.symmetric(horizontal: 14, vertical: 14),
           sliver: SliverToBoxAdapter(child: AdditionalInformationTile()),
         ),
       ],
