@@ -1,6 +1,7 @@
 import 'package:auto_route/annotations.dart';
 import 'package:flutter/material.dart';
 
+import 'package:weather_app/shared/lib/layout/index.dart';
 import '../../../shared/ui/custom_sliver_app_bar/index.dart';
 import 'widgets/additional_information_tile.dart';
 import 'widgets/hourly_forecast_tile.dart';
@@ -12,22 +13,30 @@ class WeatherScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const CustomScrollView(
+    final screenSidesPadding = calculateScreenSidesPadding(context);
+
+    return CustomScrollView(
       slivers: [
-        CustomSliverAppBar(locationName: 'Krasnoyarsk'),
+        const CustomSliverAppBar(locationName: 'Krasnoyarsk'),
         SliverPadding(
-          padding: EdgeInsets.symmetric(horizontal: 14, vertical: 82),
-          sliver: SliverToBoxAdapter(child: MainWeatherWidget()),
+          padding: EdgeInsets.symmetric(
+            horizontal: screenSidesPadding,
+            vertical: 82,
+          ),
+          sliver: const SliverToBoxAdapter(child: MainWeatherWidget()),
         ),
 
         SliverPadding(
-          padding: EdgeInsets.symmetric(horizontal: 14),
-          sliver: SliverToBoxAdapter(child: HourlyForecastTile()),
+          padding: EdgeInsets.symmetric(horizontal: screenSidesPadding),
+          sliver: const SliverToBoxAdapter(child: HourlyForecastTile()),
         ),
 
         SliverPadding(
-          padding: EdgeInsets.symmetric(horizontal: 14, vertical: 14),
-          sliver: SliverToBoxAdapter(child: AdditionalInformationTile()),
+          padding: EdgeInsets.symmetric(
+            horizontal: screenSidesPadding,
+            vertical: screenSidesPadding,
+          ),
+          sliver: const SliverToBoxAdapter(child: AdditionalInformationTile()),
         ),
       ],
     );

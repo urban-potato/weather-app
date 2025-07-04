@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 
+import 'package:weather_app/shared/lib/layout/index.dart';
 import '../../../../shared/ui/basic_tile/index.dart';
 
 class AdditionalInformationTile extends StatelessWidget {
@@ -8,37 +8,82 @@ class AdditionalInformationTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final screenSidesPadding = calculateScreenSidesPadding(context);
+
+    final isDeviceVertical =
+        MediaQuery.of(context).size.width < MediaQuery.of(context).size.height;
+    final screenMinSide = isDeviceVertical
+        ? MediaQuery.of(context).size.width
+        : MediaQuery.of(context).size.height;
+
+    final additionalInformationAreaMaxWidth =
+        screenMinSide - (screenSidesPadding * 2);
+    final additionalInformationTilesSpacing =
+        additionalInformationAreaMaxWidth / 2 / 17;
+
+    final smallTilesHorizontalPadding =
+        additionalInformationAreaMaxWidth / 47.75;
+    final smallTilesVerticalPadding = additionalInformationAreaMaxWidth / 31.8;
+
+    final bigTileHorizontalPadding = additionalInformationAreaMaxWidth / 23.88;
+    final bigTileVerticalPadding = additionalInformationAreaMaxWidth / 31.8;
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
           'Additional Information',
-          style: TextStyle(fontSize: 21, fontWeight: FontWeight.bold),
+          style: TextStyle(
+            fontSize: screenMinSide / 16.5,
+            fontWeight: FontWeight.bold,
+          ),
         ),
-        StaggeredGrid.count(
-          crossAxisCount: 5,
-          mainAxisSpacing: 10,
-          crossAxisSpacing: 10,
-          children: [
-            StaggeredGridTile.count(
-              crossAxisCellCount: 2,
-              mainAxisCellCount: 1,
-              child: BasicTile(child: _AdditionalInformationWindTile()),
+
+        Center(
+          child: Container(
+            constraints: BoxConstraints(
+              maxWidth: additionalInformationAreaMaxWidth,
             ),
-            StaggeredGridTile.count(
-              crossAxisCellCount: 3,
-              mainAxisCellCount: 3,
-              child: BasicTile(
-                padding: EdgeInsets.symmetric(horizontal: 16),
-                child: _AdditionalInformationBigTile(),
-              ),
+
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              spacing: additionalInformationTilesSpacing,
+              children: [
+                Flexible(
+                  child: Column(
+                    spacing: additionalInformationTilesSpacing,
+                    children: [
+                      BasicTile(
+                        padding: EdgeInsets.symmetric(
+                          horizontal: smallTilesHorizontalPadding,
+                          vertical: smallTilesVerticalPadding,
+                        ),
+                        child: const _AdditionalInformationWindTile(),
+                      ),
+                      BasicTile(
+                        padding: EdgeInsets.symmetric(
+                          horizontal: smallTilesHorizontalPadding,
+                          vertical: smallTilesVerticalPadding,
+                        ),
+                        child: const _AdditionalInformationSunTile(),
+                      ),
+                    ],
+                  ),
+                ),
+
+                Flexible(
+                  child: BasicTile(
+                    padding: EdgeInsets.symmetric(
+                      horizontal: bigTileHorizontalPadding,
+                      vertical: bigTileVerticalPadding,
+                    ),
+                    child: const _AdditionalInformationBigTile(),
+                  ),
+                ),
+              ],
             ),
-            StaggeredGridTile.count(
-              crossAxisCellCount: 2,
-              mainAxisCellCount: 1,
-              child: BasicTile(child: _AdditionalInformationSunTile()),
-            ),
-          ],
+          ),
         ),
       ],
     );
@@ -50,7 +95,7 @@ class _AdditionalInformationBigTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
+    return const Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         _AdditionalInformationBigTileRow(label: 'Feels like', value: '28°'),
@@ -75,17 +120,31 @@ class _AdditionalInformationBigTileRow extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+    return LayoutBuilder(
+      builder: (BuildContext context, BoxConstraints constraints) {
+        final unitContainerWidth = constraints.maxWidth * 0.01;
+        final dividerHeight = constraints.maxWidth / 10.23;
+        final fontSize = unitContainerWidth * 9.5;
+
+        return Column(
           children: [
-            Text(label),
-            Text(value, style: TextStyle(fontWeight: FontWeight.w700)),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text(label, style: TextStyle(fontSize: fontSize)),
+                Text(
+                  value,
+                  style: TextStyle(
+                    fontSize: fontSize,
+                    fontWeight: FontWeight.w700,
+                  ),
+                ),
+              ],
+            ),
+            Divider(height: dividerHeight),
           ],
-        ),
-        Divider(height: 15),
-      ],
+        );
+      },
     );
   }
 }
@@ -95,51 +154,62 @@ class _AdditionalInformationSunTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceAround,
-      crossAxisAlignment: CrossAxisAlignment.center,
-      children: [
-        Column(
-          mainAxisAlignment: MainAxisAlignment.center,
+    return LayoutBuilder(
+      builder: (BuildContext context, BoxConstraints constraints) {
+        final unitContainerWidth = constraints.maxWidth * 0.01;
+        final fontSize = unitContainerWidth * 10;
+        const fontHeight = 1.5;
+        final iconSize = unitContainerWidth * 20;
+
+        return Row(
+          mainAxisAlignment: MainAxisAlignment.spaceAround,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            RichText(
-              text: TextSpan(
-                text: '04:02',
-                style: TextStyle(
-                  color: Colors.black,
-                  fontWeight: FontWeight.w700,
-                  height: 1.5,
-                ),
-                children: [
-                  TextSpan(
-                    text: ' Sunrize',
-                    style: TextStyle(fontWeight: FontWeight.w400),
+            Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                RichText(
+                  text: TextSpan(
+                    text: '04:02',
+                    style: TextStyle(
+                      color: Colors.black,
+                      fontWeight: FontWeight.w700,
+                      height: fontHeight,
+                      fontSize: fontSize,
+                    ),
+                    children: const [
+                      TextSpan(
+                        text: ' Sunrize',
+                        style: TextStyle(fontWeight: FontWeight.w400),
+                      ),
+                    ],
                   ),
-                ],
-              ),
-            ),
-            RichText(
-              text: TextSpan(
-                text: '21:39',
-                style: TextStyle(
-                  color: Colors.black,
-                  fontWeight: FontWeight.w700,
-                  height: 1.5,
                 ),
-                children: [
-                  TextSpan(
-                    text: ' Sunset',
-                    style: TextStyle(fontWeight: FontWeight.w400),
+                RichText(
+                  text: TextSpan(
+                    text: '21:39',
+                    style: TextStyle(
+                      color: Colors.black,
+                      fontWeight: FontWeight.w700,
+                      height: fontHeight,
+                      fontSize: fontSize,
+                    ),
+                    children: const [
+                      TextSpan(
+                        text: ' Sunset',
+                        style: TextStyle(fontWeight: FontWeight.w400),
+                      ),
+                    ],
                   ),
-                ],
-              ),
+                ),
+              ],
             ),
-          ],
-        ),
 
-        Icon(Icons.wb_sunny_outlined, size: 32),
-      ],
+            Icon(Icons.wb_sunny_outlined, size: iconSize),
+          ],
+        );
+      },
     );
   }
 }
@@ -149,27 +219,44 @@ class _AdditionalInformationWindTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceAround,
-      crossAxisAlignment: CrossAxisAlignment.center,
-      children: [
-        Column(
-          mainAxisAlignment: MainAxisAlignment.center,
+    return LayoutBuilder(
+      builder: (BuildContext context, BoxConstraints constraints) {
+        final unitContainerWidth = constraints.maxWidth * 0.01;
+        final fontSize = unitContainerWidth * 10;
+        const fontHeight = 1.5;
+        final iconSize = unitContainerWidth * 20;
+
+        return Row(
+          mainAxisAlignment: MainAxisAlignment.spaceAround,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            Text(
-              'Southwest',
-              style: TextStyle(fontWeight: FontWeight.w700, height: 1.5),
+            Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Text(
+                  'Southwest',
+                  style: TextStyle(
+                    fontWeight: FontWeight.w700,
+                    height: fontHeight,
+                    fontSize: fontSize,
+                  ),
+                ),
+                Text(
+                  '20.9 km/h',
+                  style: TextStyle(
+                    fontWeight: FontWeight.w700,
+                    height: fontHeight,
+                    fontSize: fontSize,
+                  ),
+                ),
+              ],
             ),
-            Text(
-              '20.9 km/h',
-              style: TextStyle(fontWeight: FontWeight.w700, height: 1.5),
-            ),
-          ],
-        ),
 
-        Icon(Icons.air, size: 32),
-      ],
+            Icon(Icons.air, size: iconSize),
+          ],
+        );
+      },
     );
   }
 }

@@ -7,7 +7,7 @@ class MainWeatherWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
+    return const Column(
       // spacing: 6,
       children: [
         // _CurrentTemperature2(),
@@ -32,7 +32,7 @@ class _CurrentAQI extends StatelessWidget {
   Widget build(BuildContext context) {
     // final theme = Theme.of(context);
 
-    return BasicTile(
+    return const BasicTile(
       padding: EdgeInsets.all(8),
       child: Row(
         mainAxisSize: MainAxisSize.min,
@@ -52,7 +52,7 @@ class _MaxMinTemperatureToday extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Row(
+    return const Row(
       spacing: 16,
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
@@ -83,7 +83,10 @@ class _MaxMinTemperatureText extends StatelessWidget {
         children: [
           TextSpan(
             text: ' $temperature°',
-            style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
+            style: const TextStyle(
+              color: Colors.black,
+              fontWeight: FontWeight.bold,
+            ),
           ),
         ],
       ),
@@ -102,7 +105,7 @@ class _CurrentCondition extends StatelessWidget {
       spacing: 16,
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        Text('Clear', style: TextStyle(fontSize: 24, height: 1.0)),
+        const Text('Clear', style: TextStyle(fontSize: 24, height: 1.0)),
         Icon(Icons.sunny, size: 52, color: theme.primaryColorDark),
       ],
     );
@@ -118,9 +121,9 @@ class _CurrentTemperature extends StatelessWidget {
       offset: const Offset(16, 0),
       child: RichText(
         text: TextSpan(
-          style: TextStyle(height: 1.0),
+          style: const TextStyle(height: 1.0),
           children: [
-            TextSpan(
+            const TextSpan(
               text: '30',
               style: TextStyle(
                 color: Colors.black,
@@ -131,7 +134,7 @@ class _CurrentTemperature extends StatelessWidget {
             WidgetSpan(
               child: Transform.translate(
                 offset: const Offset(0, -48),
-                child: Text(
+                child: const Text(
                   '°C',
                   style: TextStyle(
                     color: Colors.black,

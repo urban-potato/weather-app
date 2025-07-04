@@ -9,8 +9,19 @@ class WeekForecastScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const CustomScrollView(
-      slivers: [CustomSliverAppBar(locationName: 'Krasnoyarsk')],
+    return CustomScrollView(
+      slivers: [
+        const CustomSliverAppBar(locationName: 'Krasnoyarsk'),
+
+        SliverPadding(
+          padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 14),
+          sliver: SliverList.separated(
+            itemBuilder: (context, index) => const Text('text'),
+            separatorBuilder: (context, index) => const SizedBox(height: 26),
+            itemCount: 7,
+          ),
+        ),
+      ],
     );
   }
 }
