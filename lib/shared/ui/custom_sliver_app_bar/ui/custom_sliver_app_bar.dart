@@ -7,16 +7,40 @@ class CustomSliverAppBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final screenMinSide =
+        MediaQuery.of(context).size.width < MediaQuery.of(context).size.height
+        ? MediaQuery.of(context).size.width
+        : MediaQuery.of(context).size.height;
+    final toolbarHeight = screenMinSide / 8;
+    final contentSize = screenMinSide / 17;
+
     return SliverAppBar(
+      pinned: true,
+      toolbarHeight: toolbarHeight,
       title: Text(
         locationName,
-        style: const TextStyle(fontWeight: FontWeight.w600),
+        style: TextStyle(fontWeight: FontWeight.w600, fontSize: contentSize),
       ),
       centerTitle: true,
-      // backgroundColor: theme.appBarTheme.foregroundColor,
-      backgroundColor: Colors.transparent,
-      actions: [IconButton(onPressed: () {}, icon: const Icon(Icons.menu))],
-      leading: IconButton(onPressed: () {}, icon: const Icon(Icons.add)),
+      backgroundColor: theme.scaffoldBackgroundColor,
+      surfaceTintColor: theme.scaffoldBackgroundColor,
+      actions: [
+        IconButton(
+          iconSize: contentSize,
+          onPressed: () {},
+          icon: const Icon(Icons.menu),
+        ),
+      ],
+      leading: Align(
+        alignment: Alignment.centerLeft,
+        child: IconButton(
+          iconSize: contentSize,
+          onPressed: () {},
+          icon: const Icon(Icons.add),
+        ),
+      ),
+      leadingWidth: toolbarHeight,
     );
   }
 }
