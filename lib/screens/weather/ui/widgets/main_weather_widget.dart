@@ -48,7 +48,7 @@ class _CurrentAQI extends StatelessWidget {
         spacing: 8,
         children: [
           Icon(Icons.local_florist),
-          Row(spacing: 4, children: [Text('AQI'), Text('49')]),
+          Row(spacing: 6, children: [Text('AQI'), Text('49')]),
         ],
       ),
     );
