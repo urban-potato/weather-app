@@ -7,20 +7,30 @@ class MainWeatherWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Column(
-      // spacing: 6,
-      children: [
-        // _CurrentTemperature2(),
-        _CurrentTemperature(),
-        Column(
-          spacing: 6,
+    final screenMinSide =
+        MediaQuery.of(context).size.width < MediaQuery.of(context).size.height
+        ? MediaQuery.of(context).size.width
+        : MediaQuery.of(context).size.height;
+    final widgetHeight = screenMinSide / 2;
+
+    return SizedBox(
+      height: widgetHeight,
+      child: const FittedBox(
+        child: Column(
           children: [
-            _CurrentCondition(),
-            _MaxMinTemperatureToday(),
-            _CurrentAQI(),
+            _CurrentTemperature(),
+
+            Column(
+              spacing: 6,
+              children: [
+                _CurrentCondition(),
+                _MaxMinTemperatureToday(),
+                _CurrentAQI(),
+              ],
+            ),
           ],
         ),
-      ],
+      ),
     );
   }
 }
@@ -30,10 +40,8 @@ class _CurrentAQI extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // final theme = Theme.of(context);
-
     return const BasicTile(
-      padding: EdgeInsets.all(8),
+      padding: EdgeInsets.symmetric(vertical: 8, horizontal: 12),
       child: Row(
         mainAxisSize: MainAxisSize.min,
         mainAxisAlignment: MainAxisAlignment.center,
@@ -150,39 +158,3 @@ class _CurrentTemperature extends StatelessWidget {
     );
   }
 }
-
-// class _CurrentTemperature2 extends StatelessWidget {
-//   const _CurrentTemperature2();
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return RichText(
-//       text: TextSpan(
-//         style: TextStyle(height: 1.0),
-//         children: [
-//           TextSpan(
-//             text: '30',
-//             style: TextStyle(
-//               color: Colors.black,
-//               fontSize: 102,
-//               fontWeight: FontWeight.w600,
-//             ),
-//           ),
-//           WidgetSpan(
-//             child: Transform.translate(
-//               offset: const Offset(0, -48),
-//               child: Text(
-//                 '°C',
-//                 style: TextStyle(
-//                   color: Colors.black,
-//                   fontSize: 26,
-//                   fontWeight: FontWeight.w600,
-//                 ),
-//               ),
-//             ),
-//           ),
-//         ],
-//       ),
-//     );
-//   }
-// }
