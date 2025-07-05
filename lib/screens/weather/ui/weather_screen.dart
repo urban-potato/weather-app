@@ -13,7 +13,14 @@ class WeatherScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final screenSidesPadding = calculateScreenSidesPadding(context);
+    final screenMinSide =
+        MediaQuery.of(context).size.width < MediaQuery.of(context).size.height
+        ? MediaQuery.of(context).size.width
+        : MediaQuery.of(context).size.height;
+    final screenSidesPadding = calculateScreenSidesPadding(
+      screenMinSide: screenMinSide,
+    );
+    final mainWeatherWidgetVerticalPadding = screenMinSide / 5;
 
     return CustomScrollView(
       slivers: [
@@ -21,7 +28,7 @@ class WeatherScreen extends StatelessWidget {
         SliverPadding(
           padding: EdgeInsets.symmetric(
             horizontal: screenSidesPadding,
-            vertical: 82,
+            vertical: mainWeatherWidgetVerticalPadding,
           ),
           sliver: const SliverToBoxAdapter(child: MainWeatherWidget()),
         ),

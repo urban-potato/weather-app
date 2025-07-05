@@ -8,13 +8,15 @@ class AdditionalInformationTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final screenSidesPadding = calculateScreenSidesPadding(context);
-
     final isDeviceVertical =
         MediaQuery.of(context).size.width < MediaQuery.of(context).size.height;
     final screenMinSide = isDeviceVertical
         ? MediaQuery.of(context).size.width
         : MediaQuery.of(context).size.height;
+
+    final screenSidesPadding = calculateScreenSidesPadding(
+      screenMinSide: screenMinSide,
+    );
 
     final additionalInformationAreaMaxWidth =
         screenMinSide - (screenSidesPadding * 2);
