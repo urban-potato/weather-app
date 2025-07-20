@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:weather_app/shared/lib/adjustable_size/index.dart';
 
-import 'package:weather_app/shared/lib/layout/index.dart';
 import '../../../../shared/ui/basic_tile/index.dart';
 
 class AdditionalInformationTile extends StatelessWidget {
@@ -8,53 +8,39 @@ class AdditionalInformationTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final isDeviceVertical =
-        MediaQuery.of(context).size.width < MediaQuery.of(context).size.height;
-    final screenMinSide = isDeviceVertical
-        ? MediaQuery.of(context).size.width
-        : MediaQuery.of(context).size.height;
+    AdjustableSize.instance.init(context);
 
-    final screenSidesPadding = calculateScreenSidesPadding(
-      screenMinSide: screenMinSide,
-    );
+    final contentMaxWidth = AdjustableSize.instance.getContentMaxWidth();
+    final tilesSpacing = contentMaxWidth / 2 / 17;
 
-    final additionalInformationAreaMaxWidth =
-        screenMinSide - (screenSidesPadding * 2);
-    final additionalInformationTilesSpacing =
-        additionalInformationAreaMaxWidth / 2 / 17;
+    final smallTilesHorizontalPadding = contentMaxWidth / 47.75;
+    final smallTilesVerticalPadding = contentMaxWidth / 31.8;
 
-    final smallTilesHorizontalPadding =
-        additionalInformationAreaMaxWidth / 47.75;
-    final smallTilesVerticalPadding = additionalInformationAreaMaxWidth / 31.8;
+    final bigTileHorizontalPadding = contentMaxWidth / 23.88;
+    final bigTileVerticalPadding = contentMaxWidth / 31.8;
 
-    final bigTileHorizontalPadding = additionalInformationAreaMaxWidth / 23.88;
-    final bigTileVerticalPadding = additionalInformationAreaMaxWidth / 31.8;
+    final fontSize = AdjustableSize.instance.scaleByScreen(16.5);
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
           'Additional Information',
-          style: TextStyle(
-            fontSize: screenMinSide / 16.5,
-            fontWeight: FontWeight.bold,
-          ),
+          style: TextStyle(fontSize: fontSize, fontWeight: FontWeight.bold),
         ),
 
         Center(
           child: Container(
-            constraints: BoxConstraints(
-              maxWidth: additionalInformationAreaMaxWidth,
-            ),
+            constraints: BoxConstraints(maxWidth: contentMaxWidth),
 
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               crossAxisAlignment: CrossAxisAlignment.start,
-              spacing: additionalInformationTilesSpacing,
+              spacing: tilesSpacing,
               children: [
                 Flexible(
                   child: Column(
-                    spacing: additionalInformationTilesSpacing,
+                    spacing: tilesSpacing,
                     children: [
                       BasicTile(
                         padding: EdgeInsets.symmetric(
@@ -158,10 +144,12 @@ class _AdditionalInformationSunTile extends StatelessWidget {
   Widget build(BuildContext context) {
     return LayoutBuilder(
       builder: (BuildContext context, BoxConstraints constraints) {
-        final unitContainerWidth = constraints.maxWidth * 0.01;
-        final fontSize = unitContainerWidth * 10;
+        AdjustableSize.instance.init(context);
+
+        final tileMaxWidth = constraints.maxWidth;
         const fontHeight = 1.5;
-        final iconSize = unitContainerWidth * 20;
+        final fontSize = AdjustableSize.instance.scaleByUnit(tileMaxWidth, 10);
+        final iconSize = AdjustableSize.instance.scaleByUnit(tileMaxWidth, 20);
 
         return Row(
           mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -223,10 +211,12 @@ class _AdditionalInformationWindTile extends StatelessWidget {
   Widget build(BuildContext context) {
     return LayoutBuilder(
       builder: (BuildContext context, BoxConstraints constraints) {
-        final unitContainerWidth = constraints.maxWidth * 0.01;
-        final fontSize = unitContainerWidth * 10;
+        AdjustableSize.instance.init(context);
+
+        final tileMaxWidth = constraints.maxWidth;
         const fontHeight = 1.5;
-        final iconSize = unitContainerWidth * 20;
+        final fontSize = AdjustableSize.instance.scaleByUnit(tileMaxWidth, 10);
+        final iconSize = AdjustableSize.instance.scaleByUnit(tileMaxWidth, 20);
 
         return Row(
           mainAxisAlignment: MainAxisAlignment.spaceAround,

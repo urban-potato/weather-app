@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:weather_app/shared/lib/adjustable_size/index.dart';
 
 import '../../../../shared/ui/basic_tile/index.dart';
 
@@ -7,10 +8,9 @@ class MainWeatherWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final screenMinSide =
-        MediaQuery.of(context).size.width < MediaQuery.of(context).size.height
-        ? MediaQuery.of(context).size.width
-        : MediaQuery.of(context).size.height;
+    AdjustableSize.instance.init(context);
+
+    final screenMinSide = AdjustableSize.instance.screenMinSide;
     final widgetHeight = screenMinSide / 2;
 
     return SizedBox(

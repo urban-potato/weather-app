@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:weather_app/shared/lib/adjustable_size/index.dart';
 
 import 'router/router.dart';
 
@@ -14,6 +15,7 @@ class _AppState extends State<App> {
 
   @override
   Widget build(BuildContext context) {
+    AdjustableSize.instance.init(context);
     const primaryColor = Color(0xFF0099FF);
 
     return MaterialApp.router(

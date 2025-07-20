@@ -1,7 +1,7 @@
 import 'package:auto_route/annotations.dart';
 import 'package:flutter/material.dart';
+import 'package:weather_app/shared/lib/adjustable_size/index.dart';
 
-import 'package:weather_app/shared/lib/layout/index.dart';
 import '../../../shared/ui/custom_sliver_app_bar/index.dart';
 import 'widgets/additional_information_tile.dart';
 import 'widgets/hourly_forecast_tile.dart';
@@ -13,35 +13,31 @@ class WeatherScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final screenMinSide =
-        MediaQuery.of(context).size.width < MediaQuery.of(context).size.height
-        ? MediaQuery.of(context).size.width
-        : MediaQuery.of(context).size.height;
-    final screenSidesPadding = calculateScreenSidesPadding(
-      screenMinSide: screenMinSide,
-    );
-    final mainWeatherWidgetVerticalPadding = screenMinSide / 5;
+    AdjustableSize.instance.init(context);
+
+    final sidesPadding = AdjustableSize.instance.getSidesPadding();
+    final verticalPadding = AdjustableSize.instance.scaleByScreen(5);
 
     return CustomScrollView(
       slivers: [
         const CustomSliverAppBar(locationName: 'Krasnoyarsk'),
         SliverPadding(
           padding: EdgeInsets.symmetric(
-            horizontal: screenSidesPadding,
-            vertical: mainWeatherWidgetVerticalPadding,
+            horizontal: sidesPadding,
+            vertical: verticalPadding,
           ),
           sliver: const SliverToBoxAdapter(child: MainWeatherWidget()),
         ),
 
         SliverPadding(
-          padding: EdgeInsets.symmetric(horizontal: screenSidesPadding),
+          padding: EdgeInsets.symmetric(horizontal: sidesPadding),
           sliver: const SliverToBoxAdapter(child: HourlyForecastTile()),
         ),
 
         SliverPadding(
           padding: EdgeInsets.symmetric(
-            horizontal: screenSidesPadding,
-            vertical: screenSidesPadding,
+            horizontal: sidesPadding,
+            vertical: sidesPadding,
           ),
           sliver: const SliverToBoxAdapter(child: AdditionalInformationTile()),
         ),

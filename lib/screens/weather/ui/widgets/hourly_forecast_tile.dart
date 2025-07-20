@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:weather_app/shared/lib/adjustable_size/index.dart';
 
 import '../../../../shared/ui/basic_tile/index.dart';
 
@@ -8,14 +9,13 @@ class HourlyForecastTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    final screenMinSide =
-        MediaQuery.of(context).size.width < MediaQuery.of(context).size.height
-        ? MediaQuery.of(context).size.width
-        : MediaQuery.of(context).size.height;
-    final scrollableAreaHeight = screenMinSide / 2.8;
+    AdjustableSize.instance.init(context);
+
+    final scrollableAreaHeight = AdjustableSize.instance.scaleByScreen(2.8);
     final tilesSeparatorWidth = scrollableAreaHeight / 15;
     final tileHorizontalPadding = scrollableAreaHeight / 7.35;
     final tileVerticalPadding = scrollableAreaHeight / 14.7;
+    final fontSize = AdjustableSize.instance.scaleByScreen(16.5);
 
     return Column(
       mainAxisSize: MainAxisSize.min,
@@ -23,10 +23,7 @@ class HourlyForecastTile extends StatelessWidget {
       children: [
         Text(
           'Hourly Forecast',
-          style: TextStyle(
-            fontSize: screenMinSide / 16.5,
-            fontWeight: FontWeight.bold,
-          ),
+          style: TextStyle(fontSize: fontSize, fontWeight: FontWeight.bold),
         ),
 
         SizedBox(
