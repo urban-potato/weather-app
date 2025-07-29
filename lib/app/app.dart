@@ -15,7 +15,7 @@ class _AppState extends State<App> {
 
   @override
   Widget build(BuildContext context) {
-    AdjustableSize.instance.init(context);
+    ScreenBasedSize.instance.init(context);
     const primaryColor = Color(0xFF0099FF);
 
     return MaterialApp.router(

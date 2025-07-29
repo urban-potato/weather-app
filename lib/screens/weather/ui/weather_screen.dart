@@ -3,9 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:weather_app/shared/lib/adjustable_size/index.dart';
 
 import '../../../shared/ui/custom_sliver_app_bar/index.dart';
-import 'widgets/additional_information_tile.dart';
-import 'widgets/hourly_forecast_tile.dart';
-import 'widgets/main_weather_widget.dart';
+
+import 'features/additional_information_tile.dart';
+import 'features/hourly_forecast_tile.dart';
+import '../../../shared/ui/main_weather/index.dart';
 
 @RoutePage()
 class WeatherScreen extends StatelessWidget {
@@ -13,31 +14,45 @@ class WeatherScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    AdjustableSize.instance.init(context);
+    ScreenBasedSize.instance.init(context);
 
-    final sidesPadding = AdjustableSize.instance.getSidesPadding();
-    final verticalPadding = AdjustableSize.instance.scaleByScreen(5);
+    final hPadding = ScreenBasedSize.instance.getSidesPadding();
+    final vPadding = ScreenBasedSize.instance.scaleByRatio(5);
+    final mainWeatherWidgetMaxWidth = ScreenBasedSize.instance.scaleByUnit(49);
 
     return CustomScrollView(
       slivers: [
-        const CustomSliverAppBar(locationName: 'Krasnoyarsk'),
+        const CustomSliverAppBar(locationName: 'Saint Petersburg'),
         SliverPadding(
           padding: EdgeInsets.symmetric(
-            horizontal: sidesPadding,
-            vertical: verticalPadding,
+            horizontal: hPadding,
+            vertical: vPadding,
           ),
-          sliver: const SliverToBoxAdapter(child: MainWeatherWidget()),
+          sliver: SliverToBoxAdapter(
+            child: Center(
+              child: ConstrainedBox(
+                constraints: BoxConstraints(
+                  maxWidth: mainWeatherWidgetMaxWidth,
+                ),
+
+                child: const MainWeatherWidget(
+                  shouldShowAQI: true,
+                  currentTemperatureSize: 1.5,
+                ),
+              ),
+            ),
+          ),
         ),
 
         SliverPadding(
-          padding: EdgeInsets.symmetric(horizontal: sidesPadding),
-          sliver: const SliverToBoxAdapter(child: HourlyForecastTile()),
+          padding: EdgeInsets.symmetric(horizontal: hPadding),
+          sliver: const SliverToBoxAdapter(child: HourlyForecastWidget()),
         ),
 
         SliverPadding(
           padding: EdgeInsets.symmetric(
-            horizontal: sidesPadding,
-            vertical: sidesPadding,
+            horizontal: hPadding,
+            vertical: hPadding,
           ),
           sliver: const SliverToBoxAdapter(child: AdditionalInformationTile()),
         ),

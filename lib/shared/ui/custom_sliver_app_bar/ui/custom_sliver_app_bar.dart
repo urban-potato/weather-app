@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import 'package:weather_app/shared/lib/adjustable_size/index.dart';
+
 class CustomSliverAppBar extends StatelessWidget {
   const CustomSliverAppBar({super.key, required this.locationName});
 
@@ -7,13 +9,11 @@ class CustomSliverAppBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    ScreenBasedSize.instance.init(context);
+
     final theme = Theme.of(context);
-    final screenMinSide =
-        MediaQuery.of(context).size.width < MediaQuery.of(context).size.height
-        ? MediaQuery.of(context).size.width
-        : MediaQuery.of(context).size.height;
-    final toolbarHeight = screenMinSide / 8;
-    final contentSize = screenMinSide / 17;
+    final toolbarHeight = ScreenBasedSize.instance.scaleByUnit(12);
+    final contentSize = ScreenBasedSize.instance.scaleByUnit(5);
 
     return SliverAppBar(
       pinned: true,

@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:weather_app/shared/lib/adjustable_size/index.dart';
 
-class BasicTile extends StatelessWidget {
-  const BasicTile({
+class CardTile extends StatelessWidget {
+  const CardTile({
     super.key,
     required this.child,
     this.padding,
@@ -24,12 +25,17 @@ class BasicTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    ScreenBasedSize.instance.init(context);
+
     final theme = Theme.of(context);
-    final screenMinSide =
-        MediaQuery.of(context).size.width < MediaQuery.of(context).size.height
-        ? MediaQuery.of(context).size.width
-        : MediaQuery.of(context).size.height;
+    final screenMinSide = ScreenBasedSize.instance.screenMinSide;
     final tileBorderRadius = screenMinSide / 25.7;
+    final hPadding = ScreenBasedSize.instance.scaleByUnit(3.5);
+    final vPadding = ScreenBasedSize.instance.scaleByUnit(3);
+
+    final finalPadding =
+        padding ??
+        EdgeInsetsGeometry.symmetric(horizontal: hPadding, vertical: vPadding);
 
     return Container(
       constraints: BoxConstraints(
@@ -40,7 +46,7 @@ class BasicTile extends StatelessWidget {
       ),
       width: width,
       height: height,
-      padding: padding,
+      padding: finalPadding,
       decoration: BoxDecoration(
         color: theme.cardColor.withValues(alpha: 0.8),
         borderRadius: BorderRadius.circular(tileBorderRadius),
