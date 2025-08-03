@@ -1,19 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:weather_app/shared/lib/adjustable_size/index.dart';
 
-class ExtraWeatherInfoWidget extends StatelessWidget {
-  const ExtraWeatherInfoWidget({super.key});
+import '../../../utils/adjustable_size/index.dart';
+
+class ResponsiveInfoList extends StatelessWidget {
+  const ResponsiveInfoList({super.key, required this.data});
+
+  final Map<String, String> data;
 
   @override
   Widget build(BuildContext context) {
-    final data = <String, String>{
-      'Feels like': '28°',
-      'Humidity': '40%',
-      'Chance of rain': '27%',
-      'Pressure': '1001 mbar',
-      'Visibility': '10 km',
-    };
-
     return Column(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: data.entries

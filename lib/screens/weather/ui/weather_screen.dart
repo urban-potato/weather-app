@@ -1,11 +1,12 @@
 import 'package:auto_route/annotations.dart';
 import 'package:flutter/material.dart';
-import 'package:weather_app/shared/lib/adjustable_size/index.dart';
 
 import '../../../shared/ui/custom_sliver_app_bar/index.dart';
 
-import 'features/additional_information_tile.dart';
-import 'features/hourly_forecast_tile.dart';
+import '../../../shared/ui/sun_info/index.dart';
+import '../../../shared/utils/adjustable_size/index.dart';
+import 'components/additional_information_tile.dart';
+import 'components/hourly_forecast_widget.dart';
 import '../../../shared/ui/main_weather/index.dart';
 
 @RoutePage()
@@ -14,6 +15,78 @@ class WeatherScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final mainWeatherMockData = MainWeatherWidgetData(
+      condition: WeatherCondition(
+        text: 'Partly Cloudy',
+        icon: 'https://cdn.weatherapi.com/weather/64x64/day/116.png',
+      ),
+      maxTemp: 23,
+      minTemp: 14,
+      temperature: 16,
+      aqi: 45,
+    );
+
+    final extraInfoMockData = ExtraWeatherInfoData(
+      feelsLike: 25,
+      chanceOfRain: 95,
+      chanceOfSnow: 0,
+      humidity: 73,
+      pressure: 1017,
+      visibility: 10,
+      uv: 3,
+    );
+
+    final windMockData = WindData(direction: 'West', speed: 17.6);
+    final sunMockData = SunData(
+      sunriseTime: '05:28 AM',
+      sunsetTime: '08:45 PM',
+    );
+
+    final hourlyForecastMockData = [
+      ForecastDay(
+        time: '16:00',
+        tempetarute: 16,
+        windSpeed: 19.1,
+        icon: 'https://cdn.weatherapi.com/weather/64x64/day/353.png',
+      ),
+      ForecastDay(
+        time: '17:00',
+        tempetarute: 22,
+        windSpeed: 16.9,
+        icon: 'https://cdn.weatherapi.com/weather/64x64/day/176.png',
+      ),
+      ForecastDay(
+        time: '18:00',
+        tempetarute: 22,
+        windSpeed: 15.5,
+        icon: 'https://cdn.weatherapi.com/weather/64x64/day/113.png',
+      ),
+      ForecastDay(
+        time: '19:00',
+        tempetarute: 21,
+        windSpeed: 12.2,
+        icon: 'https://cdn.weatherapi.com/weather/64x64/day/116.png',
+      ),
+      ForecastDay(
+        time: '20:00',
+        tempetarute: 20,
+        windSpeed: 11.2,
+        icon: 'https://cdn.weatherapi.com/weather/64x64/day/116.png',
+      ),
+      ForecastDay(
+        time: '21:00',
+        tempetarute: 20,
+        windSpeed: 13.7,
+        icon: 'https://cdn.weatherapi.com/weather/64x64/night/116.png',
+      ),
+      ForecastDay(
+        time: '22:00',
+        tempetarute: 20,
+        windSpeed: 11.5,
+        icon: 'https://cdn.weatherapi.com/weather/64x64/night/116.png',
+      ),
+    ];
+
     ScreenBasedSize.instance.init(context);
 
     final hPadding = ScreenBasedSize.instance.getSidesPadding();
@@ -35,8 +108,8 @@ class WeatherScreen extends StatelessWidget {
                   maxWidth: mainWeatherWidgetMaxWidth,
                 ),
 
-                child: const MainWeatherWidget(
-                  shouldShowAQI: true,
+                child: MainWeatherWidget(
+                  data: mainWeatherMockData,
                   currentTemperatureSize: 1.5,
                 ),
               ),
@@ -46,7 +119,9 @@ class WeatherScreen extends StatelessWidget {
 
         SliverPadding(
           padding: EdgeInsets.symmetric(horizontal: hPadding),
-          sliver: const SliverToBoxAdapter(child: HourlyForecastWidget()),
+          sliver: SliverToBoxAdapter(
+            child: HourlyForecastWidget(data: hourlyForecastMockData),
+          ),
         ),
 
         SliverPadding(
@@ -54,7 +129,13 @@ class WeatherScreen extends StatelessWidget {
             horizontal: hPadding,
             vertical: hPadding,
           ),
-          sliver: const SliverToBoxAdapter(child: AdditionalInformationTile()),
+          sliver: SliverToBoxAdapter(
+            child: AdditionalInformationTile(
+              sunData: sunMockData,
+              windData: windMockData,
+              extraWeatherInfoData: extraInfoMockData,
+            ),
+          ),
         ),
       ],
     );

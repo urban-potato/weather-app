@@ -1,17 +1,40 @@
 import 'package:flutter/material.dart';
-import 'package:weather_app/shared/lib/adjustable_size/index.dart';
 
 import '../../../../shared/layout/scaled_child_box/index.dart';
 import '../../../layout/card_tile/index.dart';
+import '../../../utils/adjustable_size/index.dart';
+
+class MainWeatherWidgetData {
+  MainWeatherWidgetData({
+    required this.temperature,
+    required this.condition,
+    required this.maxTemp,
+    required this.minTemp,
+    this.aqi,
+  });
+
+  final int temperature;
+  final WeatherCondition condition;
+  final int maxTemp;
+  final int minTemp;
+  final int? aqi;
+}
+
+class WeatherCondition {
+  WeatherCondition({required this.text, required this.icon});
+
+  final String text;
+  final String icon;
+}
 
 class MainWeatherWidget extends StatelessWidget {
   const MainWeatherWidget({
     super.key,
-    this.shouldShowAQI = false,
     this.currentTemperatureSize = 1,
+    required this.data,
   });
 
-  final bool shouldShowAQI;
+  final MainWeatherWidgetData data;
   final double currentTemperatureSize;
 
   @override
@@ -22,15 +45,27 @@ class MainWeatherWidget extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        _CurrentTemperatureWidget(size: currentTemperatureSize),
+        _CurrentTemperatureWidget(
+          size: currentTemperatureSize,
+          temperature: data.temperature,
+        ),
 
         Column(
           spacing: spacing,
           children: [
-            const _CurrentConditionWidget(),
+            _CurrentConditionWidget(condition: data.condition),
 
-            if (shouldShowAQI) _MinMaxTemperatureWithAQI(spacing: spacing),
-            if (!shouldShowAQI) const _DailyTemperatureRangeWidget(),
+            if (data.aqi != null)
+              _MinMaxTemperatureWithAQI(
+                aqi: data.aqi!,
+                maxTemp: data.maxTemp,
+                minTemp: data.minTemp,
+              ),
+            if (data.aqi == null)
+              _DailyTemperatureRangeWidget(
+                maxTemp: data.maxTemp,
+                minTemp: data.minTemp,
+              ),
           ],
         ),
       ],
@@ -38,27 +73,98 @@ class MainWeatherWidget extends StatelessWidget {
   }
 }
 
-class _MinMaxTemperatureWithAQI extends StatelessWidget {
-  const _MinMaxTemperatureWithAQI({required this.spacing});
+class _AQIInfoTile extends StatelessWidget {
+  const _AQIInfoTile({required this.aqi});
 
-  final double spacing;
+  final int aqi;
 
   @override
   Widget build(BuildContext context) {
+    final tileCOlor = aqi < 101
+        ? Colors.green
+        : aqi < 161
+        ? Colors.amber
+        : aqi < 241
+        ? Colors.red
+        : Colors.black;
+
+    return _TileWrapper(
+      color: tileCOlor,
+      child: ScaledChildBox(
+        height: 6,
+        child: Row(
+          mainAxisSize: MainAxisSize.min,
+          mainAxisAlignment: MainAxisAlignment.center,
+          spacing: 8,
+          children: [
+            const Icon(Icons.local_florist, color: Colors.white),
+            Row(
+              spacing: 6,
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                const Text(
+                  'AQI',
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 16,
+                    fontWeight: FontWeight.w600,
+                  ),
+                ),
+                Text(
+                  aqi.toString(),
+                  style: const TextStyle(
+                    color: Colors.white,
+                    fontSize: 16,
+                    fontWeight: FontWeight.w600,
+                  ),
+                ),
+              ],
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class _MinMaxTemperatureWithAQI extends StatelessWidget {
+  const _MinMaxTemperatureWithAQI({
+    required this.maxTemp,
+    required this.minTemp,
+    required this.aqi,
+  });
+
+  final int maxTemp;
+  final int minTemp;
+  final int aqi;
+
+  @override
+  Widget build(BuildContext context) {
+    ScreenBasedSize.instance.init(context);
+    final spacing = ScreenBasedSize.instance.scaleByUnit(2);
+
     return Row(
       spacing: spacing,
-      children: const [
-        Flexible(child: _TileWrapper(child: _DailyTemperatureRangeWidget())),
-        Flexible(child: _TileWrapper(child: _AQIInfoWidget())),
+      children: [
+        Flexible(
+          child: _TileWrapper(
+            child: _DailyTemperatureRangeWidget(
+              maxTemp: maxTemp,
+              minTemp: minTemp,
+            ),
+          ),
+        ),
+        Flexible(child: _AQIInfoTile(aqi: aqi)),
       ],
     );
   }
 }
 
 class _TileWrapper extends StatelessWidget {
-  const _TileWrapper({required this.child});
+  const _TileWrapper({required this.child, this.color});
 
   final Widget child;
+  final Color? color;
 
   @override
   Widget build(BuildContext context) {
@@ -69,50 +175,37 @@ class _TileWrapper extends StatelessWidget {
 
     return CardTile(
       padding: EdgeInsets.symmetric(vertical: vPadding, horizontal: hPadding),
+      color: color,
       child: child,
     );
   }
 }
 
-class _AQIInfoWidget extends StatelessWidget {
-  const _AQIInfoWidget();
-
-  @override
-  Widget build(BuildContext context) {
-    return const ScaledChildBox(
-      height: 6,
-      child: Row(
-        mainAxisSize: MainAxisSize.min,
-        mainAxisAlignment: MainAxisAlignment.center,
-        spacing: 8,
-        children: [
-          Icon(Icons.local_florist),
-          Row(
-            spacing: 6,
-            mainAxisSize: MainAxisSize.min,
-            children: [Text('AQI'), Text('49')],
-          ),
-        ],
-      ),
-    );
-  }
-}
-
 class _DailyTemperatureRangeWidget extends StatelessWidget {
-  const _DailyTemperatureRangeWidget();
+  const _DailyTemperatureRangeWidget({
+    required this.maxTemp,
+    required this.minTemp,
+  });
+
+  final int maxTemp;
+  final int minTemp;
 
   @override
   Widget build(BuildContext context) {
-    return const ScaledChildBox(
+    return ScaledChildBox(
       height: 6,
       child: Row(
         mainAxisSize: MainAxisSize.min,
         spacing: 8,
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Flexible(child: _TemperatureValueText(temperature: '32')),
-          Text('/'),
-          Flexible(child: _TemperatureValueText(temperature: '16')),
+          Flexible(
+            child: _TemperatureValueText(temperature: maxTemp.toString()),
+          ),
+          const Text('/'),
+          Flexible(
+            child: _TemperatureValueText(temperature: minTemp.toString()),
+          ),
         ],
       ),
     );
@@ -140,17 +233,17 @@ class _TemperatureValueText extends StatelessWidget {
 }
 
 class _CurrentConditionWidget extends StatelessWidget {
-  const _CurrentConditionWidget();
+  const _CurrentConditionWidget({required this.condition});
+
+  final WeatherCondition condition;
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
-
     return LayoutBuilder(
       builder: (BuildContext context, BoxConstraints constraints) {
         final constraintsMaxWidth = constraints.maxWidth;
         final fontSize = AdjustableSize.scaleByUnit(constraintsMaxWidth, 11);
-        final iconSize = AdjustableSize.scaleByUnit(constraintsMaxWidth, 20);
+        final iconSize = AdjustableSize.scaleByUnit(constraintsMaxWidth, 25);
         final spacing = AdjustableSize.scaleByUnit(constraintsMaxWidth, 3);
 
         return Row(
@@ -160,7 +253,7 @@ class _CurrentConditionWidget extends StatelessWidget {
           children: [
             Flexible(
               child: Text(
-                'Clear',
+                condition.text,
                 textAlign: TextAlign.center,
                 style: TextStyle(
                   fontSize: fontSize,
@@ -169,7 +262,11 @@ class _CurrentConditionWidget extends StatelessWidget {
                 ),
               ),
             ),
-            Icon(Icons.sunny, size: iconSize, color: theme.primaryColorDark),
+
+            ConstrainedBox(
+              constraints: BoxConstraints(maxWidth: iconSize),
+              child: Image.network(condition.icon),
+            ),
           ],
         );
       },
@@ -178,8 +275,12 @@ class _CurrentConditionWidget extends StatelessWidget {
 }
 
 class _CurrentTemperatureWidget extends StatelessWidget {
-  const _CurrentTemperatureWidget({required this.size});
+  const _CurrentTemperatureWidget({
+    required this.size,
+    required this.temperature,
+  });
 
+  final int temperature;
   final double size;
 
   @override
@@ -192,9 +293,9 @@ class _CurrentTemperatureWidget extends StatelessWidget {
           text: TextSpan(
             style: const TextStyle(height: 1.0),
             children: [
-              const TextSpan(
-                text: '35',
-                style: TextStyle(
+              TextSpan(
+                text: temperature.toString(),
+                style: const TextStyle(
                   color: Colors.black,
                   fontSize: 102,
                   fontWeight: FontWeight.w600,

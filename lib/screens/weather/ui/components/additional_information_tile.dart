@@ -1,12 +1,48 @@
 import 'package:flutter/material.dart';
-import 'package:weather_app/shared/lib/adjustable_size/index.dart';
 
 import '../../../../shared/layout/card_tile/index.dart';
-import '../../../../shared/ui/extra_weather_info/index.dart';
+import '../../../../shared/ui/responsive_info_list/index.dart';
 import '../../../../shared/ui/sun_info/index.dart';
+import '../../../../shared/utils/adjustable_size/index.dart';
+
+class ExtraWeatherInfoData {
+  ExtraWeatherInfoData({
+    required this.feelsLike,
+    required this.humidity,
+    required this.chanceOfRain,
+    required this.chanceOfSnow,
+    required this.pressure,
+    required this.visibility,
+    required this.uv,
+  });
+
+  final int feelsLike;
+  final int humidity;
+  final int chanceOfRain;
+  final int chanceOfSnow;
+  final int pressure;
+  final int visibility;
+  final int uv;
+}
+
+class WindData {
+  WindData({required this.speed, required this.direction});
+
+  final double speed;
+  final String direction;
+}
 
 class AdditionalInformationTile extends StatelessWidget {
-  const AdditionalInformationTile({super.key});
+  const AdditionalInformationTile({
+    super.key,
+    required this.sunData,
+    required this.extraWeatherInfoData,
+    required this.windData,
+  });
+
+  final SunData sunData;
+  final WindData windData;
+  final ExtraWeatherInfoData extraWeatherInfoData;
 
   @override
   Widget build(BuildContext context) {
@@ -14,6 +50,16 @@ class AdditionalInformationTile extends StatelessWidget {
 
     final contentMaxWidth = ScreenBasedSize.instance.getContentMaxWidth();
     final tilesSpacing = ScreenBasedSize.instance.scaleByUnit(2.7);
+
+    final extraWeatherData = <String, String>{
+      'Feels like': '${extraWeatherInfoData.feelsLike}°',
+      'Humidity': '${extraWeatherInfoData.humidity}%',
+      'Chance of rain': '${extraWeatherInfoData.chanceOfRain}%',
+      'Chance of snow': '${extraWeatherInfoData.chanceOfSnow}%',
+      'Pressure': '${extraWeatherInfoData.pressure} mbar',
+      'Visibility': '${extraWeatherInfoData.visibility} km',
+      'UV': extraWeatherInfoData.uv.toString(),
+    };
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -31,21 +77,23 @@ class AdditionalInformationTile extends StatelessWidget {
                 Flexible(
                   child: Column(
                     spacing: tilesSpacing,
-                    children: const [
+                    children: [
                       CardTile(
                         child: _WindInfoWidget(
-                          windDirection: 'Southwest',
-                          windSpeed: 20.9,
+                          windDirection: windData.direction,
+                          windSpeed: windData.speed,
                         ),
                       ),
 
-                      CardTile(child: SunInfoWidget()),
+                      CardTile(child: SunInfoWidget(data: sunData)),
                     ],
                   ),
                 ),
 
-                const Flexible(
-                  child: CardTile(child: ExtraWeatherInfoWidget()),
+                Flexible(
+                  child: CardTile(
+                    child: ResponsiveInfoList(data: extraWeatherData),
+                  ),
                 ),
               ],
             ),

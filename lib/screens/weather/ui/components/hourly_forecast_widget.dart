@@ -1,10 +1,26 @@
 import 'package:flutter/material.dart';
-import 'package:weather_app/shared/lib/adjustable_size/index.dart';
 
 import '../../../../shared/layout/card_tile/index.dart';
+import '../../../../shared/utils/adjustable_size/index.dart';
+
+class ForecastDay {
+  ForecastDay({
+    required this.time,
+    required this.icon,
+    required this.tempetarute,
+    required this.windSpeed,
+  });
+
+  final String time;
+  final String icon;
+  final int tempetarute;
+  final double windSpeed;
+}
 
 class HourlyForecastWidget extends StatelessWidget {
-  const HourlyForecastWidget({super.key});
+  const HourlyForecastWidget({super.key, required this.data});
+
+  final List<ForecastDay> data;
 
   @override
   Widget build(BuildContext context) {
@@ -24,8 +40,9 @@ class HourlyForecastWidget extends StatelessWidget {
             scrollDirection: Axis.horizontal,
             separatorBuilder: (context, index) =>
                 SizedBox(width: separatorWidth),
-            itemBuilder: (context, index) => const _ForecastItemTile(),
-            itemCount: 10,
+            itemBuilder: (context, index) =>
+                _ForecastItemTile(day: data[index]),
+            itemCount: data.length,
           ),
         ),
       ],
@@ -34,7 +51,9 @@ class HourlyForecastWidget extends StatelessWidget {
 }
 
 class _ForecastItemTile extends StatelessWidget {
-  const _ForecastItemTile();
+  const _ForecastItemTile({required this.day});
+
+  final ForecastDay day;
 
   @override
   Widget build(BuildContext context) {
@@ -51,13 +70,17 @@ class _ForecastItemTile extends StatelessWidget {
           mainAxisSize: MainAxisSize.min,
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            const _ForecastItemText(text: '15:00', size: 16),
+            _ForecastItemText(text: day.time, size: 16),
             Padding(
               padding: const EdgeInsets.symmetric(vertical: 10),
-              child: Icon(Icons.cloud, color: theme.primaryColorDark, size: 32),
+              // child: Icon(Icons.cloud, color: theme.primaryColorDark, size: 32),
+              child: ConstrainedBox(
+                constraints: const BoxConstraints(maxWidth: 32),
+                child: Image.network(day.icon),
+              ),
             ),
-            const _ForecastItemText(text: '25°', size: 18),
-            const _ForecastItemText(text: '16.7 km/h'),
+            _ForecastItemText(text: '${day.tempetarute}°', size: 18),
+            _ForecastItemText(text: '${day.windSpeed} km/h'),
           ],
         ),
       ),

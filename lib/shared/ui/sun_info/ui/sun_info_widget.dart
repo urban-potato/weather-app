@@ -1,8 +1,18 @@
 import 'package:flutter/material.dart';
-import 'package:weather_app/shared/lib/adjustable_size/index.dart';
+
+import '../../../utils/adjustable_size/index.dart';
+
+class SunData {
+  SunData({required this.sunriseTime, required this.sunsetTime});
+
+  final String sunriseTime;
+  final String sunsetTime;
+}
 
 class SunInfoWidget extends StatelessWidget {
-  const SunInfoWidget({super.key});
+  const SunInfoWidget({super.key, required this.data});
+
+  final SunData data;
 
   @override
   Widget build(BuildContext context) {
@@ -23,8 +33,16 @@ class SunInfoWidget extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  _InfoRow(fontSize: fontSize, time: '04:02', label: 'Sunrize'),
-                  _InfoRow(fontSize: fontSize, time: '21:39', label: 'Sunset'),
+                  _InfoRow(
+                    fontSize: fontSize,
+                    time: data.sunriseTime,
+                    label: 'Sunrise',
+                  ),
+                  _InfoRow(
+                    fontSize: fontSize,
+                    time: data.sunsetTime,
+                    label: 'Sunset',
+                  ),
                 ],
               ),
             ),

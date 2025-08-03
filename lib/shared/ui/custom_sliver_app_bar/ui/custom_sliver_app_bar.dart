@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'package:weather_app/shared/lib/adjustable_size/index.dart';
+import '../../../utils/adjustable_size/index.dart';
 
 class CustomSliverAppBar extends StatelessWidget {
   const CustomSliverAppBar({super.key, required this.locationName});

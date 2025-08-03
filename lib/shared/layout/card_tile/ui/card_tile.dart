@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:weather_app/shared/lib/adjustable_size/index.dart';
+
+import '../../../utils/adjustable_size/index.dart';
 
 class CardTile extends StatelessWidget {
   const CardTile({
@@ -8,20 +9,22 @@ class CardTile extends StatelessWidget {
     this.padding,
     this.width,
     this.height,
-    this.minWidth,
-    this.maxWidth,
-    this.minHeight,
-    this.maxHeight,
+    this.minWidth = 0.0,
+    this.maxWidth = double.infinity,
+    this.minHeight = 0.0,
+    this.maxHeight = double.infinity,
+    this.color,
   });
 
   final Widget child;
   final EdgeInsetsGeometry? padding;
   final double? width;
   final double? height;
-  final double? minWidth;
-  final double? maxWidth;
-  final double? minHeight;
-  final double? maxHeight;
+  final double minWidth;
+  final double maxWidth;
+  final double minHeight;
+  final double maxHeight;
+  final Color? color;
 
   @override
   Widget build(BuildContext context) {
@@ -37,18 +40,21 @@ class CardTile extends StatelessWidget {
         padding ??
         EdgeInsetsGeometry.symmetric(horizontal: hPadding, vertical: vPadding);
 
+    final finalColor =
+        color?.withValues(alpha: 0.8) ?? theme.cardColor.withValues(alpha: 0.8);
+
     return Container(
       constraints: BoxConstraints(
-        minWidth: minWidth ?? 0.0,
-        maxWidth: maxWidth ?? double.infinity,
-        minHeight: minHeight ?? 0.0,
-        maxHeight: maxHeight ?? double.infinity,
+        minWidth: minWidth,
+        maxWidth: maxWidth,
+        minHeight: minHeight,
+        maxHeight: maxHeight,
       ),
       width: width,
       height: height,
       padding: finalPadding,
       decoration: BoxDecoration(
-        color: theme.cardColor.withValues(alpha: 0.8),
+        color: finalColor,
         borderRadius: BorderRadius.circular(tileBorderRadius),
       ),
       child: child,
