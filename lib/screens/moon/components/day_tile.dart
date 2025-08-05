@@ -108,9 +108,17 @@ class _MoonPhaseWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final image = getMoonPhaseAssetPath(moonPhase);
+    ScreenBasedSize.instance.init(context);
 
-    return Center(child: Image.asset(image));
+    final image = getMoonPhaseAssetPath(moonPhase);
+    final imageSize = ScreenBasedSize.instance.scaleByUnit(36);
+
+    return Center(
+      child: ConstrainedBox(
+        constraints: BoxConstraints(maxWidth: imageSize),
+        child: Image.asset(image),
+      ),
+    );
   }
 }
 

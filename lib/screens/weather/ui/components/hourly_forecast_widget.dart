@@ -58,7 +58,6 @@ class _ForecastItemTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     ScreenBasedSize.instance.init(context);
-    final theme = Theme.of(context);
 
     final hPadding = ScreenBasedSize.instance.scaleByUnit(4.8);
     final vPadding = ScreenBasedSize.instance.scaleByUnit(2.4);
@@ -73,7 +72,6 @@ class _ForecastItemTile extends StatelessWidget {
             _ForecastItemText(text: day.time, size: 16),
             Padding(
               padding: const EdgeInsets.symmetric(vertical: 10),
-              // child: Icon(Icons.cloud, color: theme.primaryColorDark, size: 32),
               child: ConstrainedBox(
                 constraints: const BoxConstraints(maxWidth: 32),
                 child: Image.network(day.icon),
