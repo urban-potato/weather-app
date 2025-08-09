@@ -111,11 +111,11 @@ class _WidgetTitle extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     ScreenBasedSize.instance.init(context);
-    final fontSize = ScreenBasedSize.instance.scaleByUnit(6);
+    final theme = Theme.of(context);
 
     return Text(
       'Hourly Forecast',
-      style: TextStyle(fontSize: fontSize, fontWeight: FontWeight.bold),
+      style: theme.textTheme.titleMedium,
       overflow: TextOverflow.clip,
     );
   }
