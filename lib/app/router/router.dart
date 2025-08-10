@@ -7,12 +7,13 @@ class AppRouter extends RootStackRouter {
   @override
   List<AutoRoute> get routes => [
     AutoRoute(
-      page: HomeRoute.page,
+      page: WeatherRouteWrapper.page,
       path: '/',
+      initial: true,
       children: [
-        AutoRoute(page: WeatherRoute.page, path: 'weather'),
+        AutoRoute(page: WeatherRoute.page, path: 'weather', initial: true),
         AutoRoute(page: WeekForecastRoute.page, path: 'weekForecast'),
-        AutoRoute(page: MoonRoute.page, path: 'moon'),
+        AutoRoute(page: MoonInfoRoute.page, path: 'moon'),
       ],
     ),
   ];

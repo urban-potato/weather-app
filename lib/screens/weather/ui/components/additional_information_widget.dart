@@ -1,9 +1,19 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 
+import '../../../../app/router/router.gr.dart';
 import '../../../../shared/layout/card_tile/index.dart';
 import '../../../../shared/ui/responsive_info_list/index.dart';
 import '../../../../shared/ui/sun_info/index.dart';
+import '../../../../shared/ui/widget_title/index.dart';
 import '../../../../shared/utils/adjustable_size/index.dart';
+
+class MoonInfoItemData {
+  MoonInfoItemData({required this.phaseImagePath, required this.phase});
+
+  final String phaseImagePath;
+  final String phase;
+}
 
 class ExtraWeatherInfoData {
   ExtraWeatherInfoData({
@@ -32,17 +42,19 @@ class WindData {
   final String direction;
 }
 
-class AdditionalInformationTile extends StatelessWidget {
-  const AdditionalInformationTile({
+class AdditionalInformationWidget extends StatelessWidget {
+  const AdditionalInformationWidget({
     super.key,
     required this.sunData,
     required this.extraWeatherInfoData,
     required this.windData,
+    required this.moonInfoItem,
   });
 
   final SunData sunData;
   final WindData windData;
   final ExtraWeatherInfoData extraWeatherInfoData;
+  final MoonInfoItemData moonInfoItem;
 
   @override
   Widget build(BuildContext context) {
@@ -54,17 +66,19 @@ class AdditionalInformationTile extends StatelessWidget {
     final extraWeatherData = <String, String>{
       'Feels like': '${extraWeatherInfoData.feelsLike}°',
       'Humidity': '${extraWeatherInfoData.humidity}%',
-      'Chance of rain': '${extraWeatherInfoData.chanceOfRain}%',
-      'Chance of snow': '${extraWeatherInfoData.chanceOfSnow}%',
       'Pressure': '${extraWeatherInfoData.pressure} mbar',
       'Visibility': '${extraWeatherInfoData.visibility} km',
-      'UV': extraWeatherInfoData.uv.toString(),
+    };
+
+    final precipitationData = <String, String>{
+      'Chance of rain': '${extraWeatherInfoData.chanceOfRain}%',
+      'Chance of snow': '${extraWeatherInfoData.chanceOfSnow}%',
     };
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        const _WidgetTitle(),
+        const WidgetTitle(title: 'Additional Information'),
 
         Center(
           child: ConstrainedBox(
@@ -86,13 +100,22 @@ class AdditionalInformationTile extends StatelessWidget {
                       ),
 
                       CardTile(child: SunInfoWidget(data: sunData)),
+                      CardTile(child: _MoonInfoWidget(item: moonInfoItem)),
                     ],
                   ),
                 ),
 
                 Flexible(
-                  child: CardTile(
-                    child: ResponsiveInfoList(data: extraWeatherData),
+                  child: Column(
+                    spacing: tilesSpacing,
+                    children: [
+                      CardTile(
+                        child: ResponsiveInfoList(data: extraWeatherData),
+                      ),
+                      CardTile(
+                        child: ResponsiveInfoList(data: precipitationData),
+                      ),
+                    ],
                   ),
                 ),
               ],
@@ -104,18 +127,69 @@ class AdditionalInformationTile extends StatelessWidget {
   }
 }
 
-class _WidgetTitle extends StatelessWidget {
-  const _WidgetTitle();
+class _MoonInfoWidget extends StatelessWidget {
+  const _MoonInfoWidget({required this.item});
+
+  final MoonInfoItemData item;
 
   @override
   Widget build(BuildContext context) {
     ScreenBasedSize.instance.init(context);
-    final theme = Theme.of(context);
 
-    return Text(
-      'Additional Information',
-      style: theme.textTheme.titleMedium,
-      overflow: TextOverflow.clip,
+    return GestureDetector(
+      onTap: () => context.router.push(const MoonInfoRoute()),
+
+      child: LayoutBuilder(
+        builder: (BuildContext context, BoxConstraints constraints) {
+          final constraintsMaxWidth = constraints.maxWidth;
+          final fontSize = AdjustableSize.scaleByUnit(
+            constraintsMaxWidth,
+            10.5,
+          );
+          final moreInfoFontSize = ScreenBasedSize.instance.scaleByUnit(3.5);
+          final iconSize = AdjustableSize.scaleByUnit(constraintsMaxWidth, 20);
+          final spacing = AdjustableSize.scaleByUnit(constraintsMaxWidth, 1.9);
+
+          return Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Row(
+                spacing: spacing,
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Flexible(
+                    flex: 3,
+                    child: Text(
+                      item.phase,
+                      style: TextStyle(
+                        fontWeight: FontWeight.w700,
+                        fontSize: fontSize,
+                        overflow: TextOverflow.clip,
+                      ),
+                    ),
+                  ),
+
+                  Flexible(
+                    flex: 1,
+                    child: ConstrainedBox(
+                      constraints: BoxConstraints(maxWidth: iconSize),
+                      child: Image.asset(item.phaseImagePath),
+                    ),
+                  ),
+                ],
+              ),
+              Text(
+                'More info...',
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                  fontSize: moreInfoFontSize,
+                  color: Colors.grey[700],
+                ),
+              ),
+            ],
+          );
+        },
+      ),
     );
   }
 }

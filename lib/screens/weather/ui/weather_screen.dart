@@ -1,13 +1,15 @@
 import 'package:auto_route/annotations.dart';
 import 'package:flutter/material.dart';
 
-import '../../../shared/ui/custom_sliver_app_bar/index.dart';
-
 import '../../../shared/ui/sun_info/index.dart';
 import '../../../shared/utils/adjustable_size/index.dart';
-import 'components/additional_information_tile.dart';
+import '../../../shared/utils/get_moon_phase_image_path/index.dart';
+import 'components/additional_information_widget.dart';
 import 'components/hourly_forecast_widget.dart';
 import '../../../shared/ui/main_weather/index.dart';
+import 'components/moon_info_preview_widget.dart';
+import 'components/weather_sliver_app_bar.dart';
+import 'components/weekly_forecast_preview_widget.dart';
 
 @RoutePage()
 class WeatherScreen extends StatelessWidget {
@@ -24,6 +26,7 @@ class WeatherScreen extends StatelessWidget {
       minTemp: 14,
       temperature: 16,
       aqi: 45,
+      uv: 2,
     );
 
     final extraInfoMockData = ExtraWeatherInfoData(
@@ -37,10 +40,7 @@ class WeatherScreen extends StatelessWidget {
     );
 
     final windMockData = WindData(direction: 'West', speed: 17.6);
-    final sunMockData = SunData(
-      sunriseTime: '05:28 AM',
-      sunsetTime: '08:45 PM',
-    );
+    final sunMockData = SunData(sunriseTime: '05:28', sunsetTime: '20:45');
 
     final hourlyForecastMockData = [
       ForecastDay(
@@ -87,57 +87,137 @@ class WeatherScreen extends StatelessWidget {
       ),
     ];
 
+    final weekForecastPreviewMockData = [
+      WeeklyForecastPreviewItem(
+        date: 'Tomorrow',
+        condition: WeatherCondition(
+          text: 'Patchy rain nearby',
+          icon: 'https://cdn.weatherapi.com/weather/64x64/day/116.png',
+        ),
+        maxTemp: 20,
+        minTemp: 14,
+      ),
+      WeeklyForecastPreviewItem(
+        date: 'Mon',
+        condition: WeatherCondition(
+          text: 'Rain',
+          icon: 'https://cdn.weatherapi.com/weather/64x64/day/353.png',
+        ),
+        maxTemp: 16,
+        minTemp: 12,
+      ),
+      WeeklyForecastPreviewItem(
+        date: 'Tue',
+        condition: WeatherCondition(
+          text: 'Sunny',
+          icon: 'https://cdn.weatherapi.com/weather/64x64/day/113.png',
+        ),
+        maxTemp: 22,
+        minTemp: 16,
+      ),
+    ];
+
+    final moonInfoPreviewMockData = [
+      MoonInfoItem(
+        date: 'Today',
+        phase: 'First Quarter',
+        phaseImagePath: getMoonPhaseImagePath('First Quarter'),
+      ),
+      MoonInfoItem(
+        date: 'Tomorrow',
+        phase: 'First Quarter',
+        phaseImagePath: getMoonPhaseImagePath('First Quarter'),
+      ),
+      MoonInfoItem(
+        date: 'Mon',
+        phase: 'Waxing Gibbous',
+        phaseImagePath: getMoonPhaseImagePath('Waxing Gibbous'),
+      ),
+    ];
+
+    final moonInfoItemMockData = MoonInfoItemData(
+      phase: 'First Quarter',
+      phaseImagePath: getMoonPhaseImagePath('First Quarter'),
+    );
+
     ScreenBasedSize.instance.init(context);
 
     final hPadding = ScreenBasedSize.instance.getSidesPadding();
     final vPadding = ScreenBasedSize.instance.scaleByRatio(5);
     final mainWeatherWidgetMaxWidth = ScreenBasedSize.instance.scaleByUnit(49);
 
-    return CustomScrollView(
-      slivers: [
-        const CustomSliverAppBar(locationName: 'Saint Petersburg'),
-        SliverPadding(
-          padding: EdgeInsets.symmetric(
-            horizontal: hPadding,
-            vertical: vPadding,
-          ),
-          sliver: SliverToBoxAdapter(
-            child: Center(
-              child: ConstrainedBox(
-                constraints: BoxConstraints(
-                  maxWidth: mainWeatherWidgetMaxWidth,
-                ),
+    return SafeArea(
+      child: Scaffold(
+        body: CustomScrollView(
+          slivers: [
+            const WeatherSliverAppBar(locationName: 'Saint Petersburg'),
 
-                child: MainWeatherWidget(
-                  data: mainWeatherMockData,
-                  currentTemperatureSize: 1.5,
+            SliverPadding(
+              padding: EdgeInsets.symmetric(
+                horizontal: hPadding,
+                vertical: vPadding,
+              ),
+              sliver: SliverToBoxAdapter(
+                child: Center(
+                  child: ConstrainedBox(
+                    constraints: BoxConstraints(
+                      maxWidth: mainWeatherWidgetMaxWidth,
+                    ),
+
+                    child: MainWeatherWidget(
+                      data: mainWeatherMockData,
+                      currentTemperatureSize: 1.5,
+                    ),
+                  ),
                 ),
               ),
             ),
-          ),
-        ),
 
-        SliverPadding(
-          padding: EdgeInsets.symmetric(horizontal: hPadding),
-          sliver: SliverToBoxAdapter(
-            child: HourlyForecastWidget(data: hourlyForecastMockData),
-          ),
-        ),
-
-        SliverPadding(
-          padding: EdgeInsets.symmetric(
-            horizontal: hPadding,
-            vertical: hPadding,
-          ),
-          sliver: SliverToBoxAdapter(
-            child: AdditionalInformationTile(
-              sunData: sunMockData,
-              windData: windMockData,
-              extraWeatherInfoData: extraInfoMockData,
+            SliverPadding(
+              padding: EdgeInsets.symmetric(
+                horizontal: hPadding,
+              ).copyWith(bottom: hPadding),
+              sliver: SliverToBoxAdapter(
+                child: WeekForecastPreviewWidget(
+                  data: weekForecastPreviewMockData,
+                ),
+              ),
             ),
-          ),
+
+            SliverPadding(
+              padding: EdgeInsets.symmetric(
+                horizontal: hPadding,
+              ).copyWith(bottom: hPadding),
+              sliver: SliverToBoxAdapter(
+                child: HourlyForecastWidget(data: hourlyForecastMockData),
+              ),
+            ),
+
+            SliverPadding(
+              padding: EdgeInsets.symmetric(
+                horizontal: hPadding,
+              ).copyWith(bottom: hPadding),
+              sliver: SliverToBoxAdapter(
+                child: AdditionalInformationWidget(
+                  sunData: sunMockData,
+                  windData: windMockData,
+                  extraWeatherInfoData: extraInfoMockData,
+                  moonInfoItem: moonInfoItemMockData,
+                ),
+              ),
+            ),
+
+            // SliverPadding(
+            //   padding: EdgeInsets.symmetric(
+            //     horizontal: hPadding,
+            //   ).copyWith(bottom: hPadding),
+            //   sliver: SliverToBoxAdapter(
+            //     child: MoonInfoPreviewWidget(data: moonInfoPreviewMockData),
+            //   ),
+            // ),
+          ],
         ),
-      ],
+      ),
     );
   }
 }

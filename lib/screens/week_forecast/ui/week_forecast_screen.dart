@@ -15,7 +15,7 @@ class WeekForecastScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final weekForecastMockData = [
       WeatherForecastData(
-        date: '03.07',
+        date: 'Today',
         mainWeatherWidgetData: MainWeatherWidgetData(
           temperature: 19,
           condition: WeatherCondition(
@@ -25,7 +25,7 @@ class WeekForecastScreen extends StatelessWidget {
           maxTemp: 23,
           minTemp: 14,
         ),
-        sunData: SunData(sunriseTime: '05:28 AM', sunsetTime: '08:45 PM'),
+        sunData: SunData(sunriseTime: '05:28', sunsetTime: '20:45'),
         extraWeatherInfoData: ExtraWeatherInfoData(
           humidity: 68,
           chanceOfRain: 91,
@@ -36,7 +36,7 @@ class WeekForecastScreen extends StatelessWidget {
         ),
       ),
       WeatherForecastData(
-        date: '04.07',
+        date: 'Tomorrow',
         mainWeatherWidgetData: MainWeatherWidgetData(
           temperature: 19,
           condition: WeatherCondition(
@@ -53,7 +53,7 @@ class WeekForecastScreen extends StatelessWidget {
           chanceOfSnow: 0,
           windSpeed: 24.5,
           visibility: 10,
-          uv: 2,
+          uv: 3,
         ),
       ),
       WeatherForecastData(
@@ -103,25 +103,28 @@ class WeekForecastScreen extends StatelessWidget {
     ScreenBasedSize.instance.init(context);
 
     final hPadding = ScreenBasedSize.instance.getSidesPadding();
-    final separatorHeight = ScreenBasedSize.instance.scaleByUnit(6.5);
+    final separatorHeight = ScreenBasedSize.instance.scaleByUnit(4);
 
-    return CustomScrollView(
-      slivers: [
-        const CustomSliverAppBar(locationName: 'Saint Petersburg'),
-
-        SliverPadding(
-          padding: EdgeInsets.symmetric(
-            horizontal: hPadding,
-          ).copyWith(bottom: hPadding),
-          sliver: SliverList.separated(
-            itemBuilder: (context, index) =>
-                DayTile(data: weekForecastMockData[index]),
-            separatorBuilder: (context, index) =>
-                SizedBox(height: separatorHeight),
-            itemCount: weekForecastMockData.length,
-          ),
+    return SafeArea(
+      child: Scaffold(
+        body: CustomScrollView(
+          slivers: [
+            const CustomSliverAppBar(title: 'Week Forecast'),
+            SliverPadding(
+              padding: EdgeInsets.symmetric(
+                horizontal: hPadding,
+              ).copyWith(bottom: hPadding),
+              sliver: SliverList.separated(
+                itemBuilder: (context, index) =>
+                    DayTile(data: weekForecastMockData[index]),
+                separatorBuilder: (context, index) =>
+                    SizedBox(height: separatorHeight),
+                itemCount: weekForecastMockData.length,
+              ),
+            ),
+          ],
         ),
-      ],
+      ),
     );
   }
 }

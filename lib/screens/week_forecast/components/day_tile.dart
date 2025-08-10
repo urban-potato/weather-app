@@ -4,6 +4,7 @@ import '../../../shared/layout/card_tile/index.dart';
 import '../../../shared/ui/responsive_info_list/index.dart';
 import '../../../shared/ui/main_weather/index.dart';
 import '../../../shared/ui/sun_info/index.dart';
+import '../../../shared/ui/widget_title/index.dart';
 import '../../../shared/utils/adjustable_size/index.dart';
 
 class WeatherForecastData {
@@ -48,27 +49,24 @@ class DayTile extends StatelessWidget {
     ScreenBasedSize.instance.init(context);
 
     final contentMaxWidth = ScreenBasedSize.instance.getContentMaxWidth();
-    final tilesSpacing = ScreenBasedSize.instance.scaleByUnit(2.7);
 
     final MainWeatherWidgetData mainWeatherWidgetData =
         data.mainWeatherWidgetData;
     final SunData sunData = data.sunData;
     final ExtraWeatherInfoData extraWeatherInfoData = data.extraWeatherInfoData;
 
-    return Center(
-      child: Container(
-        constraints: BoxConstraints(maxWidth: contentMaxWidth),
-        child: Column(
-          spacing: tilesSpacing,
-          children: [
-            _DateTile(date: data.date),
-            _InfoWidgetsRow(
-              mainWeatherWidgetData: mainWeatherWidgetData,
-              sunData: sunData,
-              extraWeatherInfoData: extraWeatherInfoData,
-            ),
-          ],
-        ),
+    return ConstrainedBox(
+      constraints: BoxConstraints(maxWidth: contentMaxWidth),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          WidgetTitle(title: data.date),
+          _InfoWidgetsRow(
+            mainWeatherWidgetData: mainWeatherWidgetData,
+            sunData: sunData,
+            extraWeatherInfoData: extraWeatherInfoData,
+          ),
+        ],
       ),
     );
   }
@@ -90,25 +88,25 @@ class _InfoWidgetsRow extends StatelessWidget {
     ScreenBasedSize.instance.init(context);
 
     final contentMaxWidth = ScreenBasedSize.instance.getContentMaxWidth();
-    final tilesSpacing = contentMaxWidth / 2 / 17;
+    final spacing = contentMaxWidth / 2 / 17;
 
     final extraWeatherData = <String, String>{
       'Humidity': '${extraWeatherInfoData.humidity}%',
-      'Chance of rain': '${extraWeatherInfoData.chanceOfRain}%',
-      'Chance of snow': '${extraWeatherInfoData.chanceOfSnow}%',
       'Wind': '${extraWeatherInfoData.windSpeed} km/h',
       'Visibility': '${extraWeatherInfoData.visibility} km',
-      'UV': extraWeatherInfoData.uv.toString(),
+      'Chance of rain': '${extraWeatherInfoData.chanceOfRain}%',
+      'Chance of snow': '${extraWeatherInfoData.chanceOfSnow}%',
+      // 'UV': extraWeatherInfoData.uv.toString(),
     };
 
     return Row(
-      spacing: tilesSpacing,
+      spacing: spacing,
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Flexible(
           child: Column(
-            spacing: tilesSpacing,
+            spacing: spacing,
             children: [
               CardTile(
                 child: MainWeatherWidget(
@@ -122,37 +120,46 @@ class _InfoWidgetsRow extends StatelessWidget {
         ),
 
         Flexible(
-          child: CardTile(child: ResponsiveInfoList(data: extraWeatherData)),
+          child: Column(
+            spacing: spacing,
+            children: [
+              CardTile(child: ResponsiveInfoList(data: extraWeatherData)),
+              _UVInfoTile(uv: extraWeatherInfoData.uv),
+            ],
+          ),
         ),
       ],
     );
   }
 }
 
-class _DateTile extends StatelessWidget {
-  const _DateTile({required this.date});
+class _UVInfoTile extends StatelessWidget {
+  const _UVInfoTile({required this.uv});
 
-  final String date;
+  final int uv;
 
   @override
   Widget build(BuildContext context) {
-    ScreenBasedSize.instance.init(context);
+    final uvData = <String, String>{'UV': uv.toString()};
 
-    final horizontalPadding = ScreenBasedSize.instance.scaleByUnit(1);
-    final verticalPadding = ScreenBasedSize.instance.scaleByUnit(2);
-    final fontSize = ScreenBasedSize.instance.scaleByUnit(3.2);
+    final tileCOlor = uv < 3
+        ? Colors.green
+        : uv < 5
+        ? Colors.amber
+        : uv < 7
+        ? Colors.orange
+        : uv < 10
+        ? Colors.red
+        : Colors.black;
 
     return CardTile(
-      width: double.infinity,
-      padding: EdgeInsets.symmetric(
-        vertical: verticalPadding,
-        horizontal: horizontalPadding,
-      ),
-      child: Text(
-        date,
-        style: TextStyle(fontSize: fontSize, fontWeight: FontWeight.bold),
-        textAlign: TextAlign.center,
-        overflow: TextOverflow.clip,
+      color: tileCOlor,
+      child: ResponsiveInfoList(
+        data: uvData,
+        withDivider: false,
+        textColor: Colors.white,
+        labelFontWeight: FontWeight.bold,
+        valueFontWeight: FontWeight.bold,
       ),
     );
   }

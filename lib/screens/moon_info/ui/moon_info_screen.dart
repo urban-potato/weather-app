@@ -6,21 +6,21 @@ import '../../../shared/utils/adjustable_size/index.dart';
 import '../components/day_tile.dart';
 
 @RoutePage()
-class MoonScreen extends StatelessWidget {
-  const MoonScreen({super.key});
+class MoonInfoScreen extends StatelessWidget {
+  const MoonInfoScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
     final moonData = <MoonData>[
       MoonData(
-        date: '03.07',
+        date: 'Today',
         moonPhase: 'New Moon',
         moonrise: '11:59 AM',
         moonset: '10:41 PM',
         moonIllumination: 26,
       ),
       MoonData(
-        date: '04.07',
+        date: 'Tomorrow',
         moonPhase: 'Waxing Crescent',
         moonrise: '11:59 AM',
         moonset: '10:41 PM',
@@ -66,24 +66,27 @@ class MoonScreen extends StatelessWidget {
     ScreenBasedSize.instance.init(context);
 
     final hPadding = ScreenBasedSize.instance.getSidesPadding();
-    final separatorHeight = ScreenBasedSize.instance.scaleByUnit(5);
+    final separatorHeight = ScreenBasedSize.instance.scaleByUnit(4);
 
-    return CustomScrollView(
-      slivers: [
-        const CustomSliverAppBar(locationName: 'Saint Petersburg'),
-
-        SliverPadding(
-          padding: EdgeInsets.symmetric(
-            horizontal: hPadding,
-          ).copyWith(bottom: hPadding),
-          sliver: SliverList.separated(
-            itemBuilder: (context, index) => DayTile(data: moonData[index]),
-            separatorBuilder: (context, index) =>
-                SizedBox(height: separatorHeight),
-            itemCount: moonData.length,
-          ),
+    return SafeArea(
+      child: Scaffold(
+        body: CustomScrollView(
+          slivers: [
+            const CustomSliverAppBar(title: 'Moon Info'),
+            SliverPadding(
+              padding: EdgeInsets.symmetric(
+                horizontal: hPadding,
+              ).copyWith(bottom: hPadding),
+              sliver: SliverList.separated(
+                itemBuilder: (context, index) => DayTile(data: moonData[index]),
+                separatorBuilder: (context, index) =>
+                    SizedBox(height: separatorHeight),
+                itemCount: moonData.length,
+              ),
+            ),
+          ],
         ),
-      ],
+      ),
     );
   }
 }

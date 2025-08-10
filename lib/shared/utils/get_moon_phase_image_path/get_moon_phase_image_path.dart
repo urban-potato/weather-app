@@ -1,4 +1,4 @@
-import '../../../shared/resources/resources.dart';
+import '../../resources/resources.dart';
 
 enum MoonPhase {
   newMoon,
@@ -35,7 +35,7 @@ MoonPhase parseMoonPhase(String moonPhase) {
   }
 }
 
-String getMoonPhaseAssetPath(String moonPhase) {
+String getMoonPhaseImagePath(String moonPhase) {
   final moonPhaseParsed = parseMoonPhase(moonPhase);
 
   final moonImage = switch (moonPhaseParsed) {

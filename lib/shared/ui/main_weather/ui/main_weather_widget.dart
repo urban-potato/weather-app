@@ -10,6 +10,7 @@ class MainWeatherWidgetData {
     required this.condition,
     required this.maxTemp,
     required this.minTemp,
+    this.uv,
     this.aqi,
   });
 
@@ -17,6 +18,7 @@ class MainWeatherWidgetData {
   final WeatherCondition condition;
   final int maxTemp;
   final int minTemp;
+  final int? uv;
   final int? aqi;
 }
 
@@ -54,21 +56,86 @@ class MainWeatherWidget extends StatelessWidget {
           spacing: spacing,
           children: [
             _CurrentConditionWidget(condition: data.condition),
+            _DailyTemperatureRangeWidget(
+              maxTemp: data.maxTemp,
+              minTemp: data.minTemp,
+            ),
 
-            if (data.aqi != null)
-              _MinMaxTemperatureWithAQI(
+            if (data.aqi != null && data.uv != null)
+              _UVAndAQIInfoRow(
+                maxTemp: data.maxTemp,
+                minTemp: data.minTemp,
                 aqi: data.aqi!,
-                maxTemp: data.maxTemp,
-                minTemp: data.minTemp,
+                uv: data.uv!,
               ),
-            if (data.aqi == null)
-              _DailyTemperatureRangeWidget(
-                maxTemp: data.maxTemp,
-                minTemp: data.minTemp,
-              ),
+
+            if (data.uv != null && data.aqi == null) _UVInfoTile(uv: data.uv!),
           ],
         ),
       ],
+    );
+  }
+}
+
+class _UVInfoTile extends StatelessWidget {
+  const _UVInfoTile({required this.uv});
+
+  final int uv;
+
+  @override
+  Widget build(BuildContext context) {
+    final tileCOlor = uv < 3
+        ? Colors.green
+        : uv < 5
+        ? Colors.amber
+        : uv < 7
+        ? Colors.orange
+        : uv < 10
+        ? Colors.red
+        : Colors.black;
+
+    return _TileWrapper(
+      color: tileCOlor,
+      child: ScaledChildBox(
+        height: 6,
+        child: Row(
+          mainAxisSize: MainAxisSize.min,
+          mainAxisAlignment: MainAxisAlignment.center,
+          spacing: 8,
+          children: [
+            Transform.rotate(
+              angle: 90 * 3.14 / 180,
+              child: const Icon(
+                Icons.double_arrow_rounded,
+                color: Colors.white,
+              ),
+            ),
+
+            Row(
+              spacing: 6,
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                const Text(
+                  'UV',
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 16,
+                    fontWeight: FontWeight.w600,
+                  ),
+                ),
+                Text(
+                  uv.toString(),
+                  style: const TextStyle(
+                    color: Colors.white,
+                    fontSize: 16,
+                    fontWeight: FontWeight.w600,
+                  ),
+                ),
+              ],
+            ),
+          ],
+        ),
+      ),
     );
   }
 }
@@ -97,7 +164,7 @@ class _AQIInfoTile extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           spacing: 8,
           children: [
-            const Icon(Icons.local_florist, color: Colors.white),
+            const Icon(Icons.cloud, color: Colors.white),
             Row(
               spacing: 6,
               mainAxisSize: MainAxisSize.min,
@@ -127,16 +194,18 @@ class _AQIInfoTile extends StatelessWidget {
   }
 }
 
-class _MinMaxTemperatureWithAQI extends StatelessWidget {
-  const _MinMaxTemperatureWithAQI({
+class _UVAndAQIInfoRow extends StatelessWidget {
+  const _UVAndAQIInfoRow({
     required this.maxTemp,
     required this.minTemp,
     required this.aqi,
+    required this.uv,
   });
 
   final int maxTemp;
   final int minTemp;
   final int aqi;
+  final int uv;
 
   @override
   Widget build(BuildContext context) {
@@ -147,14 +216,13 @@ class _MinMaxTemperatureWithAQI extends StatelessWidget {
       spacing: spacing,
       children: [
         Flexible(
-          child: _TileWrapper(
-            child: _DailyTemperatureRangeWidget(
-              maxTemp: maxTemp,
-              minTemp: minTemp,
-            ),
-          ),
+          fit: FlexFit.tight,
+          child: _UVInfoTile(uv: uv),
         ),
-        Flexible(child: _AQIInfoTile(aqi: aqi)),
+        Flexible(
+          fit: FlexFit.tight,
+          child: _AQIInfoTile(aqi: aqi),
+        ),
       ],
     );
   }
@@ -197,7 +265,6 @@ class _DailyTemperatureRangeWidget extends StatelessWidget {
       child: Row(
         mainAxisSize: MainAxisSize.min,
         spacing: 8,
-        mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Flexible(
             child: _TemperatureValueText(temperature: maxTemp.toString()),
@@ -222,7 +289,6 @@ class _TemperatureValueText extends StatelessWidget {
     return Text(
       '$temperature°',
       style: const TextStyle(
-        color: Colors.black,
         fontWeight: FontWeight.bold,
         height: 1.0,
         overflow: TextOverflow.clip,

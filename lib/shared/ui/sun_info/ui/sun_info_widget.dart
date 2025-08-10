@@ -82,6 +82,7 @@ class _InfoRow extends StatelessWidget {
         ),
         children: [
           TextSpan(
+            // text: '\n$label',
             text: ' $label',
             style: const TextStyle(fontWeight: FontWeight.w400),
           ),

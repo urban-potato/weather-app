@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../../../shared/layout/card_tile/index.dart';
+import '../../../../shared/ui/widget_title/index.dart';
 import '../../../../shared/utils/adjustable_size/index.dart';
 
 class ForecastDay {
@@ -32,7 +33,7 @@ class HourlyForecastWidget extends StatelessWidget {
       mainAxisSize: MainAxisSize.min,
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        const _WidgetTitle(),
+        const WidgetTitle(title: 'Hourly Forecast'),
 
         SizedBox(
           height: scrollableAreaHeight,
@@ -101,22 +102,6 @@ class _ForecastItemText extends StatelessWidget {
         overflow: TextOverflow.clip,
         fontSize: size,
       ),
-    );
-  }
-}
-
-class _WidgetTitle extends StatelessWidget {
-  const _WidgetTitle();
-
-  @override
-  Widget build(BuildContext context) {
-    ScreenBasedSize.instance.init(context);
-    final theme = Theme.of(context);
-
-    return Text(
-      'Hourly Forecast',
-      style: theme.textTheme.titleMedium,
-      overflow: TextOverflow.clip,
     );
   }
 }

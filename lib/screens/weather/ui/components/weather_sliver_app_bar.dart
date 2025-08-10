@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 
-import '../../../utils/adjustable_size/index.dart';
+import '../../../../shared/utils/adjustable_size/index.dart';
 
-class CustomSliverAppBar extends StatelessWidget {
-  const CustomSliverAppBar({super.key, required this.title});
+class WeatherSliverAppBar extends StatelessWidget {
+  const WeatherSliverAppBar({super.key, required this.locationName});
 
-  final String title;
+  final String locationName;
 
   @override
   Widget build(BuildContext context) {
@@ -19,27 +19,27 @@ class CustomSliverAppBar extends StatelessWidget {
       pinned: true,
       toolbarHeight: toolbarHeight,
       title: Text(
-        title,
+        locationName,
         style: TextStyle(fontWeight: FontWeight.w600, fontSize: contentSize),
       ),
       centerTitle: true,
       backgroundColor: theme.scaffoldBackgroundColor,
       surfaceTintColor: theme.scaffoldBackgroundColor,
-      // actions: [
-      //   IconButton(
-      //     iconSize: contentSize,
-      //     onPressed: () {},
-      //     icon: const Icon(Icons.menu),
-      //   ),
-      // ],
-      // leading: Align(
-      //   alignment: Alignment.centerLeft,
-      //   child: IconButton(
-      //     iconSize: contentSize,
-      //     onPressed: () {},
-      //     icon: const Icon(Icons.add),
-      //   ),
-      // ),
+      actions: [
+        IconButton(
+          iconSize: contentSize,
+          onPressed: () {},
+          icon: const Icon(Icons.menu),
+        ),
+      ],
+      leading: Align(
+        alignment: Alignment.centerLeft,
+        child: IconButton(
+          iconSize: contentSize,
+          onPressed: () {},
+          icon: const Icon(Icons.add),
+        ),
+      ),
       leadingWidth: toolbarHeight,
     );
   }
