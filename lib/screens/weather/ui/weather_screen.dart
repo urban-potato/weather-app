@@ -7,7 +7,6 @@ import '../../../shared/utils/get_moon_phase_image_path/index.dart';
 import 'components/additional_information_widget.dart';
 import 'components/hourly_forecast_widget.dart';
 import '../../../shared/ui/main_weather/index.dart';
-import 'components/moon_info_preview_widget.dart';
 import 'components/weather_sliver_app_bar.dart';
 import 'components/weekly_forecast_preview_widget.dart';
 
@@ -117,24 +116,6 @@ class WeatherScreen extends StatelessWidget {
       ),
     ];
 
-    final moonInfoPreviewMockData = [
-      MoonInfoItem(
-        date: 'Today',
-        phase: 'First Quarter',
-        phaseImagePath: getMoonPhaseImagePath('First Quarter'),
-      ),
-      MoonInfoItem(
-        date: 'Tomorrow',
-        phase: 'First Quarter',
-        phaseImagePath: getMoonPhaseImagePath('First Quarter'),
-      ),
-      MoonInfoItem(
-        date: 'Mon',
-        phase: 'Waxing Gibbous',
-        phaseImagePath: getMoonPhaseImagePath('Waxing Gibbous'),
-      ),
-    ];
-
     final moonInfoItemMockData = MoonInfoItemData(
       phase: 'First Quarter',
       phaseImagePath: getMoonPhaseImagePath('First Quarter'),
@@ -206,15 +187,6 @@ class WeatherScreen extends StatelessWidget {
                 ),
               ),
             ),
-
-            // SliverPadding(
-            //   padding: EdgeInsets.symmetric(
-            //     horizontal: hPadding,
-            //   ).copyWith(bottom: hPadding),
-            //   sliver: SliverToBoxAdapter(
-            //     child: MoonInfoPreviewWidget(data: moonInfoPreviewMockData),
-            //   ),
-            // ),
           ],
         ),
       ),
