@@ -8,13 +8,19 @@ class TTextTheme {
   static TextTheme lightTextTheme(BuildContext context) {
     ScreenBasedSize.instance.init(context);
 
-    final fontSize = ScreenBasedSize.instance.scaleByUnit(5.2);
+    final titleMediumFontSize = ScreenBasedSize.instance.scaleByUnit(5.2);
+    final labelMediumFontSize = ScreenBasedSize.instance.scaleByUnit(4);
 
     return TextTheme(
       titleMedium: const TextStyle().copyWith(
-        fontSize: fontSize,
+        fontSize: titleMediumFontSize,
         fontWeight: FontWeight.bold,
         color: Colors.black,
+      ),
+      labelMedium: const TextStyle().copyWith(
+        fontSize: labelMediumFontSize,
+        fontWeight: FontWeight.w600,
+        color: Colors.white,
       ),
     );
   }
@@ -22,12 +28,18 @@ class TTextTheme {
   static TextTheme darkTextTheme(BuildContext context) {
     ScreenBasedSize.instance.init(context);
 
-    final fontSize = ScreenBasedSize.instance.scaleByUnit(5.2);
+    final titleMediumFontSize = ScreenBasedSize.instance.scaleByUnit(5.2);
+    final labelMediumFontSize = ScreenBasedSize.instance.scaleByUnit(4);
 
     return TextTheme(
       titleMedium: const TextStyle().copyWith(
-        fontSize: fontSize,
+        fontSize: titleMediumFontSize,
         fontWeight: FontWeight.bold,
+        color: Colors.white,
+      ),
+      labelMedium: const TextStyle().copyWith(
+        fontSize: labelMediumFontSize,
+        fontWeight: FontWeight.w600,
         color: Colors.white,
       ),
     );

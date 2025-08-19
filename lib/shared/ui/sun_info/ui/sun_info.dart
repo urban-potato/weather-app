@@ -9,8 +9,8 @@ class SunData {
   final String sunsetTime;
 }
 
-class SunInfoWidget extends StatelessWidget {
-  const SunInfoWidget({super.key, required this.data});
+class SunInfo extends StatelessWidget {
+  const SunInfo({super.key, required this.data});
 
   final SunData data;
 
@@ -19,9 +19,12 @@ class SunInfoWidget extends StatelessWidget {
     return LayoutBuilder(
       builder: (BuildContext context, BoxConstraints constraints) {
         final constraintsMaxWidth = constraints.maxWidth;
-        final fontSize = AdjustableSize.scaleByUnit(constraintsMaxWidth, 10.5);
+        // final fontSize = AdjustableSize.scaleByUnit(constraintsMaxWidth, 10.5);
+        final fontSize = AdjustableSize.scaleByUnit(constraintsMaxWidth, 9);
         final iconize = AdjustableSize.scaleByUnit(constraintsMaxWidth, 20);
         final spacing = AdjustableSize.scaleByUnit(constraintsMaxWidth, 1.9);
+
+        // print('fontSize 2 = $fontSize');
 
         return Row(
           spacing: spacing,

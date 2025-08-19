@@ -18,15 +18,58 @@ class ForecastDay {
   final double windSpeed;
 }
 
-class HourlyForecastWidget extends StatelessWidget {
-  const HourlyForecastWidget({super.key, required this.data});
-
-  final List<ForecastDay> data;
+class HourlyForecast extends StatelessWidget {
+  const HourlyForecast({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final data = [
+      ForecastDay(
+        time: '16:00',
+        tempetarute: 16,
+        windSpeed: 19.1,
+        icon: 'https://cdn.weatherapi.com/weather/64x64/day/353.png',
+      ),
+      ForecastDay(
+        time: '17:00',
+        tempetarute: 22,
+        windSpeed: 16.9,
+        icon: 'https://cdn.weatherapi.com/weather/64x64/day/176.png',
+      ),
+      ForecastDay(
+        time: '18:00',
+        tempetarute: 22,
+        windSpeed: 15.5,
+        icon: 'https://cdn.weatherapi.com/weather/64x64/day/113.png',
+      ),
+      ForecastDay(
+        time: '19:00',
+        tempetarute: 21,
+        windSpeed: 12.2,
+        icon: 'https://cdn.weatherapi.com/weather/64x64/day/116.png',
+      ),
+      ForecastDay(
+        time: '20:00',
+        tempetarute: 20,
+        windSpeed: 11.2,
+        icon: 'https://cdn.weatherapi.com/weather/64x64/day/116.png',
+      ),
+      ForecastDay(
+        time: '21:00',
+        tempetarute: 20,
+        windSpeed: 13.7,
+        icon: 'https://cdn.weatherapi.com/weather/64x64/night/116.png',
+      ),
+      ForecastDay(
+        time: '22:00',
+        tempetarute: 20,
+        windSpeed: 11.5,
+        icon: 'https://cdn.weatherapi.com/weather/64x64/night/116.png',
+      ),
+    ];
+
     ScreenBasedSize.instance.init(context);
-    final scrollableAreaHeight = ScreenBasedSize.instance.scaleByUnit(35.5);
+    final scrollableAreaHeight = ScreenBasedSize.instance.scaleByUnit(33);
     final separatorWidth = ScreenBasedSize.instance.scaleByUnit(2.4);
 
     return Column(
@@ -70,7 +113,7 @@ class _ForecastItemTile extends StatelessWidget {
           mainAxisSize: MainAxisSize.min,
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            _ForecastItemText(text: day.time, size: 16),
+            _ForecastItemText(text: day.time, size: 15),
             Padding(
               padding: const EdgeInsets.symmetric(vertical: 10),
               child: ConstrainedBox(
@@ -78,8 +121,11 @@ class _ForecastItemTile extends StatelessWidget {
                 child: Image.network(day.icon),
               ),
             ),
-            _ForecastItemText(text: '${day.tempetarute}°', size: 18),
-            _ForecastItemText(text: '${day.windSpeed} km/h'),
+            _ForecastItemText(text: '${day.tempetarute}°', size: 17),
+            _ForecastItemText(
+              text: '${day.windSpeed} km/h',
+              fontWeight: FontWeight.w400,
+            ),
           ],
         ),
       ),
@@ -88,17 +134,22 @@ class _ForecastItemTile extends StatelessWidget {
 }
 
 class _ForecastItemText extends StatelessWidget {
-  const _ForecastItemText({required this.text, this.size = 14});
+  const _ForecastItemText({
+    required this.text,
+    this.size = 14,
+    this.fontWeight = FontWeight.w600,
+  });
 
   final String text;
   final double size;
+  final FontWeight? fontWeight;
 
   @override
   Widget build(BuildContext context) {
     return Text(
       text,
       style: TextStyle(
-        fontWeight: FontWeight.w600,
+        fontWeight: fontWeight,
         overflow: TextOverflow.clip,
         fontSize: size,
       ),

@@ -2,8 +2,8 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 
 import '../../../../app/router/router.gr.dart';
+import '../../../../shared/domain/models/weather.dart';
 import '../../../../shared/layout/card_tile/index.dart';
-import '../../../../shared/ui/main_weather/index.dart';
 import '../../../../shared/ui/widget_title/index.dart';
 import '../../../../shared/utils/adjustable_size/index.dart';
 
@@ -16,21 +16,47 @@ class WeeklyForecastPreviewItem {
   });
 
   final String date;
-  final WeatherCondition condition;
+  final WeatherConditionM condition;
   final int maxTemp;
   final int minTemp;
 }
 
-class WeekForecastPreviewWidget extends StatelessWidget {
-  const WeekForecastPreviewWidget({super.key, required this.data});
-
-  final List<WeeklyForecastPreviewItem> data;
+class WeekForecastPreview extends StatelessWidget {
+  const WeekForecastPreview({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final data = [
+      WeeklyForecastPreviewItem(
+        date: 'Tomorrow',
+        condition: const WeatherConditionM(
+          text: 'Patchy rain nearby',
+          iconPath: 'https://cdn.weatherapi.com/weather/64x64/day/116.png',
+        ),
+        maxTemp: 20,
+        minTemp: 14,
+      ),
+      WeeklyForecastPreviewItem(
+        date: 'Mon',
+        condition: const WeatherConditionM(
+          text: 'Rain',
+          iconPath: 'https://cdn.weatherapi.com/weather/64x64/day/353.png',
+        ),
+        maxTemp: 16,
+        minTemp: 12,
+      ),
+      WeeklyForecastPreviewItem(
+        date: 'Tue',
+        condition: const WeatherConditionM(
+          text: 'Sunny',
+          iconPath: 'https://cdn.weatherapi.com/weather/64x64/day/113.png',
+        ),
+        maxTemp: 22,
+        minTemp: 16,
+      ),
+    ];
+
     final reducedData = data.take(3).toList();
-    ScreenBasedSize.instance.init;
-    final fontSize = ScreenBasedSize.instance.scaleByUnit(3.5);
 
     return GestureDetector(
       onTap: () => context.router.push(const WeekForecastRoute()),
@@ -41,15 +67,28 @@ class WeekForecastPreviewWidget extends StatelessWidget {
           const WidgetTitle(title: 'Weekly forecast'),
 
           CardTile(
-            child: Column(
-              children: [
-                ...reducedData.map((e) => _InfoRow(item: e)),
-                Text(
-                  'More info...',
-                  textAlign: TextAlign.center,
-                  style: TextStyle(fontSize: fontSize, color: Colors.grey[700]),
-                ),
-              ],
+            child: LayoutBuilder(
+              builder: (BuildContext context, BoxConstraints constraints) {
+                final constraintsMaxWidth = constraints.maxWidth;
+                final moreInfoFontSize = AdjustableSize.scaleByUnit(
+                  constraintsMaxWidth,
+                  3.7,
+                );
+
+                return Column(
+                  children: [
+                    ...reducedData.map((e) => _InfoRow(item: e)),
+                    Text(
+                      'More info...',
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                        fontSize: moreInfoFontSize,
+                        color: Colors.grey[700],
+                      ),
+                    ),
+                  ],
+                );
+              },
             ),
           ),
         ],
@@ -70,7 +109,6 @@ class _InfoRow extends StatelessWidget {
         final constraintsMaxWidth = constraints.maxWidth;
         final fontSize = AdjustableSize.scaleByUnit(constraintsMaxWidth, 4.1);
         final iconSize = AdjustableSize.scaleByUnit(constraintsMaxWidth, 10);
-
         final conditionTextHPadding = AdjustableSize.scaleByUnit(
           constraintsMaxWidth,
           1.8,
@@ -79,7 +117,6 @@ class _InfoRow extends StatelessWidget {
           constraintsMaxWidth,
           1.5,
         );
-
         final temperatureRowMaxWidth = constraintsMaxWidth * 0.5;
         final firstRowMaxWidth = constraintsMaxWidth - temperatureRowMaxWidth;
 
@@ -93,7 +130,7 @@ class _InfoRow extends StatelessWidget {
                 children: [
                   ConstrainedBox(
                     constraints: BoxConstraints(maxWidth: iconSize),
-                    child: Image.network(item.condition.icon),
+                    child: Image.network(item.condition.iconPath),
                   ),
                   Flexible(
                     child: Text(

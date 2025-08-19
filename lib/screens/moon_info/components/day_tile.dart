@@ -29,19 +29,12 @@ class DayTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    ScreenBasedSize.instance.init(context);
-    final contentMaxWidth = ScreenBasedSize.instance.getContentMaxWidth();
-
-    return ConstrainedBox(
-      constraints: BoxConstraints(maxWidth: contentMaxWidth),
-
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          WidgetTitle(title: data.date),
-          CardTile(child: _InfoWidgetsRow(data: data)),
-        ],
-      ),
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        WidgetTitle(title: data.date),
+        CardTile(child: _InfoWidgetsRow(data: data)),
+      ],
     );
   }
 }

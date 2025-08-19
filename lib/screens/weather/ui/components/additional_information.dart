@@ -7,6 +7,7 @@ import '../../../../shared/ui/responsive_info_list/index.dart';
 import '../../../../shared/ui/sun_info/index.dart';
 import '../../../../shared/ui/widget_title/index.dart';
 import '../../../../shared/utils/adjustable_size/index.dart';
+import '../../../../shared/utils/get_moon_phase_image_path/index.dart';
 
 class MoonInfoItemData {
   MoonInfoItemData({required this.phaseImagePath, required this.phase});
@@ -42,22 +43,29 @@ class WindData {
   final String direction;
 }
 
-class AdditionalInformationWidget extends StatelessWidget {
-  const AdditionalInformationWidget({
-    super.key,
-    required this.sunData,
-    required this.extraWeatherInfoData,
-    required this.windData,
-    required this.moonInfoItem,
-  });
-
-  final SunData sunData;
-  final WindData windData;
-  final ExtraWeatherInfoData extraWeatherInfoData;
-  final MoonInfoItemData moonInfoItem;
+class AdditionalInformation extends StatelessWidget {
+  const AdditionalInformation({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final extraWeatherInfoData = ExtraWeatherInfoData(
+      feelsLike: 25,
+      chanceOfRain: 95,
+      chanceOfSnow: 0,
+      humidity: 73,
+      pressure: 1017,
+      visibility: 10,
+      uv: 3,
+    );
+
+    final windData = WindData(direction: 'West', speed: 17.6);
+    final sunData = SunData(sunriseTime: '05:28', sunsetTime: '20:45');
+
+    final moonInfoItem = MoonInfoItemData(
+      phase: 'First Quarter',
+      phaseImagePath: getMoonPhaseImagePath('First Quarter'),
+    );
+
     ScreenBasedSize.instance.init(context);
 
     final contentMaxWidth = ScreenBasedSize.instance.getContentMaxWidth();
@@ -99,7 +107,7 @@ class AdditionalInformationWidget extends StatelessWidget {
                         ),
                       ),
 
-                      CardTile(child: SunInfoWidget(data: sunData)),
+                      CardTile(child: SunInfo(data: sunData)),
                       CardTile(child: _MoonInfoWidget(item: moonInfoItem)),
                     ],
                   ),
@@ -142,11 +150,11 @@ class _MoonInfoWidget extends StatelessWidget {
       child: LayoutBuilder(
         builder: (BuildContext context, BoxConstraints constraints) {
           final constraintsMaxWidth = constraints.maxWidth;
-          final fontSize = AdjustableSize.scaleByUnit(
+          final fontSize = AdjustableSize.scaleByUnit(constraintsMaxWidth, 9);
+          final moreInfoFontSize = AdjustableSize.scaleByUnit(
             constraintsMaxWidth,
-            10.5,
+            8,
           );
-          final moreInfoFontSize = ScreenBasedSize.instance.scaleByUnit(3.5);
           final iconSize = AdjustableSize.scaleByUnit(constraintsMaxWidth, 20);
           final spacing = AdjustableSize.scaleByUnit(constraintsMaxWidth, 1.9);
 
@@ -205,7 +213,7 @@ class _WindInfoWidget extends StatelessWidget {
     return LayoutBuilder(
       builder: (BuildContext context, BoxConstraints constraints) {
         final constraintsMaxWidth = constraints.maxWidth;
-        final fontSize = AdjustableSize.scaleByUnit(constraintsMaxWidth, 10.5);
+        final fontSize = AdjustableSize.scaleByUnit(constraintsMaxWidth, 9);
         final iconSize = AdjustableSize.scaleByUnit(constraintsMaxWidth, 20);
         final spacing = AdjustableSize.scaleByUnit(constraintsMaxWidth, 1.9);
 

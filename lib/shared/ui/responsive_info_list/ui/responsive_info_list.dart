@@ -60,8 +60,10 @@ class _InfoRow extends StatelessWidget {
     return LayoutBuilder(
       builder: (BuildContext context, BoxConstraints constraints) {
         final constraintsMaxWidth = constraints.maxWidth;
-        final fontSize = AdjustableSize.scaleByUnit(constraintsMaxWidth, 9.3);
+        final fontSize = AdjustableSize.scaleByUnit(constraintsMaxWidth, 9);
         final spacing = AdjustableSize.scaleByUnit(constraintsMaxWidth, 1.9);
+
+        // print('fontSize 0 = $fontSize');
 
         return Column(
           children: [

@@ -1,1 +1,1 @@
-export './ui/sun_info_widget.dart';
+export 'ui/sun_info.dart';
