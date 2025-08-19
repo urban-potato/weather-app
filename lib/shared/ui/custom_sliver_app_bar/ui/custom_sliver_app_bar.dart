@@ -1,3 +1,4 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 
 import '../../../utils/adjustable_size/index.dart';
@@ -11,7 +12,6 @@ class CustomSliverAppBar extends StatelessWidget {
   Widget build(BuildContext context) {
     ScreenBasedSize.instance.init(context);
 
-    final theme = Theme.of(context);
     final toolbarHeight = ScreenBasedSize.instance.scaleByUnit(12);
     final contentSize = ScreenBasedSize.instance.scaleByUnit(5);
 
@@ -23,23 +23,16 @@ class CustomSliverAppBar extends StatelessWidget {
         style: TextStyle(fontWeight: FontWeight.w600, fontSize: contentSize),
       ),
       centerTitle: true,
-      backgroundColor: theme.scaffoldBackgroundColor,
-      surfaceTintColor: theme.scaffoldBackgroundColor,
-      // actions: [
-      //   IconButton(
-      //     iconSize: contentSize,
-      //     onPressed: () {},
-      //     icon: const Icon(Icons.menu),
-      //   ),
-      // ],
-      // leading: Align(
-      //   alignment: Alignment.centerLeft,
-      //   child: IconButton(
-      //     iconSize: contentSize,
-      //     onPressed: () {},
-      //     icon: const Icon(Icons.add),
-      //   ),
-      // ),
+      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+      surfaceTintColor: Theme.of(context).scaffoldBackgroundColor,
+      leading: Align(
+        alignment: Alignment.centerLeft,
+        child: IconButton(
+          iconSize: contentSize,
+          onPressed: () => context.router.pop(),
+          icon: const Icon(Icons.arrow_back),
+        ),
+      ),
       leadingWidth: toolbarHeight,
     );
   }
