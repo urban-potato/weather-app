@@ -44,13 +44,13 @@ class MainWeather extends StatelessWidget {
     );
 
     const int aqi = 15;
-    // const int aqi = 1523424112312123121;
     const int uv = 2;
-    // const int uv = 2342341242342343423;
+
+    ScreenBasedSize.instance.init(context);
+    final spacing = ScreenBasedSize.instance.scaleByUnit(2);
 
     return Column(
-      // TODO: рассчитать spacing
-      spacing: 8,
+      spacing: spacing,
       mainAxisSize: MainAxisSize.min,
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
@@ -76,104 +76,17 @@ class _UVAndAQIInfoRow extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     ScreenBasedSize.instance.init(context);
-    // final spacing = ScreenBasedSize.instance.scaleByUnit(2);
     final spacing = ScreenBasedSize.instance.scaleByUnit(1);
-    final runSpacing = ScreenBasedSize.instance.scaleByUnit(1);
 
     return Wrap(
       crossAxisAlignment: WrapCrossAlignment.center,
       alignment: WrapAlignment.center,
       spacing: spacing,
-      runSpacing: runSpacing,
+      runSpacing: spacing,
       children: [
         UvInfo(uv: uv),
         AqiInfo(aqi: aqi),
       ],
-      // children: [
-      //   LayoutBuilder(
-      //     builder: (context, constraints) {
-      //       final constraintsMaxWidth = constraints.maxWidth;
-      //       return ConstrainedBox(
-      //         constraints: BoxConstraints(
-      //           maxWidth: constraintsMaxWidth / 2,
-      //           minWidth: constraintsMaxWidth / 2,
-      //         ),
-      //         child: UvInfoWidget(uv: uv),
-      //       );
-      //     },
-      //   ),
-      //   LayoutBuilder(
-      //     builder: (context, constraints) {
-      //       final constraintsMaxWidth = constraints.maxWidth;
-      //       return ConstrainedBox(
-      //         constraints: BoxConstraints(
-      //           maxWidth: constraintsMaxWidth / 2,
-      //           minWidth: constraintsMaxWidth / 2,
-      //         ),
-      //         child: AqiInfoWidget(aqi: aqi),
-      //       );
-      //     },
-      //   ),
-      // ],
     );
-
-    // return Wrap(
-    //   crossAxisAlignment: WrapCrossAlignment.center,
-    //   alignment: WrapAlignment.center,
-    //   spacing: spacing,
-    //   runSpacing: runSpacing,
-    //   children: [
-    //     Flexible(
-    //       fit: FlexFit.tight,
-    //       child: UvInfoWidget(uv: uv),
-    //     ),
-    //     Flexible(
-    //       fit: FlexFit.tight,
-    //       child: AqiInfoWidget(aqi: aqi),
-    //     ),
-    //   ],
-    // );
-
-    // return Row(
-    //   spacing: spacing,
-
-    //   children: [
-    //     Flexible(
-    //       fit: FlexFit.tight,
-    //       child: UvInfoWidget(uv: uv),
-    //     ),
-    //     Flexible(
-    //       fit: FlexFit.tight,
-    //       child: AqiInfoWidget(aqi: aqi),
-    //     ),
-    //   ],
-    // );
   }
 }
-
-// class _UVAndAQIInfoRow extends StatelessWidget {
-//   const _UVAndAQIInfoRow({required this.aqi, required this.uv});
-
-//   final int aqi;
-//   final int uv;
-
-//   @override
-//   Widget build(BuildContext context) {
-//     ScreenBasedSize.instance.init(context);
-//     final spacing = ScreenBasedSize.instance.scaleByUnit(2);
-
-//     return Row(
-//       spacing: spacing,
-//       children: [
-//         Flexible(
-//           fit: FlexFit.tight,
-//           child: UvInfoWidget(uv: uv),
-//         ),
-//         Flexible(
-//           fit: FlexFit.tight,
-//           child: AqiInfoWidget(aqi: aqi),
-//         ),
-//       ],
-//     );
-//   }
-// }
