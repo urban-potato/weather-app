@@ -54,11 +54,11 @@ class MainWeather extends StatelessWidget {
       mainAxisSize: MainAxisSize.min,
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        MainTemperature(temperature: data.temperature, sizeRatio: 2),
+        MainTemperature(temperature: data.temperature.toString(), sizeRatio: 2),
         WeatherCondition(
           text: data.condition.text,
           iconPath: data.condition.icon,
-          sizeRatio: 1.1,
+          sizeRatio: 1.3,
         ),
         DailyTemperatureRange(maxTemp: data.maxTemp, minTemp: data.minTemp),
         const _UVAndAQIInfoRow(aqi: aqi, uv: uv),

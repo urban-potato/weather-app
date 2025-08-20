@@ -48,12 +48,8 @@ class MainForecast extends StatelessWidget {
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          MainTemperature(temperature: temperature),
-          WeatherCondition(
-            text: condition.text,
-            iconPath: condition.iconPath,
-            sizeRatio: 1.1,
-          ),
+          MainTemperature(temperature: temperature.toString()),
+          WeatherCondition(text: condition.text, iconPath: condition.iconPath),
           DailyTemperatureRange(maxTemp: maxTemp, minTemp: minTemp),
         ],
       ),

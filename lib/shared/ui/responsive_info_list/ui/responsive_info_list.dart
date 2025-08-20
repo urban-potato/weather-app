@@ -3,67 +3,33 @@ import 'package:flutter/material.dart';
 import '../../../utils/adjustable_size/index.dart';
 
 class ResponsiveInfoList extends StatelessWidget {
-  const ResponsiveInfoList({
-    super.key,
-    required this.data,
-    this.withDivider,
-    this.textColor,
-    this.labelFontWeight,
-    this.valueFontWeight,
-  });
+  const ResponsiveInfoList({super.key, required this.data});
 
   final Map<String, String> data;
-  final bool? withDivider;
-  final Color? textColor;
-  final FontWeight? labelFontWeight;
-  final FontWeight? valueFontWeight;
 
   @override
   Widget build(BuildContext context) {
     return Column(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: data.entries
-          .map(
-            (e) => _InfoRow(
-              label: e.key,
-              value: e.value,
-              withDivider: withDivider,
-              textColor: textColor,
-              labelFontWeight: labelFontWeight,
-              valueFontWeight: valueFontWeight,
-            ),
-          )
+          .map((e) => _InfoRow(label: e.key, value: e.value))
           .toList(),
     );
   }
 }
 
 class _InfoRow extends StatelessWidget {
-  const _InfoRow({
-    required this.label,
-    required this.value,
-    required this.withDivider,
-    required this.textColor,
-    this.labelFontWeight,
-    this.valueFontWeight,
-  });
+  const _InfoRow({required this.label, required this.value});
 
   final String label;
   final String value;
-  final bool? withDivider;
-  final Color? textColor;
-  final FontWeight? labelFontWeight;
-  final FontWeight? valueFontWeight;
 
   @override
   Widget build(BuildContext context) {
     return LayoutBuilder(
       builder: (BuildContext context, BoxConstraints constraints) {
         final constraintsMaxWidth = constraints.maxWidth;
-        final fontSize = AdjustableSize.scaleByUnit(constraintsMaxWidth, 9);
         final spacing = AdjustableSize.scaleByUnit(constraintsMaxWidth, 1.9);
-
-        // print('fontSize 0 = $fontSize');
 
         return Column(
           children: [
@@ -78,11 +44,7 @@ class _InfoRow extends StatelessWidget {
                   ),
                   child: Text(
                     label,
-                    style: TextStyle(
-                      fontSize: fontSize,
-                      color: textColor,
-                      fontWeight: labelFontWeight,
-                    ),
+                    style: Theme.of(context).textTheme.bodyMedium,
                     overflow: TextOverflow.clip,
                   ),
                 ),
@@ -91,17 +53,15 @@ class _InfoRow extends StatelessWidget {
                   child: Text(
                     textAlign: TextAlign.right,
                     value,
-                    style: TextStyle(
-                      fontSize: fontSize,
-                      fontWeight: valueFontWeight ?? FontWeight.w700,
-                      color: textColor,
+                    style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                      fontWeight: FontWeight.w700,
                     ),
                     overflow: TextOverflow.clip,
                   ),
                 ),
               ],
             ),
-            if (withDivider ?? true) const Divider(),
+            const Divider(),
           ],
         );
       },

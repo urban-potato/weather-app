@@ -9,7 +9,7 @@ class MainTemperature extends StatelessWidget {
     required this.temperature,
   });
 
-  final int temperature;
+  final String temperature;
   final double sizeRatio;
 
   @override
@@ -26,22 +26,19 @@ class MainTemperature extends StatelessWidget {
           style: const TextStyle(height: 0.1),
           children: [
             TextSpan(
-              text: temperature.toString(),
-              style: const TextStyle(
-                color: Colors.black,
-                fontSize: 102,
-                fontWeight: FontWeight.w600,
-              ),
+              text: temperature,
+              style: Theme.of(
+                context,
+              ).textTheme.headlineMedium?.copyWith(fontSize: 34, height: 0.1),
             ),
             WidgetSpan(
               child: Transform.translate(
-                offset: const Offset(0, -48),
-                child: const Text(
+                offset: const Offset(0, -24),
+                child: Text(
                   '°C',
-                  style: TextStyle(
-                    color: Colors.black,
-                    fontSize: 26,
-                    fontWeight: FontWeight.w600,
+                  style: Theme.of(context).textTheme.headlineMedium?.copyWith(
+                    fontSize: 12,
+                    height: 0.1,
                   ),
                 ),
               ),

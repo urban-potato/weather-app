@@ -19,10 +19,6 @@ class WeatherCondition extends StatelessWidget {
     return LayoutBuilder(
       builder: (BuildContext context, BoxConstraints constraints) {
         final constraintsMaxWidth = constraints.maxWidth;
-        final fontSize = AdjustableSize.scaleByUnit(
-          constraintsMaxWidth,
-          10 * sizeRatio,
-        );
         final iconSize = AdjustableSize.scaleByUnit(
           constraintsMaxWidth,
           22 * sizeRatio,
@@ -38,11 +34,14 @@ class WeatherCondition extends StatelessWidget {
               child: Text(
                 text,
                 textAlign: TextAlign.center,
-                style: TextStyle(
-                  fontSize: fontSize,
-                  height: 1.0,
-                  overflow: TextOverflow.clip,
+                style: Theme.of(context).textTheme.labelLarge?.copyWith(
+                  fontSize:
+                      ((Theme.of(context).textTheme.labelLarge?.fontSize ?? 1) *
+                              sizeRatio)
+                          .round()
+                          .toDouble(),
                 ),
+                overflow: TextOverflow.clip,
               ),
             ),
 

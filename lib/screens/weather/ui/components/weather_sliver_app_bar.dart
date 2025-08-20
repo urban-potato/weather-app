@@ -20,7 +20,9 @@ class WeatherSliverAppBar extends StatelessWidget {
       toolbarHeight: toolbarHeight,
       title: Text(
         locationName,
-        style: TextStyle(fontWeight: FontWeight.w600, fontSize: contentSize),
+        style: Theme.of(
+          context,
+        ).textTheme.headlineMedium?.copyWith(fontSize: contentSize),
       ),
       centerTitle: true,
       backgroundColor: theme.scaffoldBackgroundColor,

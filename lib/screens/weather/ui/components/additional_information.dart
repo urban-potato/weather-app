@@ -150,11 +150,6 @@ class _MoonInfoWidget extends StatelessWidget {
       child: LayoutBuilder(
         builder: (BuildContext context, BoxConstraints constraints) {
           final constraintsMaxWidth = constraints.maxWidth;
-          final fontSize = AdjustableSize.scaleByUnit(constraintsMaxWidth, 9);
-          final moreInfoFontSize = AdjustableSize.scaleByUnit(
-            constraintsMaxWidth,
-            8,
-          );
           final iconSize = AdjustableSize.scaleByUnit(constraintsMaxWidth, 20);
           final spacing = AdjustableSize.scaleByUnit(constraintsMaxWidth, 1.9);
 
@@ -169,11 +164,10 @@ class _MoonInfoWidget extends StatelessWidget {
                     flex: 3,
                     child: Text(
                       item.phase,
-                      style: TextStyle(
-                        fontWeight: FontWeight.w700,
-                        fontSize: fontSize,
-                        overflow: TextOverflow.clip,
+                      style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                        fontWeight: FontWeight.bold,
                       ),
+                      overflow: TextOverflow.clip,
                     ),
                   ),
 
@@ -189,10 +183,7 @@ class _MoonInfoWidget extends StatelessWidget {
               Text(
                 'More info...',
                 textAlign: TextAlign.center,
-                style: TextStyle(
-                  fontSize: moreInfoFontSize,
-                  color: Colors.grey[700],
-                ),
+                style: Theme.of(context).textTheme.bodySmall,
               ),
             ],
           );
@@ -213,7 +204,6 @@ class _WindInfoWidget extends StatelessWidget {
     return LayoutBuilder(
       builder: (BuildContext context, BoxConstraints constraints) {
         final constraintsMaxWidth = constraints.maxWidth;
-        final fontSize = AdjustableSize.scaleByUnit(constraintsMaxWidth, 9);
         final iconSize = AdjustableSize.scaleByUnit(constraintsMaxWidth, 20);
         final spacing = AdjustableSize.scaleByUnit(constraintsMaxWidth, 1.9);
 
@@ -229,19 +219,17 @@ class _WindInfoWidget extends StatelessWidget {
                 children: [
                   Text(
                     windDirection,
-                    style: TextStyle(
-                      fontWeight: FontWeight.w700,
-                      fontSize: fontSize,
-                      overflow: TextOverflow.clip,
+                    style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                      fontWeight: FontWeight.bold,
                     ),
+                    overflow: TextOverflow.clip,
                   ),
                   Text(
                     '$windSpeed km/h',
-                    style: TextStyle(
-                      fontWeight: FontWeight.w700,
-                      fontSize: fontSize,
-                      overflow: TextOverflow.clip,
+                    style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                      fontWeight: FontWeight.bold,
                     ),
+                    overflow: TextOverflow.clip,
                   ),
                 ],
               ),

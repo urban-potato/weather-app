@@ -148,11 +148,9 @@ class _ForecastItemText extends StatelessWidget {
   Widget build(BuildContext context) {
     return Text(
       text,
-      style: TextStyle(
-        fontWeight: fontWeight,
-        overflow: TextOverflow.clip,
-        fontSize: size,
-      ),
+      style: Theme.of(
+        context,
+      ).textTheme.bodyMedium?.copyWith(fontWeight: fontWeight, fontSize: size),
     );
   }
 }

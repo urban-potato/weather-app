@@ -58,7 +58,9 @@ class _InfoText extends StatelessWidget {
   Widget build(BuildContext context) {
     return Text(
       text,
-      style: Theme.of(context).textTheme.labelMedium,
+      style: Theme.of(
+        context,
+      ).textTheme.labelMedium?.copyWith(color: Colors.white),
       overflow: TextOverflow.clip,
     );
   }

@@ -25,7 +25,7 @@ class DailyTemperatureRange extends StatelessWidget {
           Flexible(
             child: _TemperatureValueText(temperature: maxTemp.toString()),
           ),
-          const Text('/'),
+          Text('/', style: Theme.of(context).textTheme.bodyMedium),
           Flexible(
             child: _TemperatureValueText(temperature: minTemp.toString()),
           ),
@@ -44,11 +44,11 @@ class _TemperatureValueText extends StatelessWidget {
   Widget build(BuildContext context) {
     return Text(
       '$temperature°',
-      style: const TextStyle(
+      style: Theme.of(context).textTheme.bodyMedium?.copyWith(
         fontWeight: FontWeight.bold,
         height: 1.0,
-        overflow: TextOverflow.clip,
       ),
+      overflow: TextOverflow.clip,
       textAlign: TextAlign.center,
     );
   }

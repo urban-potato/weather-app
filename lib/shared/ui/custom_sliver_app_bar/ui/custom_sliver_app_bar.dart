@@ -20,7 +20,9 @@ class CustomSliverAppBar extends StatelessWidget {
       toolbarHeight: toolbarHeight,
       title: Text(
         title,
-        style: TextStyle(fontWeight: FontWeight.w600, fontSize: contentSize),
+        style: Theme.of(
+          context,
+        ).textTheme.headlineMedium?.copyWith(fontSize: contentSize),
       ),
       centerTitle: true,
       backgroundColor: Theme.of(context).scaffoldBackgroundColor,

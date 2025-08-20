@@ -67,28 +67,15 @@ class WeekForecastPreview extends StatelessWidget {
           const WidgetTitle(title: 'Weekly forecast'),
 
           CardTile(
-            child: LayoutBuilder(
-              builder: (BuildContext context, BoxConstraints constraints) {
-                final constraintsMaxWidth = constraints.maxWidth;
-                final moreInfoFontSize = AdjustableSize.scaleByUnit(
-                  constraintsMaxWidth,
-                  3.7,
-                );
-
-                return Column(
-                  children: [
-                    ...reducedData.map((e) => _InfoRow(item: e)),
-                    Text(
-                      'More info...',
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                        fontSize: moreInfoFontSize,
-                        color: Colors.grey[700],
-                      ),
-                    ),
-                  ],
-                );
-              },
+            child: Column(
+              children: [
+                ...reducedData.map((e) => _InfoRow(item: e)),
+                Text(
+                  'More info...',
+                  textAlign: TextAlign.center,
+                  style: Theme.of(context).textTheme.bodySmall,
+                ),
+              ],
             ),
           ),
         ],
@@ -107,7 +94,6 @@ class _InfoRow extends StatelessWidget {
     return LayoutBuilder(
       builder: (BuildContext context, BoxConstraints constraints) {
         final constraintsMaxWidth = constraints.maxWidth;
-        final fontSize = AdjustableSize.scaleByUnit(constraintsMaxWidth, 4.1);
         final iconSize = AdjustableSize.scaleByUnit(constraintsMaxWidth, 10);
         final conditionTextHPadding = AdjustableSize.scaleByUnit(
           constraintsMaxWidth,
@@ -135,11 +121,10 @@ class _InfoRow extends StatelessWidget {
                   Flexible(
                     child: Text(
                       item.date,
-                      overflow: TextOverflow.ellipsis,
-                      style: TextStyle(
-                        fontSize: fontSize,
+                      style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                         fontWeight: FontWeight.bold,
                       ),
+                      overflow: TextOverflow.ellipsis,
                     ),
                   ),
                 ],
@@ -158,7 +143,7 @@ class _InfoRow extends StatelessWidget {
                       child: Text(
                         item.condition.text,
                         overflow: TextOverflow.ellipsis,
-                        style: TextStyle(fontSize: fontSize),
+                        style: Theme.of(context).textTheme.bodyMedium,
                       ),
                     ),
                   ),
@@ -166,7 +151,10 @@ class _InfoRow extends StatelessWidget {
                     constraints: BoxConstraints(
                       maxWidth: temperatureRowMaxWidth,
                     ),
-                    child: _MaxMinTempWidget(item: item, fontSize: fontSize),
+                    child: _DailyTemperatureRangeWidget(
+                      maxTemp: item.maxTemp.toString(),
+                      minTemp: item.minTemp.toString(),
+                    ),
                   ),
                 ],
               ),
@@ -178,11 +166,14 @@ class _InfoRow extends StatelessWidget {
   }
 }
 
-class _MaxMinTempWidget extends StatelessWidget {
-  const _MaxMinTempWidget({required this.item, required this.fontSize});
+class _DailyTemperatureRangeWidget extends StatelessWidget {
+  const _DailyTemperatureRangeWidget({
+    required this.maxTemp,
+    required this.minTemp,
+  });
 
-  final WeeklyForecastPreviewItem item;
-  final double fontSize;
+  final String maxTemp;
+  final String minTemp;
 
   @override
   Widget build(BuildContext context) {
@@ -195,19 +186,9 @@ class _MaxMinTempWidget extends StatelessWidget {
           mainAxisSize: MainAxisSize.min,
           spacing: spacing,
           children: [
-            Flexible(
-              child: _TemperatureValueText(
-                temperature: item.maxTemp.toString(),
-                fontSize: fontSize,
-              ),
-            ),
-            Text('/', style: TextStyle(fontSize: fontSize)),
-            Flexible(
-              child: _TemperatureValueText(
-                temperature: item.minTemp.toString(),
-                fontSize: fontSize,
-              ),
-            ),
+            Flexible(child: _TemperatureValueText(temperature: maxTemp)),
+            Text('/', style: Theme.of(context).textTheme.bodyMedium),
+            Flexible(child: _TemperatureValueText(temperature: minTemp)),
           ],
         );
       },
@@ -216,24 +197,18 @@ class _MaxMinTempWidget extends StatelessWidget {
 }
 
 class _TemperatureValueText extends StatelessWidget {
-  const _TemperatureValueText({
-    required this.temperature,
-    required this.fontSize,
-  });
+  const _TemperatureValueText({required this.temperature});
 
   final String temperature;
-  final double fontSize;
 
   @override
   Widget build(BuildContext context) {
     return Text(
       '$temperature°',
-      style: TextStyle(
-        fontWeight: FontWeight.bold,
-        height: 1.0,
-        overflow: TextOverflow.clip,
-        fontSize: fontSize,
-      ),
+      style: Theme.of(
+        context,
+      ).textTheme.bodyMedium?.copyWith(fontWeight: FontWeight.bold),
+      overflow: TextOverflow.clip,
       textAlign: TextAlign.center,
     );
   }

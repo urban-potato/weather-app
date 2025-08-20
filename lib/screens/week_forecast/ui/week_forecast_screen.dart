@@ -18,7 +18,7 @@ class WeekForecastScreen extends StatelessWidget {
       child: Scaffold(
         body: CustomScrollView(
           slivers: [
-            const CustomSliverAppBar(title: 'Week Forecast'),
+            const CustomSliverAppBar(title: 'Weekly Forecast'),
             SliverPadding(
               padding: EdgeInsets.symmetric(
                 horizontal: padding,
