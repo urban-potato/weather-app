@@ -12,9 +12,11 @@
 import 'package:auto_route/auto_route.dart' as _i5;
 import 'package:weather_app/app/router/wrappers/weather_screen_wrapper.dart'
     as _i3;
-import 'package:weather_app/screens/moon_info/ui/moon_info_screen.dart' as _i1;
-import 'package:weather_app/screens/weather/ui/weather_screen.dart' as _i2;
-import 'package:weather_app/screens/week_forecast/ui/week_forecast_screen.dart'
+import 'package:weather_app/features/weather/presentation/screens/moon_info/screen/moon_info_screen.dart'
+    as _i1;
+import 'package:weather_app/features/weather/presentation/screens/today_weather/screen/today_weather_screen.dart'
+    as _i2;
+import 'package:weather_app/features/weather/presentation/screens/weekly_forecast/screen/weekly_forecast_screen.dart'
     as _i4;
 
 /// generated route for
@@ -34,17 +36,17 @@ class MoonInfoRoute extends _i5.PageRouteInfo<void> {
 }
 
 /// generated route for
-/// [_i2.WeatherScreen]
-class WeatherRoute extends _i5.PageRouteInfo<void> {
-  const WeatherRoute({List<_i5.PageRouteInfo>? children})
-    : super(WeatherRoute.name, initialChildren: children);
+/// [_i2.TodayWeatherScreen]
+class TodayWeatherRoute extends _i5.PageRouteInfo<void> {
+  const TodayWeatherRoute({List<_i5.PageRouteInfo>? children})
+    : super(TodayWeatherRoute.name, initialChildren: children);
 
-  static const String name = 'WeatherRoute';
+  static const String name = 'TodayWeatherRoute';
 
   static _i5.PageInfo page = _i5.PageInfo(
     name,
     builder: (data) {
-      return const _i2.WeatherScreen();
+      return const _i2.TodayWeatherScreen();
     },
   );
 }
@@ -66,17 +68,17 @@ class WeatherRouteWrapper extends _i5.PageRouteInfo<void> {
 }
 
 /// generated route for
-/// [_i4.WeekForecastScreen]
-class WeekForecastRoute extends _i5.PageRouteInfo<void> {
-  const WeekForecastRoute({List<_i5.PageRouteInfo>? children})
-    : super(WeekForecastRoute.name, initialChildren: children);
+/// [_i4.WeeklyForecastScreen]
+class WeeklyForecastRoute extends _i5.PageRouteInfo<void> {
+  const WeeklyForecastRoute({List<_i5.PageRouteInfo>? children})
+    : super(WeeklyForecastRoute.name, initialChildren: children);
 
-  static const String name = 'WeekForecastRoute';
+  static const String name = 'WeeklyForecastRoute';
 
   static _i5.PageInfo page = _i5.PageInfo(
     name,
     builder: (data) {
-      return const _i4.WeekForecastScreen();
+      return const _i4.WeeklyForecastScreen();
     },
   );
 }

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:weather_app/shared/utils/theme/index.dart';
+import 'package:weather_app/shared/theme/index.dart';
 
-import '../shared/utils/adjustable_size/index.dart';
+import '../shared/utils/size_helpers/index.dart';
 import 'router/router.dart';
 
 class App extends StatefulWidget {

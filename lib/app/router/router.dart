@@ -11,8 +11,8 @@ class AppRouter extends RootStackRouter {
       path: '/',
       initial: true,
       children: [
-        AutoRoute(page: WeatherRoute.page, path: 'weather', initial: true),
-        AutoRoute(page: WeekForecastRoute.page, path: 'weekForecast'),
+        AutoRoute(page: TodayWeatherRoute.page, path: 'weather', initial: true),
+        AutoRoute(page: WeeklyForecastRoute.page, path: 'weekForecast'),
         AutoRoute(page: MoonInfoRoute.page, path: 'moon'),
       ],
     ),

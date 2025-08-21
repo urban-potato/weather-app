@@ -1,17 +1,17 @@
-import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 
-import '../../../utils/size_helpers/index.dart';
+import '../../../../../../../../shared/utils/size_helpers/index.dart';
 
 class CustomSliverAppBar extends StatelessWidget {
-  const CustomSliverAppBar({super.key, required this.title});
+  const CustomSliverAppBar({super.key, required this.locationName});
 
-  final String title;
+  final String locationName;
 
   @override
   Widget build(BuildContext context) {
     ScreenBasedSize.instance.init(context);
 
+    final theme = Theme.of(context);
     final toolbarHeight = ScreenBasedSize.instance.scaleByUnit(12);
     final contentSize = ScreenBasedSize.instance.scaleByUnit(5);
 
@@ -19,20 +19,27 @@ class CustomSliverAppBar extends StatelessWidget {
       pinned: true,
       toolbarHeight: toolbarHeight,
       title: Text(
-        title,
+        locationName,
         style: Theme.of(
           context,
         ).textTheme.headlineMedium?.copyWith(fontSize: contentSize),
       ),
       centerTitle: true,
-      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
-      surfaceTintColor: Theme.of(context).scaffoldBackgroundColor,
+      backgroundColor: theme.scaffoldBackgroundColor,
+      surfaceTintColor: theme.scaffoldBackgroundColor,
+      actions: [
+        IconButton(
+          iconSize: contentSize,
+          onPressed: () {},
+          icon: const Icon(Icons.menu),
+        ),
+      ],
       leading: Align(
         alignment: Alignment.centerLeft,
         child: IconButton(
           iconSize: contentSize,
-          onPressed: () => context.router.pop(),
-          icon: const Icon(Icons.arrow_back),
+          onPressed: () {},
+          icon: const Icon(Icons.add),
         ),
       ),
       leadingWidth: toolbarHeight,
