@@ -1,8 +1,8 @@
 import 'package:equatable/equatable.dart';
 
 class MoonModelDomain extends Equatable {
-  final DateTime moonrise;
-  final DateTime moonset;
+  final DateTime? moonrise;
+  final DateTime? moonset;
   final String moonPhase;
   final double moonIllumination;
 
