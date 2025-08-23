@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 
+import '../../../../../../../../models/index.dart';
 import '../../../../../../../../widgets/daily_temperature_range/index.dart';
 import '../../../../../../../../widgets/main_temperature/index.dart';
 import '../../../../../../../../widgets/weather_condition/index.dart';
-import '../../../../../../../../models/weather.dart';
+
 import '../../../../../../../../../../../shared/ui/card_tile/index.dart';
 import '../../../../../../../../../../../shared/utils/size_helpers/index.dart';
 
@@ -18,7 +19,7 @@ class MainForecastInfoWidget extends StatelessWidget {
   });
 
   final int temperature;
-  final WeatherConditionModelUI condition;
+  final ConditionModelUI condition;
   final int maxTemp;
   final int minTemp;
   final int uv;

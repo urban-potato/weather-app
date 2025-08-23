@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../../../../models/weather.dart';
+import '../../../../../models/index.dart';
 import '../../../../../widgets/sun_info/index.dart';
 import '../../../../../../../../shared/utils/size_helpers/index.dart';
 import 'components/day_tile/day_tile.dart';
@@ -15,7 +15,7 @@ class WeeklyForecastListWidget extends StatelessWidget {
         date: 'Today',
         mainForecastWidgetData: MainForecastWidgetData(
           temperature: 19,
-          condition: const WeatherConditionModelUI(
+          condition: const ConditionModelUI(
             text: 'Patchy rain nearby',
             iconPath: 'https://cdn.weatherapi.com/weather/64x64/day/176.png',
           ),
@@ -36,7 +36,7 @@ class WeeklyForecastListWidget extends StatelessWidget {
         date: 'Tomorrow',
         mainForecastWidgetData: MainForecastWidgetData(
           temperature: 19,
-          condition: const WeatherConditionModelUI(
+          condition: const ConditionModelUI(
             text: 'Patchy rain nearby',
             iconPath: 'https://cdn.weatherapi.com/weather/64x64/day/176.png',
           ),
@@ -57,7 +57,7 @@ class WeeklyForecastListWidget extends StatelessWidget {
         date: '05.07',
         mainForecastWidgetData: MainForecastWidgetData(
           temperature: 18,
-          condition: const WeatherConditionModelUI(
+          condition: const ConditionModelUI(
             text: 'Partly Cloudy',
             iconPath: 'https://cdn.weatherapi.com/weather/64x64/day/116.png',
           ),
@@ -78,7 +78,7 @@ class WeeklyForecastListWidget extends StatelessWidget {
         date: '06.07',
         mainForecastWidgetData: MainForecastWidgetData(
           temperature: 17,
-          condition: const WeatherConditionModelUI(
+          condition: const ConditionModelUI(
             text: 'Sunny',
             iconPath: 'https://cdn.weatherapi.com/weather/64x64/day/113.png',
           ),

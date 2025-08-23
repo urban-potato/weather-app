@@ -2,10 +2,11 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 
 import '../../../../../../../../app/router/router.gr.dart';
-import '../../../../../models/weather.dart';
+
 import '../../../../../../../../shared/ui/card_tile/index.dart';
 import '../../../../../../shared/ui/widget_title/index.dart';
 import '../../../../../../../../shared/utils/size_helpers/index.dart';
+import '../../../../../models/index.dart';
 import 'components/daily_temperature_range.dart';
 
 class WeeklyForecastPreviewItem {
@@ -17,7 +18,7 @@ class WeeklyForecastPreviewItem {
   });
 
   final String date;
-  final WeatherConditionModelUI condition;
+  final ConditionModelUI condition;
   final int maxTemp;
   final int minTemp;
 }
@@ -30,7 +31,7 @@ class WeekForecastPreviewWidget extends StatelessWidget {
     final data = [
       WeeklyForecastPreviewItem(
         date: 'Tomorrow',
-        condition: const WeatherConditionModelUI(
+        condition: const ConditionModelUI(
           text: 'Patchy rain nearby',
           iconPath: 'https://cdn.weatherapi.com/weather/64x64/day/116.png',
         ),
@@ -39,7 +40,7 @@ class WeekForecastPreviewWidget extends StatelessWidget {
       ),
       WeeklyForecastPreviewItem(
         date: 'Mon',
-        condition: const WeatherConditionModelUI(
+        condition: const ConditionModelUI(
           text: 'Rain',
           iconPath: 'https://cdn.weatherapi.com/weather/64x64/day/353.png',
         ),
@@ -48,7 +49,7 @@ class WeekForecastPreviewWidget extends StatelessWidget {
       ),
       WeeklyForecastPreviewItem(
         date: 'Tue',
-        condition: const WeatherConditionModelUI(
+        condition: const ConditionModelUI(
           text: 'Sunny',
           iconPath: 'https://cdn.weatherapi.com/weather/64x64/day/113.png',
         ),

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../../../../../../../../../../shared/ui/card_tile/index.dart';
 import '../../../../../../../../shared/ui/responsive_info_list/index.dart';
-import '../../../../../../../models/weather.dart';
+import '../../../../../../../models/index.dart';
 import '../../../../../../../widgets/sun_info/index.dart';
 import '../../../../../../../widgets/uv_info/index.dart';
 import '../../../../../../../../shared/ui/widget_title/index.dart';
@@ -18,7 +18,7 @@ class MainForecastWidgetData {
   });
 
   final int temperature;
-  final WeatherConditionModelUI condition;
+  final ConditionModelUI condition;
   final int maxTemp;
   final int minTemp;
 }
