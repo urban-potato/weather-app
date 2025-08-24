@@ -1,8 +1,8 @@
 class MoonModelUI {
   final String phaseImagePath;
   final String phase;
-  final DateTime moonrise;
-  final DateTime moonset;
+  final DateTime? moonrise;
+  final DateTime? moonset;
   final int illumination;
 
   const MoonModelUI({
