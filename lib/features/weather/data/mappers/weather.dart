@@ -60,13 +60,25 @@ extension on WeatherModelData {
         ).parse('${f.date} ${f.astro.sunset}'),
       );
 
+      DateTime? moonriseDomain;
+
+      try {
+        moonriseDomain = DateFormat(
+          'yyyy-MM-dd h:mm a',
+        ).parse('${f.date} ${f.astro.moonrise}');
+      } catch (e) {}
+
+      DateTime? moonsetDomain;
+
+      try {
+        moonriseDomain = DateFormat(
+          'yyyy-MM-dd h:mm a',
+        ).parse('${f.date} ${f.astro.moonset}');
+      } catch (e) {}
+
       final moonDomain = MoonModelDomain(
-        moonrise: DateFormat(
-          'yyyy-MM-dd h:mm a',
-        ).parse('${f.date} ${f.astro.moonrise}'),
-        moonset: DateFormat(
-          'yyyy-MM-dd h:mm a',
-        ).parse('${f.date} ${f.astro.moonset}'),
+        moonrise: moonriseDomain,
+        moonset: moonsetDomain,
         moonPhase: f.astro.moonPhase,
         moonIllumination: f.astro.moonIllumination,
       );
