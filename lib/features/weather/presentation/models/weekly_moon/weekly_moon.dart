@@ -1,7 +1,7 @@
 import '../moon/moon.dart';
 
 class WeeklyMoonModelUI {
-  final List<MoonModelUI> weeklyMoonDay;
+  final List<MoonModelUI> moonList;
 
-  const WeeklyMoonModelUI({required this.weeklyMoonDay});
+  const WeeklyMoonModelUI({required this.moonList});
 }

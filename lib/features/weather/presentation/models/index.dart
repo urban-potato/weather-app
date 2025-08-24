@@ -17,5 +17,6 @@ export 'weekly_forecast/weekly_forecast_day/weekly_forecast_day.dart';
 export 'weekly_moon/weekly_moon.dart';
 export 'wind/wind.dart';
 export 'wind/wind_speed/wind_speed.dart';
+export './location/location.dart';
 
 export 'weather/weather.dart';

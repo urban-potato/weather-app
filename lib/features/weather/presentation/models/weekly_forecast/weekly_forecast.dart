@@ -1,7 +1,7 @@
 import 'weekly_forecast_day/weekly_forecast_day.dart';
 
 class WeeklyForecastModelUI {
-  final List<WeeklyForecastDayModelUI> forecastDay;
+  final List<WeeklyForecastDayModelUI> forecastDayList;
 
-  const WeeklyForecastModelUI({required this.forecastDay});
+  const WeeklyForecastModelUI({required this.forecastDayList});
 }

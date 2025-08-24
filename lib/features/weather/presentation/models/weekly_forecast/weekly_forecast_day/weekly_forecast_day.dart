@@ -7,7 +7,8 @@ import '../../visibility/visibility.dart';
 import '../../wind/wind_speed/wind_speed.dart';
 
 class WeeklyForecastDayModelUI {
-  final TemperatureModelUI averageTemperature;
+  final DateTime date;
+  final TemperatureModelUI temperature;
   final ConditionModelUI condition;
   final TemperatureRangeModelUI temperatureRange;
   final int uv;
@@ -18,7 +19,8 @@ class WeeklyForecastDayModelUI {
   final PrecipitationModelUI precipitation;
 
   const WeeklyForecastDayModelUI({
-    required this.averageTemperature,
+    required this.date,
+    required this.temperature,
     required this.condition,
     required this.temperatureRange,
     required this.uv,
