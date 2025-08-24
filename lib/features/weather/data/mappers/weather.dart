@@ -3,7 +3,6 @@ import 'package:intl/intl.dart';
 import '../../domain/models/index.dart';
 import '../models/index.dart';
 
-// TODO: Добавить проверки при парсинге - DateFormat, DateTime
 extension on WeatherModelData {
   WeatherModelDomain toWeatherModelDomain() {
     final currentTemperatureDomain = TemperatureModelDomain(
