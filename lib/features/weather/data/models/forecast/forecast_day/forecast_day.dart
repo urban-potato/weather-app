@@ -24,4 +24,9 @@ class ForecastDayModelData {
       _$ForecastDayModelDataFromJson(json);
 
   Map<String, dynamic> toJson() => _$ForecastDayModelDataToJson(this);
+
+  @override
+  String toString() {
+    return 'ForecastDayModelData(date: $date, day: $day, astro: $astro, hour: $hour)';
+  }
 }

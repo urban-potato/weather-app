@@ -1,87 +1,78 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../../../../../../../app/router/router.gr.dart';
+import '../../../../../../../../shared/router/router.gr.dart';
 
 import '../../../../../../../../shared/ui/card_tile/index.dart';
 import '../../../../../../shared/ui/widget_title/index.dart';
-import '../../../../../../../../shared/utils/size_helpers/index.dart';
+import '../../../../../../../../shared/utils/size_helper/index.dart';
+import '../../../../../../shared/utils/day_helper/index.dart';
 import '../../../../../models/index.dart';
+import '../../../../../provider/weather_cubit.dart';
+import '../../../../../provider/weather_state.dart';
 import 'components/daily_temperature_range.dart';
 
-class WeeklyForecastPreviewItem {
-  WeeklyForecastPreviewItem({
-    required this.date,
-    required this.condition,
-    required this.maxTemp,
-    required this.minTemp,
-  });
+class WeeklyForecastPreviewWidget extends StatefulWidget {
+  const WeeklyForecastPreviewWidget({super.key});
 
-  final String date;
-  final ConditionModelUI condition;
-  final int maxTemp;
-  final int minTemp;
+  @override
+  State<WeeklyForecastPreviewWidget> createState() =>
+      _WeeklyForecastPreviewWidgetState();
 }
 
-class WeekForecastPreviewWidget extends StatelessWidget {
-  const WeekForecastPreviewWidget({super.key});
+class _WeeklyForecastPreviewWidgetState
+    extends State<WeeklyForecastPreviewWidget>
+    with AutomaticKeepAliveClientMixin<WeeklyForecastPreviewWidget> {
+  @override
+  bool get wantKeepAlive => true;
 
   @override
   Widget build(BuildContext context) {
-    final data = [
-      WeeklyForecastPreviewItem(
-        date: 'Tomorrow',
-        condition: const ConditionModelUI(
-          text: 'Patchy rain nearby',
-          iconPath: 'https://cdn.weatherapi.com/weather/64x64/day/116.png',
-        ),
-        maxTemp: 20,
-        minTemp: 14,
-      ),
-      WeeklyForecastPreviewItem(
-        date: 'Mon',
-        condition: const ConditionModelUI(
-          text: 'Rain',
-          iconPath: 'https://cdn.weatherapi.com/weather/64x64/day/353.png',
-        ),
-        maxTemp: 16,
-        minTemp: 12,
-      ),
-      WeeklyForecastPreviewItem(
-        date: 'Tue',
-        condition: const ConditionModelUI(
-          text: 'Sunny',
-          iconPath: 'https://cdn.weatherapi.com/weather/64x64/day/113.png',
-        ),
-        maxTemp: 22,
-        minTemp: 16,
-      ),
-    ];
+    super.build(context);
 
-    final reducedData = data.take(3).toList();
+    print('WeekForecastPreviewWidget build');
 
-    return GestureDetector(
-      onTap: () => context.router.push(const WeeklyForecastRoute()),
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          const WidgetTitle(title: 'Weekly forecast'),
+    return Column(
+      mainAxisSize: MainAxisSize.min,
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        const WidgetTitle(title: 'Weekly forecast'),
 
-          CardTile(
-            child: Column(
-              children: [
-                ...reducedData.map((e) => _InfoRow(item: e)),
-                Text(
-                  'More info...',
-                  textAlign: TextAlign.center,
-                  style: Theme.of(context).textTheme.bodySmall,
+        BlocSelector<WeatherCubit, WeatherState, WeeklyForecastPreviewModelUI?>(
+          selector: (state) => state.weather?.today.weeklyForecastPreview,
+          builder: (context, state) {
+            if (state == null) {
+              print(
+                'WeekForecastPreviewWidget BlocSelector return CircularProgressIndicator',
+              );
+              return const Center(child: CircularProgressIndicator());
+            } else {
+              print(
+                'WeekForecastPreviewWidget BlocSelector return GestureDetector',
+              );
+
+              return GestureDetector(
+                onTap: () => context.router.push(const WeeklyForecastRoute()),
+                child: CardTile(
+                  child: Column(
+                    children: [
+                      ...state.weeklyForecastPreviewDayList.map(
+                        (e) => _InfoRow(item: e),
+                      ),
+                      Text(
+                        'More info...',
+                        textAlign: TextAlign.center,
+                        style: Theme.of(context).textTheme.bodySmall,
+                      ),
+                    ],
+                  ),
                 ),
-              ],
-            ),
-          ),
-        ],
-      ),
+              );
+            }
+          },
+        ),
+      ],
     );
   }
 }
@@ -89,7 +80,7 @@ class WeekForecastPreviewWidget extends StatelessWidget {
 class _InfoRow extends StatelessWidget {
   const _InfoRow({required this.item});
 
-  final WeeklyForecastPreviewItem item;
+  final WeeklyForecastPreviewDayModelUI item;
 
   @override
   Widget build(BuildContext context) {
@@ -108,6 +99,8 @@ class _InfoRow extends StatelessWidget {
         final temperatureRowMaxWidth = constraintsMaxWidth * 0.5;
         final firstRowMaxWidth = constraintsMaxWidth - temperatureRowMaxWidth;
 
+        final day = getDay(item.dateTime);
+
         return Row(
           children: [
             ConstrainedBox(
@@ -122,7 +115,7 @@ class _InfoRow extends StatelessWidget {
                   ),
                   Flexible(
                     child: Text(
-                      item.date,
+                      day,
                       style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                         fontWeight: FontWeight.bold,
                       ),
@@ -154,8 +147,8 @@ class _InfoRow extends StatelessWidget {
                       maxWidth: temperatureRowMaxWidth,
                     ),
                     child: DailyTemperatureRangeWidget(
-                      maxTemp: item.maxTemp.toString(),
-                      minTemp: item.minTemp.toString(),
+                      maxTemp: item.temperatureRange.maximum.celsius.toString(),
+                      minTemp: item.temperatureRange.minimum.celsius.toString(),
                     ),
                   ),
                 ],

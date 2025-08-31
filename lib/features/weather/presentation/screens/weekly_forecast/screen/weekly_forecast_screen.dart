@@ -2,7 +2,7 @@ import 'package:auto_route/annotations.dart';
 import 'package:flutter/material.dart';
 
 import '../../../../../../shared/ui/custom_sliver_app_bar/index.dart';
-import '../../../../../../shared/utils/size_helpers/index.dart';
+import '../../../../../../shared/utils/size_helper/index.dart';
 import '../widgets/weekly_forecast_list/index.dart';
 
 @RoutePage()

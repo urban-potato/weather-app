@@ -22,4 +22,8 @@ class WeatherModelData {
       _$WeatherModelDataFromJson(json);
 
   Map<String, dynamic> toJson() => _$WeatherModelDataToJson(this);
+
+  @override
+  String toString() =>
+      'WeatherModelData(location: $location, current: $current, forecast: $forecast)';
 }

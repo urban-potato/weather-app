@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../../../../../../../shared/utils/size_helpers/index.dart';
+import '../../../../../../../../shared/utils/size_helper/index.dart';
 import 'components/day_tile.dart';
 
 class MoonInfoListWidget extends StatelessWidget {

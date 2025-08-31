@@ -1,18 +1,16 @@
 import 'package:flutter/material.dart';
 
-import '../../../../../../shared/utils/size_helpers/index.dart';
+import '../../../../../../shared/utils/size_helper/index.dart';
 
-class SunData {
-  SunData({required this.sunriseTime, required this.sunsetTime});
+class SunInfoWidget extends StatelessWidget {
+  const SunInfoWidget({
+    super.key,
+    required this.sunriseTime,
+    required this.sunsetTime,
+  });
 
   final String sunriseTime;
   final String sunsetTime;
-}
-
-class SunInfoWidget extends StatelessWidget {
-  const SunInfoWidget({super.key, required this.data});
-
-  final SunData data;
 
   @override
   Widget build(BuildContext context) {
@@ -32,8 +30,8 @@ class SunInfoWidget extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  _InfoText(time: data.sunriseTime, label: 'Sunrise'),
-                  _InfoText(time: data.sunsetTime, label: 'Sunset'),
+                  _InfoText(time: sunriseTime, label: 'Sunrise'),
+                  _InfoText(time: sunsetTime, label: 'Sunset'),
                 ],
               ),
             ),

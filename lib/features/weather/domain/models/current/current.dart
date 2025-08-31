@@ -8,6 +8,7 @@ import '../visibility/visibility.dart';
 import '../wind/wind.dart';
 
 class CurrentModelDomain extends Equatable {
+  final String lastUpdated;
   final TemperatureModelDomain temperature;
   final ConditionModelDomain condition;
   final WindModelDomain wind;
@@ -19,6 +20,7 @@ class CurrentModelDomain extends Equatable {
   final AirQualityModelDomain airQuality;
 
   const CurrentModelDomain({
+    required this.lastUpdated,
     required this.temperature,
     required this.condition,
     required this.wind,
@@ -32,6 +34,7 @@ class CurrentModelDomain extends Equatable {
 
   @override
   List<Object?> get props => [
+    lastUpdated,
     temperature,
     condition,
     wind,

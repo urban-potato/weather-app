@@ -1,20 +1,18 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 
-import '../../../../../../../../../app/router/router.gr.dart';
-import '../../../../../../../../../shared/utils/size_helpers/index.dart';
+import '../../../../../../../../../shared/router/router.gr.dart';
+import '../../../../../../../../../shared/utils/size_helper/index.dart';
 
-class MoonInfoItemData {
-  MoonInfoItemData({required this.phaseImagePath, required this.phase});
+class MoonInfoWidget extends StatelessWidget {
+  const MoonInfoWidget({
+    super.key,
+    required this.phaseImagePath,
+    required this.phase,
+  });
 
   final String phaseImagePath;
   final String phase;
-}
-
-class MoonInfoWidget extends StatelessWidget {
-  const MoonInfoWidget({super.key, required this.item});
-
-  final MoonInfoItemData item;
 
   @override
   Widget build(BuildContext context) {
@@ -39,7 +37,7 @@ class MoonInfoWidget extends StatelessWidget {
                   Flexible(
                     flex: 3,
                     child: Text(
-                      item.phase,
+                      phase,
                       style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                         fontWeight: FontWeight.bold,
                       ),
@@ -51,7 +49,7 @@ class MoonInfoWidget extends StatelessWidget {
                     flex: 1,
                     child: ConstrainedBox(
                       constraints: BoxConstraints(maxWidth: iconSize),
-                      child: Image.asset(item.phaseImagePath),
+                      child: Image.asset(phaseImagePath),
                     ),
                   ),
                 ],

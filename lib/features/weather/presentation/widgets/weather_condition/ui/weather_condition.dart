@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../../../../../shared/utils/size_helpers/index.dart';
+import '../../../../../../shared/utils/size_helper/index.dart';
 
 class WeatherConditionWidget extends StatelessWidget {
   const WeatherConditionWidget({

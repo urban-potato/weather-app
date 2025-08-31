@@ -1,80 +1,41 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:intl/intl.dart';
 
 import '../../../../../../../../shared/ui/card_tile/index.dart';
 import '../../../../../../shared/ui/responsive_info_list/index.dart';
+import '../../../../../../shared/utils/wind_direction_helper/index.dart';
+import '../../../../../models/index.dart';
+import '../../../../../provider/weather_cubit.dart';
+import '../../../../../provider/weather_state.dart';
 import '../../../../../widgets/sun_info/index.dart';
 import '../../../../../../shared/ui/widget_title/index.dart';
-import '../../../../../../../../shared/utils/size_helpers/index.dart';
-import '../../../../../../shared/utils/moon_phase_image_path_helper/index.dart';
+import '../../../../../../../../shared/utils/size_helper/index.dart';
 import 'components/moon_info.dart';
 import 'components/wind_info.dart';
 
-class ExtraWeatherInfoData {
-  ExtraWeatherInfoData({
-    required this.feelsLike,
-    required this.humidity,
-    required this.chanceOfRain,
-    required this.chanceOfSnow,
-    required this.pressure,
-    required this.visibility,
-    required this.uv,
-  });
-
-  final int feelsLike;
-  final int humidity;
-  final int chanceOfRain;
-  final int chanceOfSnow;
-  final int pressure;
-  final int visibility;
-  final int uv;
-}
-
-class WindData {
-  WindData({required this.speed, required this.direction});
-
-  final double speed;
-  final String direction;
-}
-
-class AdditionalInfoWidget extends StatelessWidget {
+class AdditionalInfoWidget extends StatefulWidget {
   const AdditionalInfoWidget({super.key});
 
   @override
+  State<AdditionalInfoWidget> createState() => _AdditionalInfoWidgetState();
+}
+
+class _AdditionalInfoWidgetState extends State<AdditionalInfoWidget>
+    with AutomaticKeepAliveClientMixin<AdditionalInfoWidget> {
+  @override
+  bool get wantKeepAlive => true;
+
+  @override
   Widget build(BuildContext context) {
-    final extraWeatherInfoData = ExtraWeatherInfoData(
-      feelsLike: 25,
-      chanceOfRain: 95,
-      chanceOfSnow: 0,
-      humidity: 73,
-      pressure: 1017,
-      visibility: 10,
-      uv: 3,
-    );
+    super.build(context);
 
-    final windData = WindData(direction: 'West', speed: 17.6);
-    final sunData = SunData(sunriseTime: '05:28', sunsetTime: '20:45');
-
-    final moonInfoItem = MoonInfoItemData(
-      phase: 'First Quarter',
-      phaseImagePath: getMoonPhaseImagePath('First Quarter'),
-    );
+    print('AdditionalInfoWidget build');
 
     ScreenBasedSize.instance.init(context);
 
     final contentMaxWidth = ScreenBasedSize.instance.getContentMaxWidth();
     final tilesSpacing = ScreenBasedSize.instance.scaleByUnit(2.7);
-
-    final extraWeatherData = <String, String>{
-      'Feels like': '${extraWeatherInfoData.feelsLike}°',
-      'Humidity': '${extraWeatherInfoData.humidity}%',
-      'Pressure': '${extraWeatherInfoData.pressure} mbar',
-      'Visibility': '${extraWeatherInfoData.visibility} km',
-    };
-
-    final precipitationData = <String, String>{
-      'Chance of rain': '${extraWeatherInfoData.chanceOfRain}%',
-      'Chance of snow': '${extraWeatherInfoData.chanceOfSnow}%',
-    };
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -92,16 +53,10 @@ class AdditionalInfoWidget extends StatelessWidget {
                 Flexible(
                   child: Column(
                     spacing: tilesSpacing,
-                    children: [
-                      CardTile(
-                        child: WindInfoWidget(
-                          windDirection: windData.direction,
-                          windSpeed: windData.speed,
-                        ),
-                      ),
-
-                      CardTile(child: SunInfoWidget(data: sunData)),
-                      CardTile(child: MoonInfoWidget(item: moonInfoItem)),
+                    children: const [
+                      _WindInfoCard(),
+                      _SunInfoCard(),
+                      _MoonInfoCard(),
                     ],
                   ),
                 ),
@@ -109,13 +64,9 @@ class AdditionalInfoWidget extends StatelessWidget {
                 Flexible(
                   child: Column(
                     spacing: tilesSpacing,
-                    children: [
-                      CardTile(
-                        child: ResponsiveInfoList(data: extraWeatherData),
-                      ),
-                      CardTile(
-                        child: ResponsiveInfoList(data: precipitationData),
-                      ),
+                    children: const [
+                      _OtherWeatherInfoCard(),
+                      _PrecipitationInfoCard(),
                     ],
                   ),
                 ),
@@ -124,6 +75,158 @@ class AdditionalInfoWidget extends StatelessWidget {
           ),
         ),
       ],
+    );
+  }
+}
+
+class _PrecipitationInfoCard extends StatelessWidget {
+  const _PrecipitationInfoCard({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    print('AdditionalInfoWidget _PrecipitationInfoCard build');
+
+    return BlocSelector<WeatherCubit, WeatherState, PrecipitationModelUI?>(
+      selector: (state) => state.weather?.today.additionalInfo.precipitation,
+      builder: (context, state) {
+        if (state == null) {
+          print(
+            'AdditionalInfoWidget BlocSelector return precipitationData CircularProgressIndicator',
+          );
+          return const Center(child: CircularProgressIndicator());
+        } else {
+          print('AdditionalInfoWidget BlocSelector return precipitationData');
+
+          final precipitationData = {
+            'Chance of rain': '${state.chanceOfRain}%',
+            'Chance of snow': '${state.chanceOfSnow}%',
+          };
+
+          return CardTile(child: ResponsiveInfoList(data: precipitationData));
+        }
+      },
+    );
+  }
+}
+
+class _OtherWeatherInfoCard extends StatelessWidget {
+  const _OtherWeatherInfoCard({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    print('AdditionalInfoWidget _OtherWeatherInfoCard build');
+
+    return BlocSelector<WeatherCubit, WeatherState, OtherWeatherInfoModelUI?>(
+      selector: (state) => state.weather?.today.additionalInfo.otherWeatherInfo,
+      builder: (context, state) {
+        if (state == null) {
+          print(
+            'AdditionalInfoWidget BlocSelector return otherWeatherData CircularProgressIndicator',
+          );
+          return const Center(child: CircularProgressIndicator());
+        } else {
+          print('AdditionalInfoWidget BlocSelector return otherWeatherData');
+
+          final otherWeatherData = {
+            'Feels like': '${state.feelsLike.celsius}°',
+            'Humidity': '${state.humidity}%',
+            'Pressure': '${state.pressure.millibars} mbar',
+            'Visibility': '${state.visibility.kilometers} km',
+          };
+
+          return CardTile(child: ResponsiveInfoList(data: otherWeatherData));
+        }
+      },
+    );
+  }
+}
+
+class _MoonInfoCard extends StatelessWidget {
+  const _MoonInfoCard({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    print('AdditionalInfoWidget _MoonInfoCard build');
+
+    return BlocSelector<WeatherCubit, WeatherState, MoonModelUI?>(
+      selector: (state) => state.weather?.today.additionalInfo.moon,
+      builder: (context, state) {
+        if (state == null) {
+          print(
+            'AdditionalInfoWidget BlocSelector return MoonInfoWidget CircularProgressIndicator',
+          );
+          return const Center(child: CircularProgressIndicator());
+        } else {
+          print('AdditionalInfoWidget BlocSelector return MoonInfoWidget');
+
+          return CardTile(
+            child: MoonInfoWidget(
+              phase: state.phase,
+              phaseImagePath: state.phaseImagePath,
+            ),
+          );
+        }
+      },
+    );
+  }
+}
+
+class _SunInfoCard extends StatelessWidget {
+  const _SunInfoCard({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    print('AdditionalInfoWidget _SunInfoCard build');
+
+    return BlocSelector<WeatherCubit, WeatherState, SunModelUI?>(
+      selector: (state) => state.weather?.today.additionalInfo.sun,
+      builder: (context, state) {
+        if (state == null) {
+          print(
+            'AdditionalInfoWidget BlocSelector return SunInfoWidget CircularProgressIndicator',
+          );
+          return const Center(child: CircularProgressIndicator());
+        } else {
+          print('AdditionalInfoWidget BlocSelector return SunInfoWidget');
+
+          return CardTile(
+            child: SunInfoWidget(
+              sunriseTime: DateFormat.Hm().format(state.sunrise),
+              sunsetTime: DateFormat.Hm().format(state.sunset),
+            ),
+          );
+        }
+      },
+    );
+  }
+}
+
+class _WindInfoCard extends StatelessWidget {
+  const _WindInfoCard({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    print('AdditionalInfoWidget _WindInfoCard build');
+
+    return BlocSelector<WeatherCubit, WeatherState, WindModelUI?>(
+      selector: (state) => state.weather?.today.additionalInfo.wind,
+      builder: (context, state) {
+        if (state == null) {
+          print(
+            'AdditionalInfoWidget BlocSelector return WindInfoWidget CircularProgressIndicator',
+          );
+          return const Center(child: CircularProgressIndicator());
+        } else {
+          print('AdditionalInfoWidget BlocSelector return WindInfoWidget');
+
+          return CardTile(
+            child: WindInfoWidget(
+              windDirection: getFullWindDirection(state.direction),
+              windSpeed: '${state.speed.kilometrePerHour} km/h',
+            ),
+          );
+        }
+      },
     );
   }
 }

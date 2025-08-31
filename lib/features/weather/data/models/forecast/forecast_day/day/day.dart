@@ -57,4 +57,9 @@ class DayModelData {
       _$DayModelDataFromJson(json);
 
   Map<String, dynamic> toJson() => _$DayModelDataToJson(this);
+
+  @override
+  String toString() {
+    return 'DayModelData(maxTempC: $maxTempC, maxTempF: $maxTempF, minTempC: $minTempC, minTempF: $minTempF, avgTempC: $avgTempC, avgTempF: $avgTempF, maxWindMph: $maxWindMph, maxWindKph: $maxWindKph, avgVisKm: $avgVisKm, avgVisMiles: $avgVisMiles, avgHumidity: $avgHumidity, dailyChanceOfRain: $dailyChanceOfRain, dailyChanceOfSnow: $dailyChanceOfSnow, condition: $condition, uv: $uv)';
+  }
 }

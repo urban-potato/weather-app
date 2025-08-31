@@ -7,6 +7,8 @@ part 'current.g.dart';
 
 @JsonSerializable(explicitToJson: true)
 class CurrentModelData {
+  @JsonKey(name: 'last_updated')
+  final String lastUpdated;
   @JsonKey(name: 'temp_c')
   final double tempC;
   @JsonKey(name: 'temp_f')
@@ -36,6 +38,7 @@ class CurrentModelData {
   final AirQualityModelData airQuality;
 
   const CurrentModelData({
+    required this.lastUpdated,
     required this.tempC,
     required this.tempF,
     required this.condition,
@@ -57,4 +60,9 @@ class CurrentModelData {
       _$CurrentModelDataFromJson(json);
 
   Map<String, dynamic> toJson() => _$CurrentModelDataToJson(this);
+
+  @override
+  String toString() {
+    return 'CurrentModelData(lastUpdated: $lastUpdated, tempC: $tempC, tempF: $tempF, condition: $condition, windMph: $windMph, windKph: $windKph, windDir: $windDir, pressureMb: $pressureMb, pressureIn: $pressureIn, humidity: $humidity, feelslikeC: $feelslikeC, feelslikeF: $feelslikeF, visKm: $visKm, visMiles: $visMiles, uv: $uv, airQuality: $airQuality)';
+  }
 }

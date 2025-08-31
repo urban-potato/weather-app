@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../../../../shared/utils/size_helpers/index.dart';
+import '../../../../../shared/utils/size_helper/index.dart';
 
 class ResponsiveInfoList extends StatelessWidget {
   const ResponsiveInfoList({super.key, required this.data});

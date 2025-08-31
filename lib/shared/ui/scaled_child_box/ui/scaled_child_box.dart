@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../../utils/size_helpers/index.dart';
+import '../../../utils/size_helper/index.dart';
 
 class ScaledChildBox extends StatelessWidget {
   const ScaledChildBox({

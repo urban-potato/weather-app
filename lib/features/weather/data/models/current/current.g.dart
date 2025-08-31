@@ -8,6 +8,7 @@ part of 'current.dart';
 
 CurrentModelData _$CurrentModelDataFromJson(Map<String, dynamic> json) =>
     CurrentModelData(
+      lastUpdated: json['last_updated'] as String,
       tempC: (json['temp_c'] as num).toDouble(),
       tempF: (json['temp_f'] as num).toDouble(),
       condition: ConditionModelData.fromJson(
@@ -31,6 +32,7 @@ CurrentModelData _$CurrentModelDataFromJson(Map<String, dynamic> json) =>
 
 Map<String, dynamic> _$CurrentModelDataToJson(CurrentModelData instance) =>
     <String, dynamic>{
+      'last_updated': instance.lastUpdated,
       'temp_c': instance.tempC,
       'temp_f': instance.tempF,
       'condition': instance.condition.toJson(),

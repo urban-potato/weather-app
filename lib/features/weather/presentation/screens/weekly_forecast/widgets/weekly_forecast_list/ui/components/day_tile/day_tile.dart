@@ -6,7 +6,7 @@ import '../../../../../../../models/index.dart';
 import '../../../../../../../widgets/sun_info/index.dart';
 import '../../../../../../../widgets/uv_info/index.dart';
 import '../../../../../../../../shared/ui/widget_title/index.dart';
-import '../../../../../../../../../../shared/utils/size_helpers/index.dart';
+import '../../../../../../../../../../shared/utils/size_helper/index.dart';
 import 'components/main_forecast_info.dart';
 
 class MainForecastWidgetData {
@@ -27,14 +27,16 @@ class WeatherForecastDayData {
   WeatherForecastDayData({
     required this.date,
     required this.mainForecastWidgetData,
-    required this.sunData,
     required this.extraWeatherData,
+    required this.sunriseTime,
+    required this.sunsetTime,
   });
 
   final String date;
   final MainForecastWidgetData mainForecastWidgetData;
-  final SunData sunData;
   final ExtraWeatherData extraWeatherData;
+  final String sunriseTime;
+  final String sunsetTime;
 }
 
 class ExtraWeatherData {
@@ -73,8 +75,9 @@ class DayTileWidget extends StatelessWidget {
           WidgetTitle(title: data.date),
           _InfoWidgetsRow(
             mainForecastWidgetData: data.mainForecastWidgetData,
-            sunData: data.sunData,
             extraWeatherData: data.extraWeatherData,
+            sunriseTime: data.sunriseTime,
+            sunsetTime: data.sunsetTime,
           ),
         ],
       ),
@@ -85,13 +88,15 @@ class DayTileWidget extends StatelessWidget {
 class _InfoWidgetsRow extends StatelessWidget {
   const _InfoWidgetsRow({
     required this.mainForecastWidgetData,
-    required this.sunData,
     required this.extraWeatherData,
+    required this.sunriseTime,
+    required this.sunsetTime,
   });
 
   final MainForecastWidgetData mainForecastWidgetData;
-  final SunData sunData;
   final ExtraWeatherData extraWeatherData;
+  final String sunriseTime;
+  final String sunsetTime;
 
   @override
   Widget build(BuildContext context) {
@@ -130,7 +135,12 @@ class _InfoWidgetsRow extends StatelessWidget {
                 uv: extraWeatherData.uv,
               ),
               UvInfoWidget(uv: extraWeatherData.uv),
-              CardTile(child: SunInfoWidget(data: sunData)),
+              CardTile(
+                child: SunInfoWidget(
+                  sunriseTime: sunriseTime,
+                  sunsetTime: sunsetTime,
+                ),
+              ),
             ],
           ),
         ),

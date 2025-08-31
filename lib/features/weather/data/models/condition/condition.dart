@@ -18,4 +18,8 @@ class ConditionModelData {
       _$ConditionModelDataFromJson(json);
 
   Map<String, dynamic> toJson() => _$ConditionModelDataToJson(this);
+
+  @override
+  String toString() =>
+      'ConditionModelData(text: $text, icon: $icon, code: $code)';
 }

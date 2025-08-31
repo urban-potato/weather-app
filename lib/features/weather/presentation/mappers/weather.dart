@@ -2,11 +2,13 @@ import '../../domain/models/index.dart';
 import '../../shared/utils/moon_phase_image_path_helper/index.dart';
 import '../models/index.dart';
 
-extension on WeatherModelDomain {
+extension ConvertToWeatherModelUI on WeatherModelDomain {
   WeatherModelUI toWeatherModelUI() {
     final todayDomain = forecast.forecastDayList[0];
+    final tomorrowDomain = forecast.forecastDayList[1];
 
     final todayMainWeatherUI = MainWeatherModelUI(
+      lastUpdated: current.lastUpdated,
       temperature: TemperatureModelUI(
         celsius: current.temperature.celsius.round(),
         fahrenheit: current.temperature.fahrenheit.round(),
@@ -29,40 +31,56 @@ extension on WeatherModelDomain {
       airQualityGbDefraIndex: current.airQuality.gbDefraIndex,
     );
 
-    final weeklyForecastPreviewUI = forecast.forecastDayList.take(3).map((f) {
-      return WeeklyForecastPreviewDayModelUI(
-        dateTime: f.date,
-        condition: ConditionModelUI(
-          text: f.day.condition.text,
-          iconPath: f.day.condition.iconPath,
-        ),
-        temperatureRange: TemperatureRangeModelUI(
-          maximum: TemperatureModelUI(
-            celsius: f.day.maxTemp.celsius.round(),
-            fahrenheit: f.day.maxTemp.fahrenheit.round(),
+    final weeklyForecastPreviewUI = WeeklyForecastPreviewModelUI(
+      weeklyForecastPreviewDayList: forecast.forecastDayList.take(3).map((f) {
+        return WeeklyForecastPreviewDayModelUI(
+          dateTime: f.date,
+          condition: ConditionModelUI(
+            text: f.day.condition.text,
+            iconPath: f.day.condition.iconPath,
           ),
-          minimum: TemperatureModelUI(
-            celsius: f.day.minTemp.celsius.round(),
-            fahrenheit: f.day.minTemp.fahrenheit.round(),
+          temperatureRange: TemperatureRangeModelUI(
+            maximum: TemperatureModelUI(
+              celsius: f.day.maxTemp.celsius.round(),
+              fahrenheit: f.day.maxTemp.fahrenheit.round(),
+            ),
+            minimum: TemperatureModelUI(
+              celsius: f.day.minTemp.celsius.round(),
+              fahrenheit: f.day.minTemp.fahrenheit.round(),
+            ),
           ),
-        ),
-      );
-    }).toList();
+        );
+      }).toList(),
+    );
 
-    final todayHourlyForecastUi = todayDomain.hourlyForecast.map((h) {
-      return HourModelUI(
-        dateTime: h.dateTime,
-        conditionIconPath: h.condition.iconPath,
-        temperature: TemperatureModelUI(
-          celsius: h.temperature.celsius.round(),
-          fahrenheit: h.temperature.fahrenheit.round(),
-        ),
-        windSpeed: WindSpeedModelUI(
-          milePerHour: h.windSpeed.milePerHour,
-          kilometrePerHour: h.windSpeed.kilometrePerHour,
-        ),
-      );
-    }).toList();
+    final todayHoursList = todayDomain.hourlyForecast
+        .map(_mapHourModelDomainToHourModelUI)
+        .where((h) {
+          final localDateTime = location.localtime;
+          final hDateTime = h.dateTime;
+
+          if (hDateTime.year == localDateTime.year &&
+              hDateTime.month == localDateTime.month &&
+              hDateTime.day == localDateTime.day &&
+              hDateTime.hour >= localDateTime.hour) {
+            return true;
+          }
+          return false;
+        })
+        .toList();
+
+    if (todayHoursList.length < 24) {
+      final tomorrowHoursList = tomorrowDomain.hourlyForecast
+          .map(_mapHourModelDomainToHourModelUI)
+          .take(24 - todayHoursList.length);
+
+      todayHoursList.addAll(tomorrowHoursList);
+    }
+
+    final todayHourlyForecastUi = HourlyForecastModelUI(
+      localtime: location.localtime,
+      hoursList: todayHoursList,
+    );
 
     final todayAdditionalInfoUI = AdditionalInfoModelUI(
       wind: WindModelUI(
@@ -83,18 +101,20 @@ extension on WeatherModelDomain {
         moonset: todayDomain.astro.moon.moonset,
         illumination: todayDomain.astro.moon.moonIllumination.round(),
       ),
-      feelsLike: TemperatureModelUI(
-        celsius: current.feelsLike.celsius.round(),
-        fahrenheit: current.feelsLike.fahrenheit.round(),
-      ),
-      humidity: current.humidity,
-      pressure: PressureModelUI(
-        millibars: current.pressure.millibars.round(),
-        inches: current.pressure.inches.round(),
-      ),
-      visibility: VisibilityModelUI(
-        kilometers: current.visibility.kilometers.round(),
-        miles: current.visibility.miles.round(),
+      otherWeatherInfo: OtherWeatherInfoModelUI(
+        feelsLike: TemperatureModelUI(
+          celsius: current.feelsLike.celsius.round(),
+          fahrenheit: current.feelsLike.fahrenheit.round(),
+        ),
+        humidity: current.humidity,
+        pressure: PressureModelUI(
+          millibars: current.pressure.millibars.round(),
+          inches: current.pressure.inches.round(),
+        ),
+        visibility: VisibilityModelUI(
+          kilometers: current.visibility.kilometers.round(),
+          miles: current.visibility.miles.round(),
+        ),
       ),
       precipitation: PrecipitationModelUI(
         chanceOfRain: todayDomain.day.precipitation.chanceOfRain,
@@ -155,7 +175,11 @@ extension on WeatherModelDomain {
     }).toList();
 
     return WeatherModelUI(
-      location: LocationModelUI(name: location.name, country: location.country),
+      location: LocationModelUI(
+        name: location.name,
+        country: location.country,
+        localtime: location.localtime,
+      ),
       today: TodayModelUI(
         mainWeather: todayMainWeatherUI,
         weeklyForecastPreview: weeklyForecastPreviewUI,
@@ -166,6 +190,22 @@ extension on WeatherModelDomain {
         forecastDayList: weeklyForecastDayList,
       ),
       weeklyMoon: WeeklyMoonModelUI(moonList: weeklyMoonList),
+      lastUpdated: DateTime.now(),
+    );
+  }
+
+  HourModelUI _mapHourModelDomainToHourModelUI(HourModelDomain h) {
+    return HourModelUI(
+      dateTime: h.dateTime,
+      conditionIconPath: h.condition.iconPath,
+      temperature: TemperatureModelUI(
+        celsius: h.temperature.celsius.round(),
+        fahrenheit: h.temperature.fahrenheit.round(),
+      ),
+      windSpeed: WindSpeedModelUI(
+        milePerHour: h.windSpeed.milePerHour,
+        kilometrePerHour: h.windSpeed.kilometrePerHour,
+      ),
     );
   }
 }

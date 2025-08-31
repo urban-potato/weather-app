@@ -10,8 +10,8 @@ class DailyTemperatureRangeWidget extends StatelessWidget {
     this.sizeRatio = 1,
   });
 
-  final int maxTemp;
-  final int minTemp;
+  final String maxTemp;
+  final String minTemp;
   final double sizeRatio;
 
   @override
@@ -22,13 +22,9 @@ class DailyTemperatureRangeWidget extends StatelessWidget {
         mainAxisSize: MainAxisSize.min,
         spacing: 8,
         children: [
-          Flexible(
-            child: _TemperatureValueText(temperature: maxTemp.toString()),
-          ),
+          Flexible(child: _TemperatureValueText(temperature: maxTemp)),
           Text('/', style: Theme.of(context).textTheme.bodyMedium),
-          Flexible(
-            child: _TemperatureValueText(temperature: minTemp.toString()),
-          ),
+          Flexible(child: _TemperatureValueText(temperature: minTemp)),
         ],
       ),
     );

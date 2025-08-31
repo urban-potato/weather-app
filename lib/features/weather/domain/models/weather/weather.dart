@@ -1,8 +1,10 @@
+import 'package:equatable/equatable.dart';
+
 import '../current/current.dart';
 import '../forecast/forecast.dart';
 import '../location/location.dart';
 
-class WeatherModelDomain {
+class WeatherModelDomain extends Equatable {
   final LocationModelDomain location;
   final CurrentModelDomain current;
   final ForecastModelDomain forecast;
@@ -12,4 +14,7 @@ class WeatherModelDomain {
     required this.current,
     required this.forecast,
   });
+
+  @override
+  List<Object?> get props => [location, current, forecast];
 }

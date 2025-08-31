@@ -30,4 +30,9 @@ class HourModelData {
       _$HourModelDataFromJson(json);
 
   Map<String, dynamic> toJson() => _$HourModelDataToJson(this);
+
+  @override
+  String toString() {
+    return 'HourModelData(time: $time, tempC: $tempC, tempF: $tempF, condition: $condition, windMph: $windMph, windKph: $windKph)';
+  }
 }

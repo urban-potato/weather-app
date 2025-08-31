@@ -1,4 +1,6 @@
-class MoonModelUI {
+import 'package:equatable/equatable.dart';
+
+class MoonModelUI extends Equatable {
   final String phaseImagePath;
   final String phase;
   final DateTime? moonrise;
@@ -12,4 +14,13 @@ class MoonModelUI {
     required this.moonset,
     required this.illumination,
   });
+
+  @override
+  List<Object?> get props => [
+    phaseImagePath,
+    phase,
+    moonrise,
+    moonset,
+    illumination,
+  ];
 }

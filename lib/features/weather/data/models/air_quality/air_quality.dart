@@ -28,4 +28,9 @@ class AirQualityModelData {
       _$AirQualityModelDataFromJson(json);
 
   Map<String, dynamic> toJson() => _$AirQualityModelDataToJson(this);
+
+  @override
+  String toString() {
+    return 'AirQualityModelData(co: $co, no2: $no2, o3: $o3, so2: $so2, pm25: $pm25, pm10: $pm10, gbDefraIndex: $gbDefraIndex)';
+  }
 }

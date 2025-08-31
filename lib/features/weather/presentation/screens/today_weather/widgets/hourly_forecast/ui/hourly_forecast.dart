@@ -1,72 +1,31 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:intl/intl.dart';
 
 import '../../../../../../../../shared/ui/card_tile/index.dart';
 import '../../../../../../shared/ui/widget_title/index.dart';
-import '../../../../../../../../shared/utils/size_helpers/index.dart';
+import '../../../../../../../../shared/utils/size_helper/index.dart';
+import '../../../../../models/index.dart';
+import '../../../../../provider/weather_cubit.dart';
+import '../../../../../provider/weather_state.dart';
 
-class ForecastDay {
-  ForecastDay({
-    required this.time,
-    required this.icon,
-    required this.tempetarute,
-    required this.windSpeed,
-  });
-
-  final String time;
-  final String icon;
-  final int tempetarute;
-  final double windSpeed;
-}
-
-class HourlyForecastWidget extends StatelessWidget {
+class HourlyForecastWidget extends StatefulWidget {
   const HourlyForecastWidget({super.key});
 
   @override
+  State<HourlyForecastWidget> createState() => _HourlyForecastWidgetState();
+}
+
+class _HourlyForecastWidgetState extends State<HourlyForecastWidget>
+    with AutomaticKeepAliveClientMixin<HourlyForecastWidget> {
+  @override
+  bool get wantKeepAlive => true;
+
+  @override
   Widget build(BuildContext context) {
-    final data = [
-      ForecastDay(
-        time: '16:00',
-        tempetarute: 16,
-        windSpeed: 19.1,
-        icon: 'https://cdn.weatherapi.com/weather/64x64/day/353.png',
-      ),
-      ForecastDay(
-        time: '17:00',
-        tempetarute: 22,
-        windSpeed: 16.9,
-        icon: 'https://cdn.weatherapi.com/weather/64x64/day/176.png',
-      ),
-      ForecastDay(
-        time: '18:00',
-        tempetarute: 22,
-        windSpeed: 15.5,
-        icon: 'https://cdn.weatherapi.com/weather/64x64/day/113.png',
-      ),
-      ForecastDay(
-        time: '19:00',
-        tempetarute: 21,
-        windSpeed: 12.2,
-        icon: 'https://cdn.weatherapi.com/weather/64x64/day/116.png',
-      ),
-      ForecastDay(
-        time: '20:00',
-        tempetarute: 20,
-        windSpeed: 11.2,
-        icon: 'https://cdn.weatherapi.com/weather/64x64/day/116.png',
-      ),
-      ForecastDay(
-        time: '21:00',
-        tempetarute: 20,
-        windSpeed: 13.7,
-        icon: 'https://cdn.weatherapi.com/weather/64x64/night/116.png',
-      ),
-      ForecastDay(
-        time: '22:00',
-        tempetarute: 20,
-        windSpeed: 11.5,
-        icon: 'https://cdn.weatherapi.com/weather/64x64/night/116.png',
-      ),
-    ];
+    super.build(context);
+
+    print('HourlyForecastWidget build');
 
     ScreenBasedSize.instance.init(context);
     final scrollableAreaHeight = ScreenBasedSize.instance.scaleByUnit(33);
@@ -80,13 +39,31 @@ class HourlyForecastWidget extends StatelessWidget {
 
         SizedBox(
           height: scrollableAreaHeight,
-          child: ListView.separated(
-            scrollDirection: Axis.horizontal,
-            separatorBuilder: (context, index) =>
-                SizedBox(width: separatorWidth),
-            itemBuilder: (context, index) =>
-                _ForecastItemTile(day: data[index]),
-            itemCount: data.length,
+          child: BlocSelector<WeatherCubit, WeatherState, HourlyForecastModelUI?>(
+            selector: (state) => state.weather?.today.hourlyForecast,
+            builder: (context, state) {
+              if (state == null) {
+                print(
+                  'HourlyForecastWidget BlocSelector return CircularProgressIndicator',
+                );
+                return const Center(child: CircularProgressIndicator());
+              } else {
+                print(
+                  'HourlyForecastWidget BlocSelector return ListView.separated',
+                );
+
+                return ListView.separated(
+                  scrollDirection: Axis.horizontal,
+                  separatorBuilder: (context, index) =>
+                      SizedBox(width: separatorWidth),
+                  itemBuilder: (context, index) => _ForecastItemTile(
+                    localtime: state.localtime,
+                    hourInfo: state.hoursList[index],
+                  ),
+                  itemCount: state.hoursList.length,
+                );
+              }
+            },
           ),
         ),
       ],
@@ -95,12 +72,14 @@ class HourlyForecastWidget extends StatelessWidget {
 }
 
 class _ForecastItemTile extends StatelessWidget {
-  const _ForecastItemTile({required this.day});
+  const _ForecastItemTile({required this.localtime, required this.hourInfo});
 
-  final ForecastDay day;
+  final DateTime localtime;
+  final HourModelUI hourInfo;
 
   @override
   Widget build(BuildContext context) {
+    print('HourlyForecastWidget _ForecastItemTile build');
     ScreenBasedSize.instance.init(context);
 
     final hPadding = ScreenBasedSize.instance.scaleByUnit(4.8);
@@ -113,17 +92,23 @@ class _ForecastItemTile extends StatelessWidget {
           mainAxisSize: MainAxisSize.min,
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            _ForecastItemText(text: day.time, size: 15),
+            _ForecastItemText(
+              text: DateFormat.Hm().format(hourInfo.dateTime),
+              size: 15,
+            ),
             Padding(
               padding: const EdgeInsets.symmetric(vertical: 10),
               child: ConstrainedBox(
                 constraints: const BoxConstraints(maxWidth: 32),
-                child: Image.network(day.icon),
+                child: Image.network(hourInfo.conditionIconPath),
               ),
             ),
-            _ForecastItemText(text: '${day.tempetarute}°', size: 17),
             _ForecastItemText(
-              text: '${day.windSpeed} km/h',
+              text: '${hourInfo.temperature.celsius}°',
+              size: 17,
+            ),
+            _ForecastItemText(
+              text: '${hourInfo.windSpeed.kilometrePerHour} km/h',
               fontWeight: FontWeight.w400,
             ),
           ],

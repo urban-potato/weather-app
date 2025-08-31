@@ -1,29 +1,26 @@
+import 'package:equatable/equatable.dart';
+
 import '../../moon/moon.dart';
 import '../../precipitation/precipitation.dart';
-import '../../pressure/pressure.dart';
 import '../../sun/sun.dart';
-import '../../temperature/temperature.dart';
-import '../../visibility/visibility.dart';
 import '../../wind/wind.dart';
+import 'other_info/other_info.dart';
 
-class AdditionalInfoModelUI {
+class AdditionalInfoModelUI extends Equatable {
   final WindModelUI wind;
   final SunModelUI sun;
   final MoonModelUI moon;
-  final TemperatureModelUI feelsLike;
-  final int humidity;
-  final PressureModelUI pressure;
-  final VisibilityModelUI visibility;
+  final OtherWeatherInfoModelUI otherWeatherInfo;
   final PrecipitationModelUI precipitation;
 
   const AdditionalInfoModelUI({
     required this.wind,
     required this.sun,
     required this.moon,
-    required this.feelsLike,
-    required this.humidity,
-    required this.pressure,
-    required this.visibility,
+    required this.otherWeatherInfo,
     required this.precipitation,
   });
+
+  @override
+  List<Object?> get props => [wind, sun, moon, precipitation];
 }

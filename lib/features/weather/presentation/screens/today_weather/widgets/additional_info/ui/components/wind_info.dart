@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../../../../../../../../shared/utils/size_helpers/index.dart';
+import '../../../../../../../../../shared/utils/size_helper/index.dart';
 
 class WindInfoWidget extends StatelessWidget {
   const WindInfoWidget({
@@ -10,7 +10,7 @@ class WindInfoWidget extends StatelessWidget {
   });
 
   final String windDirection;
-  final double windSpeed;
+  final String windSpeed;
 
   @override
   Widget build(BuildContext context) {
@@ -38,7 +38,7 @@ class WindInfoWidget extends StatelessWidget {
                     overflow: TextOverflow.clip,
                   ),
                   Text(
-                    '$windSpeed km/h',
+                    windSpeed,
                     style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                       fontWeight: FontWeight.bold,
                     ),

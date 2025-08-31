@@ -1,4 +1,6 @@
-class PrecipitationModelUI {
+import 'package:equatable/equatable.dart';
+
+class PrecipitationModelUI extends Equatable {
   final int chanceOfRain;
   final int chanceOfSnow;
 
@@ -6,4 +8,7 @@ class PrecipitationModelUI {
     required this.chanceOfRain,
     required this.chanceOfSnow,
   });
+
+  @override
+  List<Object?> get props => [chanceOfRain, chanceOfSnow];
 }

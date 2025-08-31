@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../../../../shared/ui/card_tile/index.dart';
-import '../../../../../shared/utils/size_helpers/index.dart';
+import '../../../../../shared/utils/size_helper/index.dart';
 
 class InfoBadge extends StatelessWidget {
   const InfoBadge({

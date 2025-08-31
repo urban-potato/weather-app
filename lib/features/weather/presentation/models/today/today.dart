@@ -1,12 +1,14 @@
-import 'additional_info/additional_info.dart';
-import 'weekly_forecast_preview_day/weekly_forecast_preview_day.dart';
-import 'hour/hour.dart';
-import 'main_weather/main_weather.dart';
+import 'package:equatable/equatable.dart';
 
-class TodayModelUI {
+import 'additional_info/additional_info.dart';
+import 'hourly_forecast/hourly_forecast.dart';
+import 'main_weather/main_weather.dart';
+import 'weekly_forecast_preview/weekly_forecast_preview.dart';
+
+class TodayModelUI extends Equatable {
   final MainWeatherModelUI mainWeather;
-  final List<WeeklyForecastPreviewDayModelUI> weeklyForecastPreview;
-  final List<HourModelUI> hourlyForecast;
+  final WeeklyForecastPreviewModelUI weeklyForecastPreview;
+  final HourlyForecastModelUI hourlyForecast;
   final AdditionalInfoModelUI additionalInfo;
 
   const TodayModelUI({
@@ -15,4 +17,12 @@ class TodayModelUI {
     required this.hourlyForecast,
     required this.additionalInfo,
   });
+
+  @override
+  List<Object?> get props => [
+    mainWeather,
+    weeklyForecastPreview,
+    hourlyForecast,
+    additionalInfo,
+  ];
 }

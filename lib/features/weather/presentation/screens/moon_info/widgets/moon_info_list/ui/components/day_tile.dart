@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import '../../../../../../../../../shared/ui/card_tile/index.dart';
 import '../../../../../../../shared/ui/responsive_info_list/index.dart';
 import '../../../../../../../shared/ui/widget_title/index.dart';
-import '../../../../../../../../../shared/utils/size_helpers/index.dart';
+import '../../../../../../../../../shared/utils/size_helper/index.dart';
 import '../../../../../../../shared/utils/moon_phase_image_path_helper/index.dart';
 
 class MoonData {

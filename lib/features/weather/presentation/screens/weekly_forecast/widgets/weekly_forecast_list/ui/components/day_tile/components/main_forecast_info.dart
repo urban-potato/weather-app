@@ -6,7 +6,7 @@ import '../../../../../../../../widgets/main_temperature/index.dart';
 import '../../../../../../../../widgets/weather_condition/index.dart';
 
 import '../../../../../../../../../../../shared/ui/card_tile/index.dart';
-import '../../../../../../../../../../../shared/utils/size_helpers/index.dart';
+import '../../../../../../../../../../../shared/utils/size_helper/index.dart';
 
 class MainForecastInfoWidget extends StatelessWidget {
   const MainForecastInfoWidget({
@@ -40,7 +40,10 @@ class MainForecastInfoWidget extends StatelessWidget {
             text: condition.text,
             iconPath: condition.iconPath,
           ),
-          DailyTemperatureRangeWidget(maxTemp: maxTemp, minTemp: minTemp),
+          DailyTemperatureRangeWidget(
+            maxTemp: maxTemp.toString(),
+            minTemp: minTemp.toString(),
+          ),
         ],
       ),
     );

@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 
-import '../../../utils/size_helpers/index.dart';
+import '../../../utils/size_helper/index.dart';
 
-class SliverToBoxAdapterWithPadding extends StatelessWidget {
-  const SliverToBoxAdapterWithPadding({super.key, required this.child});
+class ScreenPadding extends StatelessWidget {
+  const ScreenPadding({super.key, required this.child});
 
   final Widget child;
 
@@ -12,11 +12,11 @@ class SliverToBoxAdapterWithPadding extends StatelessWidget {
     ScreenBasedSize.instance.init(context);
     final padding = ScreenBasedSize.instance.getSidesPadding();
 
-    return SliverPadding(
+    return Padding(
       padding: EdgeInsets.symmetric(
         horizontal: padding,
       ).copyWith(bottom: padding),
-      sliver: SliverToBoxAdapter(child: child),
+      child: child,
     );
   }
 }

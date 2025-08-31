@@ -10,7 +10,12 @@ LocationModelData _$LocationModelDataFromJson(Map<String, dynamic> json) =>
     LocationModelData(
       name: json['name'] as String,
       country: json['country'] as String,
+      localtime: json['localtime'] as String,
     );
 
 Map<String, dynamic> _$LocationModelDataToJson(LocationModelData instance) =>
-    <String, dynamic>{'name': instance.name, 'country': instance.country};
+    <String, dynamic>{
+      'name': instance.name,
+      'country': instance.country,
+      'localtime': instance.localtime,
+    };

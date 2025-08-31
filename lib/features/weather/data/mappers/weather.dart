@@ -3,7 +3,7 @@ import 'package:intl/intl.dart';
 import '../../domain/models/index.dart';
 import '../models/index.dart';
 
-extension on WeatherModelData {
+extension ConvertToWeatherModelDomain on WeatherModelData {
   WeatherModelDomain toWeatherModelDomain() {
     final currentTemperatureDomain = TemperatureModelDomain(
       celsius: current.tempC,
@@ -165,6 +165,7 @@ extension on WeatherModelData {
 
     return WeatherModelDomain(
       current: CurrentModelDomain(
+        lastUpdated: current.lastUpdated,
         temperature: currentTemperatureDomain,
         condition: currentConditionDomain,
         wind: currentWindDomain,
@@ -179,6 +180,7 @@ extension on WeatherModelData {
       location: LocationModelDomain(
         name: location.name,
         country: location.country,
+        localtime: DateTime.parse(location.localtime),
       ),
     );
   }

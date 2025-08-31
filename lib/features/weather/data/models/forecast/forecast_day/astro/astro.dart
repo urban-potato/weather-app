@@ -26,4 +26,9 @@ class AstroModelData {
       _$AstroModelDataFromJson(json);
 
   Map<String, dynamic> toJson() => _$AstroModelDataToJson(this);
+
+  @override
+  String toString() {
+    return 'AstroModelData(sunrise: $sunrise, sunset: $sunset, moonrise: $moonrise, moonset: $moonset, moonPhase: $moonPhase, moonIllumination: $moonIllumination)';
+  }
 }

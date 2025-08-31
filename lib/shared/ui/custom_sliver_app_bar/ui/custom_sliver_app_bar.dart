@@ -1,7 +1,7 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 
-import '../../../utils/size_helpers/index.dart';
+import '../../../utils/size_helper/index.dart';
 
 class CustomSliverAppBar extends StatelessWidget {
   const CustomSliverAppBar({super.key, required this.title});

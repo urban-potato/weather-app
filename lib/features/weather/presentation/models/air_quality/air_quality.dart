@@ -1,4 +1,6 @@
-class AirQualityModelUI {
+import 'package:equatable/equatable.dart';
+
+class AirQualityModelUI extends Equatable {
   final double co;
   final double no2;
   final double o3;
@@ -16,4 +18,7 @@ class AirQualityModelUI {
     required this.pm10,
     required this.gbDefraIndex,
   });
+
+  @override
+  List<Object?> get props => [co, no2, o3, so2, pm25, pm10, gbDefraIndex];
 }

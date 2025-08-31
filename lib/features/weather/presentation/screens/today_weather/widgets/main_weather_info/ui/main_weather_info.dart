@@ -1,74 +1,71 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../../../../models/index.dart';
+import '../../../../../provider/weather_cubit.dart';
+import '../../../../../provider/weather_state.dart';
 import '../../../../../widgets/daily_temperature_range/index.dart';
 import '../../../../../widgets/main_temperature/index.dart';
 import '../../../../../widgets/uv_info/index.dart';
 import '../../../../../widgets/weather_condition/index.dart';
-import '../../../../../../../../shared/utils/size_helpers/index.dart';
+import '../../../../../../../../shared/utils/size_helper/index.dart';
 import 'components/aqi_info/ui/aqi_info.dart';
 
-class MainWeatherWidgetData {
-  MainWeatherWidgetData({
-    required this.temperature,
-    required this.condition,
-    required this.maxTemp,
-    required this.minTemp,
-  });
-
-  final int temperature;
-  final WeatherConditionData condition;
-  final int maxTemp;
-  final int minTemp;
-}
-
-class WeatherConditionData {
-  WeatherConditionData({required this.text, required this.icon});
-
-  final String text;
-  final String icon;
-}
-
-class MainWeatherInfoWidget extends StatelessWidget {
+class MainWeatherInfoWidget extends StatefulWidget {
   const MainWeatherInfoWidget({super.key});
 
   @override
-  Widget build(BuildContext context) {
-    final data = MainWeatherWidgetData(
-      condition: WeatherConditionData(
-        text: 'Patchy rain nearby',
-        icon: 'https://cdn.weatherapi.com/weather/64x64/day/116.png',
-      ),
-      maxTemp: 23,
-      minTemp: 14,
-      temperature: 16,
-    );
+  State<MainWeatherInfoWidget> createState() => _MainWeatherInfoWidgetState();
+}
 
-    const int aqi = 15;
-    const int uv = 2;
+class _MainWeatherInfoWidgetState extends State<MainWeatherInfoWidget>
+    with AutomaticKeepAliveClientMixin<MainWeatherInfoWidget> {
+  @override
+  bool get wantKeepAlive => true;
+
+  @override
+  Widget build(BuildContext context) {
+    super.build(context);
+
+    print('MainWeatherInfoWidget build');
 
     ScreenBasedSize.instance.init(context);
     final spacing = ScreenBasedSize.instance.scaleByUnit(2);
 
-    return Column(
-      spacing: spacing,
-      mainAxisSize: MainAxisSize.min,
-      crossAxisAlignment: CrossAxisAlignment.stretch,
-      children: [
-        MainTemperatureWidget(
-          temperature: data.temperature.toString(),
-          sizeRatio: 2,
-        ),
-        WeatherConditionWidget(
-          text: data.condition.text,
-          iconPath: data.condition.icon,
-          sizeRatio: 1.3,
-        ),
-        DailyTemperatureRangeWidget(
-          maxTemp: data.maxTemp,
-          minTemp: data.minTemp,
-        ),
-        const _UVAndAQIInfoRow(aqi: aqi, uv: uv),
-      ],
+    return BlocSelector<WeatherCubit, WeatherState, MainWeatherModelUI?>(
+      selector: (state) => state.weather?.today.mainWeather,
+      builder: (context, state) {
+        if (state == null) {
+          print(
+            'MainWeatherInfoWidget BlocSelector return CircularProgressIndicator',
+          );
+          return const Center(child: CircularProgressIndicator());
+        } else {
+          print('MainWeatherInfoWidget BlocSelector return Column');
+          return Column(
+            spacing: spacing,
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Center(child: Text(state.lastUpdated)),
+              MainTemperatureWidget(
+                temperature: state.temperature.celsius.toString(),
+                sizeRatio: 2,
+              ),
+              WeatherConditionWidget(
+                text: state.condition.text,
+                iconPath: state.condition.iconPath,
+                sizeRatio: 1.3,
+              ),
+              DailyTemperatureRangeWidget(
+                maxTemp: state.temperatureRange.maximum.celsius.toString(),
+                minTemp: state.temperatureRange.minimum.celsius.toString(),
+              ),
+              _UVAndAQIInfoRow(aqi: state.airQualityGbDefraIndex, uv: state.uv),
+            ],
+          );
+        }
+      },
     );
   }
 }
