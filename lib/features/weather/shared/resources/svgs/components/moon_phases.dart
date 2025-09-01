@@ -1,10 +1,10 @@
 part of '../svgs.dart';
 
-class SvgMoon {
-  SvgMoon._();
+class SvgMoonPhases {
+  SvgMoonPhases._();
 
-  static final _instance = SvgMoon._();
-  static SvgMoon get instance => _instance;
+  static final _instance = SvgMoonPhases._();
+  static SvgMoonPhases get instance => _instance;
 
   static const _basePath = '${Svgs._basePath}moon/';
 
