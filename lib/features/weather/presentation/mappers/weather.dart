@@ -1,5 +1,4 @@
 import '../../domain/models/index.dart';
-import '../../shared/utils/moon_phase_image_path_helper/index.dart';
 import '../models/index.dart';
 
 extension ConvertToWeatherModelUI on WeatherModelDomain {
@@ -95,7 +94,6 @@ extension ConvertToWeatherModelUI on WeatherModelDomain {
         sunset: todayDomain.astro.sun.sunset,
       ),
       moon: MoonModelUI(
-        phaseImagePath: getMoonPhaseImagePath(todayDomain.astro.moon.moonPhase),
         phase: todayDomain.astro.moon.moonPhase,
         moonrise: todayDomain.astro.moon.moonrise,
         moonset: todayDomain.astro.moon.moonset,
@@ -166,7 +164,6 @@ extension ConvertToWeatherModelUI on WeatherModelDomain {
 
     final weeklyMoonList = forecast.forecastDayList.map((f) {
       return MoonModelUI(
-        phaseImagePath: getMoonPhaseImagePath(f.astro.moon.moonPhase),
         phase: f.astro.moon.moonPhase,
         moonrise: f.astro.moon.moonrise,
         moonset: f.astro.moon.moonset,

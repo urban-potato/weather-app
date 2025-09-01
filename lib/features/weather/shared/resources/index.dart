@@ -1,1 +1,1 @@
-export 'images.dart';
+export './svgs/svgs.dart';

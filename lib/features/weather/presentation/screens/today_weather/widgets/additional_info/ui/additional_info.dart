@@ -159,12 +159,7 @@ class _MoonInfoCard extends StatelessWidget {
         } else {
           print('AdditionalInfoWidget BlocSelector return MoonInfoWidget');
 
-          return CardTile(
-            child: MoonInfoWidget(
-              phase: state.phase,
-              phaseImagePath: state.phaseImagePath,
-            ),
-          );
+          return CardTile(child: MoonInfoWidget(moonPhase: state.phase));
         }
       },
     );

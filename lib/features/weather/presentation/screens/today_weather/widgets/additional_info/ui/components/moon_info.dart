@@ -1,22 +1,19 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
 import '../../../../../../../../../shared/router/router.gr.dart';
 import '../../../../../../../../../shared/utils/size_helper/index.dart';
+import '../../../../../../../shared/utils/assets_path_helper/index.dart';
 
 class MoonInfoWidget extends StatelessWidget {
-  const MoonInfoWidget({
-    super.key,
-    required this.phaseImagePath,
-    required this.phase,
-  });
+  const MoonInfoWidget({super.key, required this.moonPhase});
 
-  final String phaseImagePath;
-  final String phase;
+  final String moonPhase;
 
   @override
   Widget build(BuildContext context) {
-    ScreenBasedSize.instance.init(context);
+    final moonPhaseAssetPath = getMoonPhaseAssetPath(moonPhase);
 
     return GestureDetector(
       onTap: () => context.router.push(const MoonInfoRoute()),
@@ -37,7 +34,7 @@ class MoonInfoWidget extends StatelessWidget {
                   Flexible(
                     flex: 3,
                     child: Text(
-                      phase,
+                      moonPhase,
                       style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                         fontWeight: FontWeight.bold,
                       ),
@@ -48,8 +45,15 @@ class MoonInfoWidget extends StatelessWidget {
                   Flexible(
                     flex: 1,
                     child: ConstrainedBox(
-                      constraints: BoxConstraints(maxWidth: iconSize),
-                      child: Image.asset(phaseImagePath),
+                      constraints: BoxConstraints(
+                        maxWidth: iconSize,
+                        maxHeight: iconSize,
+                      ),
+                      child: SvgPicture.asset(
+                        moonPhaseAssetPath,
+                        semanticsLabel: moonPhase,
+                        fit: BoxFit.scaleDown,
+                      ),
                     ),
                   ),
                 ],

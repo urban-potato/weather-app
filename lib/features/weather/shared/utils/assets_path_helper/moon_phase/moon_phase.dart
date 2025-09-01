@@ -1,4 +1,4 @@
-import '../../resources/index.dart';
+import '../../../resources/index.dart';
 
 enum MoonPhase {
   newMoon,
@@ -35,19 +35,19 @@ MoonPhase parseMoonPhase(String moonPhase) {
   }
 }
 
-String getMoonPhaseImagePath(String moonPhase) {
+String getMoonPhaseAssetPath(String moonPhase) {
   final moonPhaseParsed = parseMoonPhase(moonPhase);
 
   final moonImage = switch (moonPhaseParsed) {
-    MoonPhase.newMoon => Images.newMoon,
-    MoonPhase.waxingCrescent => Images.waxingCrescent,
-    MoonPhase.firstQuarter => Images.firstQuarter,
-    MoonPhase.waxingGibbous => Images.waxingGibbous,
-    MoonPhase.fullMoon => Images.fullMoon,
-    MoonPhase.waningGibbous => Images.waningGibbous,
-    MoonPhase.lastQuarter => Images.lastQuarter,
-    MoonPhase.waningCrescent => Images.waningCrescent,
-    MoonPhase.unknown => Images.unknown,
+    MoonPhase.newMoon => Svgs.moon.newMoon,
+    MoonPhase.waxingCrescent => Svgs.moon.waxingCrescent,
+    MoonPhase.firstQuarter => Svgs.moon.firstQuarter,
+    MoonPhase.waxingGibbous => Svgs.moon.waxingGibbous,
+    MoonPhase.fullMoon => Svgs.moon.fullMoon,
+    MoonPhase.waningGibbous => Svgs.moon.waningGibbous,
+    MoonPhase.lastQuarter => Svgs.moon.lastQuarter,
+    MoonPhase.waningCrescent => Svgs.moon.waningCrescent,
+    MoonPhase.unknown => Svgs.unknown,
   };
 
   return moonImage;

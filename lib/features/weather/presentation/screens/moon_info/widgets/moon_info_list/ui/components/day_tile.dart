@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
 import '../../../../../../../../../shared/ui/card_tile/index.dart';
 import '../../../../../../../shared/ui/responsive_info_list/index.dart';
 import '../../../../../../../shared/ui/widget_title/index.dart';
 import '../../../../../../../../../shared/utils/size_helper/index.dart';
-import '../../../../../../../shared/utils/moon_phase_image_path_helper/index.dart';
+import '../../../../../../../shared/utils/assets_path_helper/index.dart';
 
 class MoonData {
   MoonData({
@@ -46,7 +47,7 @@ class _InfoWidgetsRow extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final imagePath = getMoonPhaseImagePath(data.moonPhase);
+    final moonPhaseAssetPath = getMoonPhaseAssetPath(data.moonPhase);
 
     return LayoutBuilder(
       builder: (BuildContext context, BoxConstraints constraints) {
@@ -62,7 +63,26 @@ class _InfoWidgetsRow extends StatelessWidget {
             Flexible(
               child: Padding(
                 padding: EdgeInsets.all(spacing),
-                child: Center(child: Image.asset(imagePath)),
+                child: Center(
+                  child: LayoutBuilder(
+                    builder:
+                        (BuildContext context, BoxConstraints constraints) {
+                          final constraintsMaxWidth = constraints.maxWidth;
+
+                          return ConstrainedBox(
+                            constraints: BoxConstraints(
+                              maxWidth: constraintsMaxWidth,
+                              maxHeight: constraintsMaxWidth,
+                            ),
+                            child: SvgPicture.asset(
+                              moonPhaseAssetPath,
+                              semanticsLabel: data.moonPhase,
+                              fit: BoxFit.scaleDown,
+                            ),
+                          );
+                        },
+                  ),
+                ),
               ),
             ),
 
