@@ -8,5 +8,5 @@ class Svgs {
 
   static final SvgMoonPhases moonPhases = SvgMoonPhases.instance;
   static final SvgWeatherIcons weatherIcons = SvgWeatherIcons.instance;
-  static const String unknown = '${_basePath}unknown.png';
+  static const String unknown = '${_basePath}unknown.svg';
 }
