@@ -2,7 +2,7 @@ import '../../../../shared/resources/local_data_state/index.dart';
 import '../../domain/models/index.dart';
 import '../../domain/repositories/index.dart';
 import '../data_sources/local/index.dart';
-import '../mappers/conditions.dart';
+import '../mappers/index.dart';
 
 class ConditionsRepositoryImpl implements ConditionsRepository {
   final ConditionsService _conditionsService;

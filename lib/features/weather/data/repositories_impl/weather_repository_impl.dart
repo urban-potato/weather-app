@@ -8,7 +8,7 @@ import '../../../../shared/constants/constants.dart';
 import '../../../../shared/resources/remote_data_state/index.dart';
 import '../../domain/repositories/index.dart';
 import '../data_sources/remote/index.dart';
-import '../mappers/weather.dart';
+import '../mappers/index.dart';
 
 class WeatherRepositoryImpl implements WeatherRepository {
   final WeatherApiService _weatherApiService;
