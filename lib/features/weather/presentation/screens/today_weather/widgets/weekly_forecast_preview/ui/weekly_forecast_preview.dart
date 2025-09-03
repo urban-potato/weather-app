@@ -111,7 +111,15 @@ class _InfoRow extends StatelessWidget {
                 children: [
                   ConstrainedBox(
                     constraints: BoxConstraints(maxWidth: iconSize),
-                    child: Image.network(item.condition.iconPath),
+                    child: Image.asset(
+                      item.condition.assetIconPath ?? '',
+                      errorBuilder: (context, error, stackTrace) =>
+                          Image.network(
+                            item.condition.networkIconPath,
+                            errorBuilder: (context, error, stackTrace) =>
+                                const SizedBox(),
+                          ),
+                    ),
                   ),
                   Flexible(
                     child: Text(

@@ -1,18 +1,17 @@
 import 'package:flutter/material.dart';
 
 import '../../../../../../shared/utils/size_helper/index.dart';
+import '../../../models/index.dart';
 
 class WeatherConditionWidget extends StatelessWidget {
   const WeatherConditionWidget({
     super.key,
     this.sizeRatio = 1,
-    required this.text,
-    required this.iconPath,
+    required this.condition,
   });
 
-  final String text;
-  final String iconPath;
   final double sizeRatio;
+  final ConditionModelUI condition;
 
   @override
   Widget build(BuildContext context) {
@@ -32,7 +31,7 @@ class WeatherConditionWidget extends StatelessWidget {
           children: [
             Flexible(
               child: Text(
-                text,
+                condition.text,
                 textAlign: TextAlign.center,
                 style: Theme.of(context).textTheme.labelLarge?.copyWith(
                   fontSize:
@@ -47,7 +46,14 @@ class WeatherConditionWidget extends StatelessWidget {
 
             ConstrainedBox(
               constraints: BoxConstraints(maxWidth: iconSize),
-              child: Image.network(iconPath),
+              child: Image.asset(
+                condition.assetIconPath ?? '',
+                errorBuilder: (context, error, stackTrace) => Image.network(
+                  condition.networkIconPath,
+                  errorBuilder: (context, error, stackTrace) =>
+                      const SizedBox(),
+                ),
+              ),
             ),
           ],
         );

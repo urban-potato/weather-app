@@ -100,7 +100,16 @@ class _ForecastItemTile extends StatelessWidget {
               padding: const EdgeInsets.symmetric(vertical: 10),
               child: ConstrainedBox(
                 constraints: const BoxConstraints(maxWidth: 32),
-                child: Image.network(hourInfo.conditionIconPath),
+                child: Image.asset(
+                  hourInfo.condition.assetIconPath ?? '',
+                  semanticLabel: hourInfo.condition.text,
+                  errorBuilder: (context, error, stackTrace) => Image.network(
+                    semanticLabel: hourInfo.condition.text,
+                    hourInfo.condition.networkIconPath,
+                    errorBuilder: (context, error, stackTrace) =>
+                        const Icon(Icons.question_mark_outlined, size: 32),
+                  ),
+                ),
               ),
             ),
             _ForecastItemText(

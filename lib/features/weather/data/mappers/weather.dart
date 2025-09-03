@@ -12,7 +12,7 @@ extension ConvertToWeatherModelDomain on WeatherModelData {
 
     final currentConditionDomain = ConditionModelDomain(
       text: current.condition.text,
-      iconPath: 'https:${current.condition.icon}',
+      networkIconPath: 'https:${current.condition.icon}',
       code: current.condition.code,
     );
 
@@ -87,7 +87,7 @@ extension ConvertToWeatherModelDomain on WeatherModelData {
       final hourlyForecastDomain = f.hour.map((h) {
         final conditionDomain = ConditionModelDomain(
           text: h.condition.text,
-          iconPath: 'https:${h.condition.icon}',
+          networkIconPath: 'https:${h.condition.icon}',
           code: h.condition.code,
         );
 
@@ -103,6 +103,7 @@ extension ConvertToWeatherModelDomain on WeatherModelData {
 
         return HourModelDomain(
           dateTime: DateTime.parse(h.time),
+          isDay: h.isDay == 1 ? true : false,
           condition: conditionDomain,
           temperature: temperatureDomain,
           windSpeed: windSpeedDomain,
@@ -141,7 +142,7 @@ extension ConvertToWeatherModelDomain on WeatherModelData {
 
       final conditionDomain = ConditionModelDomain(
         text: f.day.condition.text,
-        iconPath: 'https:${f.day.condition.icon}',
+        networkIconPath: 'https:${f.day.condition.icon}',
         code: f.day.condition.code,
       );
 
@@ -166,6 +167,7 @@ extension ConvertToWeatherModelDomain on WeatherModelData {
     return WeatherModelDomain(
       current: CurrentModelDomain(
         lastUpdated: current.lastUpdated,
+        isDay: current.isDay == 1 ? true : false,
         temperature: currentTemperatureDomain,
         condition: currentConditionDomain,
         wind: currentWindDomain,

@@ -53,9 +53,8 @@ class _MainWeatherInfoWidgetState extends State<MainWeatherInfoWidget>
                 sizeRatio: 2,
               ),
               WeatherConditionWidget(
-                text: state.condition.text,
-                iconPath: state.condition.iconPath,
                 sizeRatio: 1.3,
+                condition: state.condition,
               ),
               DailyTemperatureRangeWidget(
                 maxTemp: state.temperatureRange.maximum.celsius.toString(),

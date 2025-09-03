@@ -8,3 +8,7 @@ export 'forecast/forecast_day/day/day.dart';
 export 'forecast/forecast_day/hour/hour.dart';
 export 'location/location.dart';
 export 'weather/weather.dart';
+
+export 'conditions/conditions_item/conditions_item.dart';
+export 'conditions/conditions_item/languages_item/languages_item.dart';
+export 'conditions/conditions.dart';

@@ -7,6 +7,8 @@ part 'hour.g.dart';
 @JsonSerializable(explicitToJson: true)
 class HourModelData {
   final String time;
+  @JsonKey(name: 'is_day')
+  final int isDay;
   @JsonKey(name: 'temp_c')
   final double tempC;
   @JsonKey(name: 'temp_f')
@@ -19,6 +21,7 @@ class HourModelData {
 
   const HourModelData({
     required this.time,
+    required this.isDay,
     required this.tempC,
     required this.tempF,
     required this.condition,
@@ -33,6 +36,6 @@ class HourModelData {
 
   @override
   String toString() {
-    return 'HourModelData(time: $time, tempC: $tempC, tempF: $tempF, condition: $condition, windMph: $windMph, windKph: $windKph)';
+    return 'HourModelData(time: $time, isDay: $isDay, tempC: $tempC, tempF: $tempF, condition: $condition, windMph: $windMph, windKph: $windKph)';
   }
 }

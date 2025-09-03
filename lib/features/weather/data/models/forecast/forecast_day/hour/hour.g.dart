@@ -9,6 +9,7 @@ part of 'hour.dart';
 HourModelData _$HourModelDataFromJson(Map<String, dynamic> json) =>
     HourModelData(
       time: json['time'] as String,
+      isDay: (json['is_day'] as num).toInt(),
       tempC: (json['temp_c'] as num).toDouble(),
       tempF: (json['temp_f'] as num).toDouble(),
       condition: ConditionModelData.fromJson(
@@ -21,6 +22,7 @@ HourModelData _$HourModelDataFromJson(Map<String, dynamic> json) =>
 Map<String, dynamic> _$HourModelDataToJson(HourModelData instance) =>
     <String, dynamic>{
       'time': instance.time,
+      'is_day': instance.isDay,
       'temp_c': instance.tempC,
       'temp_f': instance.tempF,
       'condition': instance.condition.toJson(),

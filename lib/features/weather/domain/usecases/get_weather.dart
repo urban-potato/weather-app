@@ -1,10 +1,10 @@
-import '../../../../shared/resources/data_state/index.dart';
+import '../../../../shared/resources/remote_data_state/index.dart';
 import '../../../../shared/usecases/index.dart';
 import '../models/index.dart';
 import '../repositories/index.dart';
 
 class GetWeatherUseCase
-    implements UseCase<DataState<WeatherModelDomain>, String> {
+    implements UseCase<RemoteDataState<WeatherModelDomain>, void> {
   final WeatherRepository _weatherRepository;
 
   GetWeatherUseCase({required WeatherRepository weatherRepository})
@@ -13,7 +13,7 @@ class GetWeatherUseCase
   // TODO: Изменить захардкоденный location
 
   @override
-  Future<DataState<WeatherModelDomain>> call({void params}) {
+  Future<RemoteDataState<WeatherModelDomain>> call({void params}) {
     return _weatherRepository.getWeather('London');
   }
 }

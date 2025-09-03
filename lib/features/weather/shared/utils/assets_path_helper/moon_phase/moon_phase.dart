@@ -39,15 +39,15 @@ String getMoonPhaseAssetPath(String moonPhase) {
   final moonPhaseParsed = parseMoonPhase(moonPhase);
 
   final moonImage = switch (moonPhaseParsed) {
-    MoonPhase.newMoon => Svgs.moonPhases.newMoon,
-    MoonPhase.waxingCrescent => Svgs.moonPhases.waxingCrescent,
-    MoonPhase.firstQuarter => Svgs.moonPhases.firstQuarter,
-    MoonPhase.waxingGibbous => Svgs.moonPhases.waxingGibbous,
-    MoonPhase.fullMoon => Svgs.moonPhases.fullMoon,
-    MoonPhase.waningGibbous => Svgs.moonPhases.waningGibbous,
-    MoonPhase.lastQuarter => Svgs.moonPhases.lastQuarter,
-    MoonPhase.waningCrescent => Svgs.moonPhases.waningCrescent,
-    MoonPhase.unknown => Svgs.unknown,
+    MoonPhase.newMoon => AppSvgs.moonPhases.newMoon,
+    MoonPhase.waxingCrescent => AppSvgs.moonPhases.waxingCrescent,
+    MoonPhase.firstQuarter => AppSvgs.moonPhases.firstQuarter,
+    MoonPhase.waxingGibbous => AppSvgs.moonPhases.waxingGibbous,
+    MoonPhase.fullMoon => AppSvgs.moonPhases.fullMoon,
+    MoonPhase.waningGibbous => AppSvgs.moonPhases.waningGibbous,
+    MoonPhase.lastQuarter => AppSvgs.moonPhases.lastQuarter,
+    MoonPhase.waningCrescent => AppSvgs.moonPhases.waningCrescent,
+    MoonPhase.unknown => AppSvgs.unknown,
   };
 
   return moonImage;

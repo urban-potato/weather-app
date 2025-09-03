@@ -1,8 +1,11 @@
+import '../../../../shared/service_locator/service_locator.dart';
 import '../../domain/models/index.dart';
+import '../../shared/utils/conditions_helper/index.dart';
 import '../models/index.dart';
 
 extension ConvertToWeatherModelUI on WeatherModelDomain {
   WeatherModelUI toWeatherModelUI() {
+    final conditionsHelper = sl<ConditionsHelper>();
     final todayDomain = forecast.forecastDayList[0];
     final tomorrowDomain = forecast.forecastDayList[1];
 
@@ -12,9 +15,19 @@ extension ConvertToWeatherModelUI on WeatherModelDomain {
         celsius: current.temperature.celsius.round(),
         fahrenheit: current.temperature.fahrenheit.round(),
       ),
+      // TODO: здесь где ConditionModelUI text ну;но будет выдавать текст в зависимости от языка в settings пользователя
       condition: ConditionModelUI(
-        text: current.condition.text,
-        iconPath: current.condition.iconPath,
+        text:
+            conditionsHelper.getText(
+              code: current.condition.code,
+              isDay: current.isDay,
+            ) ??
+            current.condition.text,
+        assetIconPath: conditionsHelper.getAssetIconPath(
+          code: current.condition.code,
+          isDay: current.isDay,
+        ),
+        networkIconPath: current.condition.networkIconPath,
       ),
       temperatureRange: TemperatureRangeModelUI(
         maximum: TemperatureModelUI(
@@ -35,8 +48,17 @@ extension ConvertToWeatherModelUI on WeatherModelDomain {
         return WeeklyForecastPreviewDayModelUI(
           dateTime: f.date,
           condition: ConditionModelUI(
-            text: f.day.condition.text,
-            iconPath: f.day.condition.iconPath,
+            text:
+                conditionsHelper.getText(
+                  code: f.day.condition.code,
+                  isDay: true,
+                ) ??
+                f.day.condition.text,
+            assetIconPath: conditionsHelper.getAssetIconPath(
+              code: f.day.condition.code,
+              isDay: true,
+            ),
+            networkIconPath: f.day.condition.networkIconPath,
           ),
           temperatureRange: TemperatureRangeModelUI(
             maximum: TemperatureModelUI(
@@ -128,8 +150,17 @@ extension ConvertToWeatherModelUI on WeatherModelDomain {
           fahrenheit: f.day.avgTemp.fahrenheit.round(),
         ),
         condition: ConditionModelUI(
-          text: f.day.condition.text,
-          iconPath: f.day.condition.iconPath,
+          text:
+              conditionsHelper.getText(
+                code: f.day.condition.code,
+                isDay: true,
+              ) ??
+              f.day.condition.text,
+          assetIconPath: conditionsHelper.getAssetIconPath(
+            code: f.day.condition.code,
+            isDay: true,
+          ),
+          networkIconPath: f.day.condition.networkIconPath,
         ),
         temperatureRange: TemperatureRangeModelUI(
           maximum: TemperatureModelUI(
@@ -192,9 +223,20 @@ extension ConvertToWeatherModelUI on WeatherModelDomain {
   }
 
   HourModelUI _mapHourModelDomainToHourModelUI(HourModelDomain h) {
+    final conditionsHelper = sl<ConditionsHelper>();
+
     return HourModelUI(
       dateTime: h.dateTime,
-      conditionIconPath: h.condition.iconPath,
+      condition: ConditionModelUI(
+        text:
+            conditionsHelper.getText(code: h.condition.code, isDay: h.isDay) ??
+            h.condition.text,
+        assetIconPath: conditionsHelper.getAssetIconPath(
+          code: h.condition.code,
+          isDay: h.isDay,
+        ),
+        networkIconPath: h.condition.networkIconPath,
+      ),
       temperature: TemperatureModelUI(
         celsius: h.temperature.celsius.round(),
         fahrenheit: h.temperature.fahrenheit.round(),

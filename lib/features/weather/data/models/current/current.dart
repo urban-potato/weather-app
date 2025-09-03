@@ -9,6 +9,8 @@ part 'current.g.dart';
 class CurrentModelData {
   @JsonKey(name: 'last_updated')
   final String lastUpdated;
+  @JsonKey(name: 'is_day')
+  final int isDay;
   @JsonKey(name: 'temp_c')
   final double tempC;
   @JsonKey(name: 'temp_f')
@@ -39,6 +41,7 @@ class CurrentModelData {
 
   const CurrentModelData({
     required this.lastUpdated,
+    required this.isDay,
     required this.tempC,
     required this.tempF,
     required this.condition,
@@ -63,6 +66,6 @@ class CurrentModelData {
 
   @override
   String toString() {
-    return 'CurrentModelData(lastUpdated: $lastUpdated, tempC: $tempC, tempF: $tempF, condition: $condition, windMph: $windMph, windKph: $windKph, windDir: $windDir, pressureMb: $pressureMb, pressureIn: $pressureIn, humidity: $humidity, feelslikeC: $feelslikeC, feelslikeF: $feelslikeF, visKm: $visKm, visMiles: $visMiles, uv: $uv, airQuality: $airQuality)';
+    return 'CurrentModelData(lastUpdated: $lastUpdated, isDay: $isDay, tempC: $tempC, tempF: $tempF, condition: $condition, windMph: $windMph, windKph: $windKph, windDir: $windDir, pressureMb: $pressureMb, pressureIn: $pressureIn, humidity: $humidity, feelslikeC: $feelslikeC, feelslikeF: $feelslikeF, visKm: $visKm, visMiles: $visMiles, uv: $uv, airQuality: $airQuality)';
   }
 }

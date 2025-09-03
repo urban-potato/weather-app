@@ -4,7 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../shared/utils/update_permission_helper/index.dart';
 import '../mappers/weather.dart';
-import '../../../../shared/resources/data_state/index.dart';
+import '../../../../shared/resources/remote_data_state/index.dart';
 import '../../domain/usecases/index.dart';
 import 'weather_state.dart';
 
@@ -36,7 +36,7 @@ class WeatherCubit extends Cubit<WeatherState> {
 
     final dataState = await _getWeatherUseCase();
 
-    if (dataState is DataSuccess && dataState.data != null) {
+    if (dataState is RemoteDataSuccess && dataState.data != null) {
       final dataModelUI = dataState.data!.toWeatherModelUI();
       log('emit(WeatherLoaded(dataModelUI));');
       emit(WeatherLoaded(weather: dataModelUI));

@@ -5,7 +5,7 @@ import 'package:dio/dio.dart';
 import 'package:weather_app/features/weather/domain/models/weather/weather.dart';
 
 import '../../../../shared/constants/constants.dart';
-import '../../../../shared/resources/data_state/index.dart';
+import '../../../../shared/resources/remote_data_state/index.dart';
 import '../../domain/repositories/index.dart';
 import '../data_sources/remote/index.dart';
 import '../mappers/weather.dart';
@@ -17,7 +17,9 @@ class WeatherRepositoryImpl implements WeatherRepository {
     : _weatherApiService = weatherApiService;
 
   @override
-  Future<DataState<WeatherModelDomain>> getWeather(String location) async {
+  Future<RemoteDataState<WeatherModelDomain>> getWeather(
+    String location,
+  ) async {
     try {
       final httpResponse = await _weatherApiService.getWeather(
         apiKey: weatherApiKey,
@@ -31,9 +33,9 @@ class WeatherRepositoryImpl implements WeatherRepository {
 
         log('SUCCESSFULLY GOT DATA');
 
-        return DataSuccess(weatherModelData.toWeatherModelDomain());
+        return RemoteDataSuccess(weatherModelData.toWeatherModelDomain());
       } else {
-        return DataFailed(
+        return RemoteDataFailed(
           DioException(
             requestOptions: httpResponse.response.requestOptions,
             error: httpResponse.response.statusMessage,
@@ -44,7 +46,7 @@ class WeatherRepositoryImpl implements WeatherRepository {
         );
       }
     } on DioException catch (e) {
-      return DataFailed(e);
+      return RemoteDataFailed(e);
     }
   }
 }

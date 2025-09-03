@@ -6,17 +6,25 @@ import '../../../wind/wind_speed/wind_speed.dart';
 
 class HourModelDomain extends Equatable {
   final DateTime dateTime;
+  final bool isDay;
   final TemperatureModelDomain temperature;
   final ConditionModelDomain condition;
   final WindSpeedModelDomain windSpeed;
 
   const HourModelDomain({
     required this.dateTime,
+    required this.isDay,
     required this.temperature,
     required this.condition,
     required this.windSpeed,
   });
 
   @override
-  List<Object?> get props => [dateTime, temperature, condition, windSpeed];
+  List<Object?> get props => [
+    dateTime,
+    isDay,
+    temperature,
+    condition,
+    windSpeed,
+  ];
 }

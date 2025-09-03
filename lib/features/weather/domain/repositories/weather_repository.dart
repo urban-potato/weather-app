@@ -1,6 +1,6 @@
-import '../../../../shared/resources/data_state/index.dart';
+import '../../../../shared/resources/remote_data_state/index.dart';
 import '../models/index.dart';
 
 abstract interface class WeatherRepository {
-  Future<DataState<WeatherModelDomain>> getWeather(String location);
+  Future<RemoteDataState<WeatherModelDomain>> getWeather(String location);
 }

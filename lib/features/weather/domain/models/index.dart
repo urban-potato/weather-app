@@ -15,5 +15,8 @@ export './temperature/temperature.dart';
 export './visibility/visibility.dart';
 export './wind/wind.dart';
 export './wind/wind_speed/wind_speed.dart';
-
 export 'weather/weather.dart';
+
+export 'conditions/conditions_item/conditions_item.dart';
+export 'conditions/conditions_item/languages_item/languages_item.dart';
+export 'conditions/conditions.dart';

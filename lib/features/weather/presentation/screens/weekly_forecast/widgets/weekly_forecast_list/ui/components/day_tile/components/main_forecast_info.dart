@@ -36,10 +36,7 @@ class MainForecastInfoWidget extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           MainTemperatureWidget(temperature: temperature.toString()),
-          WeatherConditionWidget(
-            text: condition.text,
-            iconPath: condition.iconPath,
-          ),
+          WeatherConditionWidget(condition: condition),
           DailyTemperatureRangeWidget(
             maxTemp: maxTemp.toString(),
             minTemp: minTemp.toString(),
