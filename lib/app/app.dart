@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../shared/utils/size_helper/index.dart';
-import '../shared/router/router.dart';
+import 'navigation/router/index.dart';
 import 'theme/index.dart';
 
 class App extends StatefulWidget {

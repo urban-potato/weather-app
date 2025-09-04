@@ -1,8 +1,8 @@
-import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
-import '../../../../../../../../../shared/router/router.gr.dart';
+import '../../../../../../../../../app/service_locator/service_locator.dart';
+import '../../../../../../../../../shared/services/index.dart';
 import '../../../../../../../../../shared/utils/size_helper/index.dart';
 import '../../../../../../../shared/utils/assets_path_helper/index.dart';
 
@@ -16,7 +16,7 @@ class MoonInfoWidget extends StatelessWidget {
     final moonPhaseAssetPath = getMoonPhaseAssetPath(moonPhase);
 
     return GestureDetector(
-      onTap: () => context.router.push(const MoonInfoRoute()),
+      onTap: () => sl<NavigationService>().pushMoonInfoRoute(context),
 
       child: LayoutBuilder(
         builder: (BuildContext context, BoxConstraints constraints) {

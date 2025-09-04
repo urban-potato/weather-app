@@ -2,7 +2,7 @@ import 'package:auto_route/annotations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../../../../../shared/service_locator/service_locator.dart';
+import '../../../../../../app/service_locator/service_locator.dart';
 import '../../../../../../shared/ui/screen_padding/index.dart';
 import '../../../../../../shared/utils/size_helper/index.dart';
 import '../../../provider/weather_cubit.dart';

@@ -8,10 +8,14 @@ import '../../features/weather/domain/repositories/index.dart';
 import '../../features/weather/domain/usecases/index.dart';
 import '../../features/weather/presentation/provider/weather_cubit.dart';
 import '../../features/weather/shared/utils/conditions_helper/index.dart';
+import '../../shared/services/index.dart';
+import '../navigation/navigation_service_impl/index.dart';
 
 final sl = GetIt.instance;
 
 Future<void> initializeDependencies() async {
+  sl.registerLazySingleton<NavigationService>(() => NavigationServiceImpl());
+
   sl.registerSingleton<Dio>(Dio());
   sl.registerSingleton<WeatherApiService>(WeatherApiService(sl<Dio>()));
   sl.registerSingleton<WeatherRepository>(

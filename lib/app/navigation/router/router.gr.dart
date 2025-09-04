@@ -16,7 +16,7 @@ import 'package:weather_app/features/weather/presentation/screens/today_weather/
     as _i2;
 import 'package:weather_app/features/weather/presentation/screens/weekly_forecast/screen/weekly_forecast_screen.dart'
     as _i4;
-import 'package:weather_app/shared/router/wrappers/weather_screen_wrapper.dart'
+import 'package:weather_app/app/navigation/router/wrappers/weather_screen_wrapper.dart'
     as _i3;
 
 /// generated route for

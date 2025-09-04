@@ -1,11 +1,9 @@
-import '../../../../shared/service_locator/service_locator.dart';
 import '../../domain/models/index.dart';
 import '../../shared/utils/conditions_helper/index.dart';
 import '../models/index.dart';
 
 extension ConvertToWeatherModelUI on WeatherModelDomain {
-  WeatherModelUI toWeatherModelUI() {
-    final conditionsHelper = sl<ConditionsHelper>();
+  WeatherModelUI toWeatherModelUI(ConditionsHelper conditionsHelper) {
     final todayDomain = forecast.forecastDayList[0];
     final tomorrowDomain = forecast.forecastDayList[1];
 
@@ -75,7 +73,7 @@ extension ConvertToWeatherModelUI on WeatherModelDomain {
     );
 
     final todayHoursList = todayDomain.hourlyForecast
-        .map(_mapHourModelDomainToHourModelUI)
+        .map((h) => _mapHourModelDomainToHourModelUI(h, conditionsHelper))
         .where((h) {
           final localDateTime = location.localtime;
           final hDateTime = h.dateTime;
@@ -92,7 +90,7 @@ extension ConvertToWeatherModelUI on WeatherModelDomain {
 
     if (todayHoursList.length < 24) {
       final tomorrowHoursList = tomorrowDomain.hourlyForecast
-          .map(_mapHourModelDomainToHourModelUI)
+          .map((h) => _mapHourModelDomainToHourModelUI(h, conditionsHelper))
           .take(24 - todayHoursList.length);
 
       todayHoursList.addAll(tomorrowHoursList);
@@ -222,9 +220,10 @@ extension ConvertToWeatherModelUI on WeatherModelDomain {
     );
   }
 
-  HourModelUI _mapHourModelDomainToHourModelUI(HourModelDomain h) {
-    final conditionsHelper = sl<ConditionsHelper>();
-
+  HourModelUI _mapHourModelDomainToHourModelUI(
+    HourModelDomain h,
+    ConditionsHelper conditionsHelper,
+  ) {
     return HourModelUI(
       dateTime: h.dateTime,
       condition: ConditionModelUI(

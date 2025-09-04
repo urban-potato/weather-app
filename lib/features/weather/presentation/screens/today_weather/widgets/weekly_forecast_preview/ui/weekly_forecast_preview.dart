@@ -1,9 +1,8 @@
-import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../../../../../../../shared/router/router.gr.dart';
-
+import '../../../../../../../../app/service_locator/service_locator.dart';
+import '../../../../../../../../shared/services/index.dart';
 import '../../../../../../../../shared/ui/card_tile/index.dart';
 import '../../../../../../shared/ui/widget_title/index.dart';
 import '../../../../../../../../shared/utils/size_helper/index.dart';
@@ -53,7 +52,9 @@ class _WeeklyForecastPreviewWidgetState
               );
 
               return GestureDetector(
-                onTap: () => context.router.push(const WeeklyForecastRoute()),
+                onTap: () =>
+                    sl<NavigationService>().pushWeeklyForecastRoute(context),
+
                 child: CardTile(
                   child: Column(
                     children: [
