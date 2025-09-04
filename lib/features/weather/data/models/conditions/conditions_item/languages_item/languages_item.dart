@@ -2,6 +2,7 @@ import 'package:json_annotation/json_annotation.dart';
 
 part 'languages_item.g.dart';
 
+@JsonSerializable()
 class LanguagesItemModelData {
   @JsonKey(name: 'lang_name')
   final String langName;
