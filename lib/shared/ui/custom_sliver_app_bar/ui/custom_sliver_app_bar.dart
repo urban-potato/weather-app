@@ -1,15 +1,17 @@
-import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../services/index.dart';
 import '../../../utils/size_helper/index.dart';
 
-class CustomSliverAppBar extends StatelessWidget {
+class CustomSliverAppBar extends ConsumerWidget {
   const CustomSliverAppBar({super.key, required this.title});
 
   final String title;
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final navigationService = ref.read(navigationServiceProvider);
     ScreenBasedSize.instance.init(context);
 
     final toolbarHeight = ScreenBasedSize.instance.scaleByUnit(12);
@@ -27,11 +29,12 @@ class CustomSliverAppBar extends StatelessWidget {
       centerTitle: true,
       backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       surfaceTintColor: Theme.of(context).scaffoldBackgroundColor,
+      automaticallyImplyLeading: false,
       leading: Align(
         alignment: Alignment.centerLeft,
         child: IconButton(
           iconSize: contentSize,
-          onPressed: () => context.router.pop(),
+          onPressed: () => navigationService.pop(context),
           icon: const Icon(Icons.arrow_back),
         ),
       ),

@@ -1,9 +1,9 @@
 import '../../domain/models/index.dart';
-import '../../shared/utils/conditions_helper/index.dart';
+import '../../domain/services/index.dart';
 import '../models/index.dart';
 
 extension ConvertToWeatherModelUI on WeatherModelDomain {
-  WeatherModelUI toWeatherModelUI(ConditionsHelper conditionsHelper) {
+  WeatherModelUI toWeatherModelUI(ConditionsService conditionsService) {
     final todayDomain = forecast.forecastDayList[0];
     final tomorrowDomain = forecast.forecastDayList[1];
 
@@ -16,12 +16,12 @@ extension ConvertToWeatherModelUI on WeatherModelDomain {
       // TODO: здесь где ConditionModelUI text ну;но будет выдавать текст в зависимости от языка в settings пользователя
       condition: ConditionModelUI(
         text:
-            conditionsHelper.getText(
+            conditionsService.getText(
               code: current.condition.code,
               isDay: current.isDay,
             ) ??
             current.condition.text,
-        assetIconPath: conditionsHelper.getAssetIconPath(
+        assetIconPath: conditionsService.getAssetIconPath(
           code: current.condition.code,
           isDay: current.isDay,
         ),
@@ -47,12 +47,12 @@ extension ConvertToWeatherModelUI on WeatherModelDomain {
           dateTime: f.date,
           condition: ConditionModelUI(
             text:
-                conditionsHelper.getText(
+                conditionsService.getText(
                   code: f.day.condition.code,
                   isDay: true,
                 ) ??
                 f.day.condition.text,
-            assetIconPath: conditionsHelper.getAssetIconPath(
+            assetIconPath: conditionsService.getAssetIconPath(
               code: f.day.condition.code,
               isDay: true,
             ),
@@ -73,7 +73,7 @@ extension ConvertToWeatherModelUI on WeatherModelDomain {
     );
 
     final todayHoursList = todayDomain.hourlyForecast
-        .map((h) => _mapHourModelDomainToHourModelUI(h, conditionsHelper))
+        .map((h) => _mapHourModelDomainToHourModelUI(h, conditionsService))
         .where((h) {
           final localDateTime = location.localtime;
           final hDateTime = h.dateTime;
@@ -90,7 +90,7 @@ extension ConvertToWeatherModelUI on WeatherModelDomain {
 
     if (todayHoursList.length < 24) {
       final tomorrowHoursList = tomorrowDomain.hourlyForecast
-          .map((h) => _mapHourModelDomainToHourModelUI(h, conditionsHelper))
+          .map((h) => _mapHourModelDomainToHourModelUI(h, conditionsService))
           .take(24 - todayHoursList.length);
 
       todayHoursList.addAll(tomorrowHoursList);
@@ -149,12 +149,12 @@ extension ConvertToWeatherModelUI on WeatherModelDomain {
         ),
         condition: ConditionModelUI(
           text:
-              conditionsHelper.getText(
+              conditionsService.getText(
                 code: f.day.condition.code,
                 isDay: true,
               ) ??
               f.day.condition.text,
-          assetIconPath: conditionsHelper.getAssetIconPath(
+          assetIconPath: conditionsService.getAssetIconPath(
             code: f.day.condition.code,
             isDay: true,
           ),
@@ -222,15 +222,15 @@ extension ConvertToWeatherModelUI on WeatherModelDomain {
 
   HourModelUI _mapHourModelDomainToHourModelUI(
     HourModelDomain h,
-    ConditionsHelper conditionsHelper,
+    ConditionsService conditionsService,
   ) {
     return HourModelUI(
       dateTime: h.dateTime,
       condition: ConditionModelUI(
         text:
-            conditionsHelper.getText(code: h.condition.code, isDay: h.isDay) ??
+            conditionsService.getText(code: h.condition.code, isDay: h.isDay) ??
             h.condition.text,
-        assetIconPath: conditionsHelper.getAssetIconPath(
+        assetIconPath: conditionsService.getAssetIconPath(
           code: h.condition.code,
           isDay: h.isDay,
         ),

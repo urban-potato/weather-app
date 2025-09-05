@@ -1,6 +1,8 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'weather_api_service.dart';
+part of 'weather_api_client.dart';
+
+// dart format off
 
 // **************************************************************************
 // RetrofitGenerator
@@ -8,8 +10,8 @@ part of 'weather_api_service.dart';
 
 // ignore_for_file: unnecessary_brace_in_string_interps,no_leading_underscores_for_local_identifiers,unused_element,unnecessary_string_interpolations,unused_element_parameter
 
-class _WeatherApiService implements WeatherApiService {
-  _WeatherApiService(this._dio, {this.baseUrl, this.errorLogger}) {
+class _WeatherApiClient implements WeatherApiClient {
+  _WeatherApiClient(this._dio, {this.baseUrl, this.errorLogger}) {
     baseUrl ??= 'https://api.weatherapi.com/v1';
   }
 
@@ -85,3 +87,5 @@ class _WeatherApiService implements WeatherApiService {
     return Uri.parse(dioBaseUrl).resolveUri(url).toString();
   }
 }
+
+// dart format on

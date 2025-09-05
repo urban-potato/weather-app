@@ -1,22 +1,23 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
-import '../../../../../../../../../app/service_locator/service_locator.dart';
 import '../../../../../../../../../shared/services/index.dart';
 import '../../../../../../../../../shared/utils/size_helper/index.dart';
 import '../../../../../../../shared/utils/assets_path_helper/index.dart';
 
-class MoonInfoWidget extends StatelessWidget {
+class MoonInfoWidget extends ConsumerWidget {
   const MoonInfoWidget({super.key, required this.moonPhase});
 
   final String moonPhase;
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     final moonPhaseAssetPath = getMoonPhaseAssetPath(moonPhase);
+    final navigationService = ref.read(navigationServiceProvider);
 
     return GestureDetector(
-      onTap: () => sl<NavigationService>().pushMoonInfoRoute(context),
+      onTap: () => navigationService.pushMoonInfoRoute(context),
 
       child: LayoutBuilder(
         builder: (BuildContext context, BoxConstraints constraints) {

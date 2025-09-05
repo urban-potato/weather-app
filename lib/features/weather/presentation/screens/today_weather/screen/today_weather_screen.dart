@@ -2,7 +2,6 @@ import 'package:auto_route/annotations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../../../../../app/service_locator/service_locator.dart';
 import '../../../../../../shared/ui/screen_padding/index.dart';
 import '../../../../../../shared/utils/size_helper/index.dart';
 import '../../../provider/weather_cubit.dart';
@@ -24,62 +23,57 @@ class TodayWeatherScreen extends StatelessWidget {
 
     return SafeArea(
       child: Scaffold(
-        body: BlocProvider<WeatherCubit>(
-          create: (context) => sl<WeatherCubit>()..loadWeather(),
-
-          child: CustomScrollView(
-            physics: const BouncingScrollPhysics(
-              parent: AlwaysScrollableScrollPhysics(),
-            ),
-            slivers: [
-              const CustomSliverAppBar(),
-              const CustomRefreshControl(),
-
-              BlocBuilder<WeatherCubit, WeatherState>(
-                buildWhen: (previous, current) {
-                  if (previous is! WeatherInitial &&
-                      current is WeatherLoading) {
-                    return false;
-                  }
-                  return true;
-                },
-                builder: (context, state) {
-                  print('+++++ TodayWeatherScreen BlocBuilder build +++++');
-                  if (state is WeatherLoading) {
-                    print(
-                      '+++++ TodayWeatherScreen BlocBuilder CircularProgressIndicator +++++',
-                    );
-
-                    return const SliverFillRemaining(
-                      child: Center(child: CircularProgressIndicator()),
-                    );
-                  } else if (state is WeatherFailure) {
-                    print(
-                      '+++++ TodayWeatherScreen BlocBuilder Text ERROR :( +++++',
-                    );
-
-                    return const SliverFillRemaining(
-                      child: Center(child: Text('ERROR :(')),
-                    );
-                  } else if (state is WeatherLoaded) {
-                    print(
-                      '+++++ TodayWeatherScreen BlocBuilder _BodyWidgets +++++',
-                    );
-
-                    return const _WeatherScreenBodyWidgets();
-                  } else {
-                    print(
-                      '+++++ TodayWeatherScreen BlocBuilder Text ERROR :(( +++++',
-                    );
-
-                    return const SliverFillRemaining(
-                      child: Center(child: Text('ERROR :((((((')),
-                    );
-                  }
-                },
-              ),
-            ],
+        body: CustomScrollView(
+          physics: const BouncingScrollPhysics(
+            parent: AlwaysScrollableScrollPhysics(),
           ),
+          slivers: [
+            const CustomSliverAppBar(),
+            const CustomRefreshControl(),
+
+            BlocBuilder<WeatherCubit, WeatherState>(
+              buildWhen: (previous, current) {
+                if (previous is! WeatherInitial && current is WeatherLoading) {
+                  return false;
+                }
+                return true;
+              },
+              builder: (context, state) {
+                print('+++++ TodayWeatherScreen BlocBuilder build +++++');
+                if (state is WeatherLoading) {
+                  print(
+                    '+++++ TodayWeatherScreen BlocBuilder CircularProgressIndicator +++++',
+                  );
+
+                  return const SliverFillRemaining(
+                    child: Center(child: CircularProgressIndicator()),
+                  );
+                } else if (state is WeatherFailure) {
+                  print(
+                    '+++++ TodayWeatherScreen BlocBuilder Text ERROR :( +++++',
+                  );
+
+                  return const SliverFillRemaining(
+                    child: Center(child: Text('ERROR :(')),
+                  );
+                } else if (state is WeatherLoaded) {
+                  print(
+                    '+++++ TodayWeatherScreen BlocBuilder _BodyWidgets +++++',
+                  );
+
+                  return const _WeatherScreenBodyWidgets();
+                } else {
+                  print(
+                    '+++++ TodayWeatherScreen BlocBuilder Text ERROR :(( +++++',
+                  );
+
+                  return const SliverFillRemaining(
+                    child: Center(child: Text('ERROR :((((((')),
+                  );
+                }
+              },
+            ),
+          ],
         ),
       ),
     );

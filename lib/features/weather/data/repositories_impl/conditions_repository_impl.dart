@@ -5,9 +5,9 @@ import '../data_sources/local/index.dart';
 import '../mappers/index.dart';
 
 class ConditionsRepositoryImpl implements ConditionsRepository {
-  final ConditionsService _conditionsService;
+  final ConditionsClient _conditionsService;
 
-  ConditionsRepositoryImpl({required ConditionsService conditionsService})
+  ConditionsRepositoryImpl({required ConditionsClient conditionsService})
     : _conditionsService = conditionsService;
 
   @override

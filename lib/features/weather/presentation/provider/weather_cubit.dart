@@ -1,9 +1,7 @@
 import 'dart:developer';
-
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../../../app/service_locator/service_locator.dart';
-import '../../shared/utils/conditions_helper/index.dart';
+import '../../domain/services/index.dart';
 import '../../shared/utils/update_permission_helper/index.dart';
 import '../mappers/weather.dart';
 import '../../../../shared/resources/remote_data_state/index.dart';
@@ -11,11 +9,14 @@ import '../../domain/usecases/index.dart';
 import 'weather_state.dart';
 
 class WeatherCubit extends Cubit<WeatherState> {
-  WeatherCubit({required GetWeatherUseCase getWeatherUseCase})
-    : _getWeatherUseCase = getWeatherUseCase,
-      super(const WeatherLoading());
+  WeatherCubit({
+    required GetWeatherUseCase getWeatherUseCase,
+    required this.conditionsService,
+  }) : _getWeatherUseCase = getWeatherUseCase,
+       super(const WeatherLoading());
 
   final GetWeatherUseCase _getWeatherUseCase;
+  final ConditionsService conditionsService;
 
   Future<void> loadWeather() async {
     print('--- CUBIT WeatherBloc _loadWeather ---');
@@ -39,9 +40,7 @@ class WeatherCubit extends Cubit<WeatherState> {
     final dataState = await _getWeatherUseCase();
 
     if (dataState is RemoteDataSuccess && dataState.data != null) {
-      final dataModelUI = dataState.data!.toWeatherModelUI(
-        sl<ConditionsHelper>(),
-      );
+      final dataModelUI = dataState.data!.toWeatherModelUI(conditionsService);
       log('emit(WeatherLoaded(dataModelUI));');
       emit(WeatherLoaded(weather: dataModelUI));
       return;

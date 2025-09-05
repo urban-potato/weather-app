@@ -1,15 +1,18 @@
-import '../../../../../shared/resources/local_data_state/index.dart';
-import '../../../domain/models/index.dart';
-import '../../../domain/usecases/index.dart';
-import '../../resources/index.dart';
+import '../../../../shared/resources/local_data_state/index.dart';
+import '../../domain/models/index.dart';
+import '../../domain/services/index.dart';
+import '../../domain/usecases/index.dart';
+import '../../shared/resources/index.dart';
 
-class ConditionsHelper {
-  ConditionsHelper({required GetConditionsUseCase getConditionsUseCase})
+class ConditionsServiceImpl implements ConditionsService {
+  ConditionsServiceImpl({required GetConditionsUseCase getConditionsUseCase})
     : _getConditionsUseCase = getConditionsUseCase;
 
   final GetConditionsUseCase _getConditionsUseCase;
   ConditionsModelDomain? _conditions;
 
+  // Must be called and completed before using an instance of the class
+  @override
   Future<void> loadConditions() async {
     if (_conditions != null) return;
 
@@ -20,10 +23,12 @@ class ConditionsHelper {
     }
   }
 
+  @override
   ConditionsItemModelDomain? getConditionByCode(int code) {
     return _conditions?.conditionsMap[code];
   }
 
+  @override
   String? getText({required int code, String? langIso, required bool isDay}) {
     final condition = getConditionByCode(code);
     if (condition == null) return null;
@@ -33,6 +38,7 @@ class ConditionsHelper {
         : condition.languages[langIso]?.nightText ?? condition.nightTextEng;
   }
 
+  @override
   String? getAssetIconPath({required int code, required bool isDay}) {
     final condition = getConditionByCode(code);
     if (condition == null) return null;

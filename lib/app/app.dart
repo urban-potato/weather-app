@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../shared/utils/size_helper/index.dart';
+import 'initializer/app_initializer.dart';
 import 'navigation/router/index.dart';
 import 'theme/index.dart';
 
@@ -18,12 +19,14 @@ class _AppState extends State<App> {
   Widget build(BuildContext context) {
     ScreenBasedSize.instance.init(context);
 
-    return MaterialApp.router(
-      routerConfig: _router.config(),
-      debugShowCheckedModeBanner: false,
-      title: 'Weather App',
-      theme: TAppTheme.lightTheme(context),
-      darkTheme: TAppTheme.darkTheme(context),
+    return AppInitializer(
+      child: MaterialApp.router(
+        routerConfig: _router.config(),
+        debugShowCheckedModeBanner: false,
+        title: 'Weather App',
+        theme: TAppTheme.lightTheme(context),
+        darkTheme: TAppTheme.darkTheme(context),
+      ),
     );
   }
 }

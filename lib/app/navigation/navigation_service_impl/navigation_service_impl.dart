@@ -2,9 +2,11 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 
 import '../../../shared/services/index.dart';
-import '../router/router.gr.dart';
+import '../router/index.dart';
 
 class NavigationServiceImpl implements NavigationService {
+  const NavigationServiceImpl();
+
   @override
   void pushMoonInfoRoute(BuildContext context) {
     context.router.push(const MoonInfoRoute());

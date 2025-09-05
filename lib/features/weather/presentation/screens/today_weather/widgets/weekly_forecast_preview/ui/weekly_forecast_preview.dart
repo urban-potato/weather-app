@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../../../../../../../../app/service_locator/service_locator.dart';
 import '../../../../../../../../shared/services/index.dart';
 import '../../../../../../../../shared/ui/card_tile/index.dart';
 import '../../../../../../shared/ui/widget_title/index.dart';
@@ -12,16 +12,16 @@ import '../../../../../provider/weather_cubit.dart';
 import '../../../../../provider/weather_state.dart';
 import 'components/daily_temperature_range.dart';
 
-class WeeklyForecastPreviewWidget extends StatefulWidget {
+class WeeklyForecastPreviewWidget extends ConsumerStatefulWidget {
   const WeeklyForecastPreviewWidget({super.key});
 
   @override
-  State<WeeklyForecastPreviewWidget> createState() =>
+  ConsumerState<WeeklyForecastPreviewWidget> createState() =>
       _WeeklyForecastPreviewWidgetState();
 }
 
 class _WeeklyForecastPreviewWidgetState
-    extends State<WeeklyForecastPreviewWidget>
+    extends ConsumerState<WeeklyForecastPreviewWidget>
     with AutomaticKeepAliveClientMixin<WeeklyForecastPreviewWidget> {
   @override
   bool get wantKeepAlive => true;
@@ -31,6 +31,7 @@ class _WeeklyForecastPreviewWidgetState
     super.build(context);
 
     print('WeekForecastPreviewWidget build');
+    final navigationService = ref.read(navigationServiceProvider);
 
     return Column(
       mainAxisSize: MainAxisSize.min,
@@ -52,8 +53,7 @@ class _WeeklyForecastPreviewWidgetState
               );
 
               return GestureDetector(
-                onTap: () =>
-                    sl<NavigationService>().pushWeeklyForecastRoute(context),
+                onTap: () => navigationService.pushWeeklyForecastRoute(context),
 
                 child: CardTile(
                   child: Column(

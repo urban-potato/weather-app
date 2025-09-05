@@ -11,9 +11,9 @@ import '../data_sources/remote/index.dart';
 import '../mappers/index.dart';
 
 class WeatherRepositoryImpl implements WeatherRepository {
-  final WeatherApiService _weatherApiService;
+  final WeatherApiClient _weatherApiService;
 
-  WeatherRepositoryImpl({required WeatherApiService weatherApiService})
+  WeatherRepositoryImpl({required WeatherApiClient weatherApiService})
     : _weatherApiService = weatherApiService;
 
   @override

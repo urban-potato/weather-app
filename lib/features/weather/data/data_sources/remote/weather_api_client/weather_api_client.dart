@@ -4,11 +4,11 @@ import 'package:retrofit/retrofit.dart';
 import '../../../../../../shared/constants/constants.dart';
 import '../../../models/index.dart';
 
-part 'weather_api_service.g.dart';
+part 'weather_api_client.g.dart';
 
 @RestApi(baseUrl: weatherApiBaseURL)
-abstract class WeatherApiService {
-  factory WeatherApiService(Dio dio) = _WeatherApiService;
+abstract class WeatherApiClient {
+  factory WeatherApiClient(Dio dio) = _WeatherApiClient;
 
   @GET('/forecast.json')
   Future<HttpResponse<WeatherModelData>> getWeather({

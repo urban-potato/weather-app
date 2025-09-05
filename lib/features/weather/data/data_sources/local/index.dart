@@ -1,1 +1,1 @@
-export './conditions_service/conditions_service.dart';
+export 'conditions_client/conditions_client.dart';
