@@ -6,7 +6,7 @@ class SvgMoonPhases {
   static final _instance = SvgMoonPhases._();
   static SvgMoonPhases get instance => _instance;
 
-  static const _basePath = '${AppSvgs._basePath}moon/';
+  static const _basePath = '${AppSvgs._basePath}moon_phases/';
 
   final String firstQuarter = '${_basePath}first-quarter.svg';
   final String fullMoon = '${_basePath}full-moon.svg';
