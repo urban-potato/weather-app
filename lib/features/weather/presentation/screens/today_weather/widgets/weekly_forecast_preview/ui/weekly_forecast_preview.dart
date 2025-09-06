@@ -4,6 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../../../../../../shared/services/index.dart';
 import '../../../../../../../../shared/ui/card_tile/index.dart';
+import '../../../../../../shared/ui/image_asset_with_network_fallback/index.dart';
 import '../../../../../../shared/ui/widget_title/index.dart';
 import '../../../../../../../../shared/utils/size_helper/index.dart';
 import '../../../../../../shared/utils/day_helper/index.dart';
@@ -112,14 +113,10 @@ class _InfoRow extends StatelessWidget {
                 children: [
                   ConstrainedBox(
                     constraints: BoxConstraints(maxWidth: iconSize),
-                    child: Image.asset(
-                      item.condition.assetIconPath ?? '',
-                      errorBuilder: (context, error, stackTrace) =>
-                          Image.network(
-                            item.condition.networkIconPath,
-                            errorBuilder: (context, error, stackTrace) =>
-                                const SizedBox(),
-                          ),
+
+                    child: ImageAssetWithNetworkFallback(
+                      assetPath: item.condition.assetIconPath,
+                      networkPath: item.condition.networkIconPath,
                     ),
                   ),
                   Flexible(

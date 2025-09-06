@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
 
 import '../../../../../../../../shared/ui/card_tile/index.dart';
+import '../../../../../../shared/ui/image_asset_with_network_fallback/index.dart';
 import '../../../../../../shared/ui/widget_title/index.dart';
 import '../../../../../../../../shared/utils/size_helper/index.dart';
 import '../../../../../models/index.dart';
@@ -99,16 +100,22 @@ class _ForecastItemTile extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.symmetric(vertical: 10),
               child: ConstrainedBox(
-                constraints: const BoxConstraints(maxWidth: 32),
-                child: Image.asset(
-                  hourInfo.condition.assetIconPath ?? '',
+                constraints: const BoxConstraints(
+                  maxWidth: 32,
+                  minWidth: 32,
+                  maxHeight: 32,
+                  minHeight: 32,
+                ),
+
+                child: ImageAssetWithNetworkFallback(
+                  assetPath: hourInfo.condition.assetIconPath,
+                  networkPath: hourInfo.condition.networkIconPath,
                   semanticLabel: hourInfo.condition.text,
-                  errorBuilder: (context, error, stackTrace) => Image.network(
-                    semanticLabel: hourInfo.condition.text,
-                    hourInfo.condition.networkIconPath,
-                    errorBuilder: (context, error, stackTrace) =>
-                        const Icon(Icons.question_mark_outlined, size: 32),
+                  errorWidget: const Icon(
+                    Icons.question_mark_outlined,
+                    size: 32,
                   ),
+                  loadingIndicatorSize: 20,
                 ),
               ),
             ),

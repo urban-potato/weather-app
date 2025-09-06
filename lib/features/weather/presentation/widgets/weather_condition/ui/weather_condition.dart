@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../../../../../shared/utils/size_helper/index.dart';
+import '../../../../shared/ui/image_asset_with_network_fallback/index.dart';
 import '../../../models/index.dart';
 
 class WeatherConditionWidget extends StatelessWidget {
@@ -46,13 +47,9 @@ class WeatherConditionWidget extends StatelessWidget {
 
             ConstrainedBox(
               constraints: BoxConstraints(maxWidth: iconSize),
-              child: Image.asset(
-                condition.assetIconPath ?? '',
-                errorBuilder: (context, error, stackTrace) => Image.network(
-                  condition.networkIconPath,
-                  errorBuilder: (context, error, stackTrace) =>
-                      const SizedBox(),
-                ),
+              child: ImageAssetWithNetworkFallback(
+                assetPath: condition.assetIconPath,
+                networkPath: condition.networkIconPath,
               ),
             ),
           ],

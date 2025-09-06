@@ -29,9 +29,14 @@ class ConditionsServiceImpl implements ConditionsService {
   }
 
   @override
-  String? getText({required int code, String? langIso, required bool isDay}) {
+  String getText({
+    required int code,
+    String? langIso,
+    required bool isDay,
+    String fallbackText = '',
+  }) {
     final condition = getConditionByCode(code);
-    if (condition == null) return null;
+    if (condition == null) return fallbackText;
 
     return isDay
         ? condition.languages[langIso]?.dayText ?? condition.dayTextEng
@@ -39,9 +44,9 @@ class ConditionsServiceImpl implements ConditionsService {
   }
 
   @override
-  String? getAssetIconPath({required int code, required bool isDay}) {
+  String getAssetIconPath({required int code, required bool isDay}) {
     final condition = getConditionByCode(code);
-    if (condition == null) return null;
+    if (condition == null) return '';
 
     final iconNumber = condition.iconNumber;
 

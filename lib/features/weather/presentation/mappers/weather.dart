@@ -15,12 +15,11 @@ extension ConvertToWeatherModelUI on WeatherModelDomain {
       ),
       // TODO: здесь где ConditionModelUI text ну;но будет выдавать текст в зависимости от языка в settings пользователя
       condition: ConditionModelUI(
-        text:
-            conditionsService.getText(
-              code: current.condition.code,
-              isDay: current.isDay,
-            ) ??
-            current.condition.text,
+        text: conditionsService.getText(
+          code: current.condition.code,
+          isDay: current.isDay,
+          fallbackText: current.condition.text,
+        ),
         assetIconPath: conditionsService.getAssetIconPath(
           code: current.condition.code,
           isDay: current.isDay,
@@ -46,12 +45,11 @@ extension ConvertToWeatherModelUI on WeatherModelDomain {
         return WeeklyForecastPreviewDayModelUI(
           dateTime: f.date,
           condition: ConditionModelUI(
-            text:
-                conditionsService.getText(
-                  code: f.day.condition.code,
-                  isDay: true,
-                ) ??
-                f.day.condition.text,
+            text: conditionsService.getText(
+              code: f.day.condition.code,
+              isDay: true,
+              fallbackText: f.day.condition.text,
+            ),
             assetIconPath: conditionsService.getAssetIconPath(
               code: f.day.condition.code,
               isDay: true,
@@ -148,12 +146,11 @@ extension ConvertToWeatherModelUI on WeatherModelDomain {
           fahrenheit: f.day.avgTemp.fahrenheit.round(),
         ),
         condition: ConditionModelUI(
-          text:
-              conditionsService.getText(
-                code: f.day.condition.code,
-                isDay: true,
-              ) ??
-              f.day.condition.text,
+          text: conditionsService.getText(
+            code: f.day.condition.code,
+            isDay: true,
+            fallbackText: f.day.condition.text,
+          ),
           assetIconPath: conditionsService.getAssetIconPath(
             code: f.day.condition.code,
             isDay: true,
@@ -227,9 +224,11 @@ extension ConvertToWeatherModelUI on WeatherModelDomain {
     return HourModelUI(
       dateTime: h.dateTime,
       condition: ConditionModelUI(
-        text:
-            conditionsService.getText(code: h.condition.code, isDay: h.isDay) ??
-            h.condition.text,
+        text: conditionsService.getText(
+          code: h.condition.code,
+          isDay: h.isDay,
+          fallbackText: h.condition.text,
+        ),
         assetIconPath: conditionsService.getAssetIconPath(
           code: h.condition.code,
           isDay: h.isDay,

@@ -3,7 +3,7 @@ import 'package:equatable/equatable.dart';
 class ConditionModelUI extends Equatable {
   final String text;
   final String networkIconPath;
-  final String? assetIconPath;
+  final String assetIconPath;
 
   const ConditionModelUI({
     required this.text,
