@@ -2,6 +2,7 @@ import 'package:auto_route/annotations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../../../../../shared/ui/custom_circular_progress_indicator/index.dart';
 import '../../../../../../shared/ui/screen_padding/index.dart';
 import '../../../../../../shared/utils/size_helper/index.dart';
 import '../../../provider/weather_cubit.dart';
@@ -46,7 +47,7 @@ class TodayWeatherScreen extends StatelessWidget {
                   );
 
                   return const SliverFillRemaining(
-                    child: Center(child: CircularProgressIndicator()),
+                    child: CustomCircularProgressIndicator(),
                   );
                 } else if (state is WeatherFailure) {
                   print(

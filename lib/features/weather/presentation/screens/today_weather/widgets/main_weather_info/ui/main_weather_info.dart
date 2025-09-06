@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../../../../../../../shared/ui/custom_circular_progress_indicator/index.dart';
 import '../../../../../models/index.dart';
 import '../../../../../provider/weather_cubit.dart';
 import '../../../../../provider/weather_state.dart';
@@ -39,7 +40,7 @@ class _MainWeatherInfoWidgetState extends State<MainWeatherInfoWidget>
           print(
             'MainWeatherInfoWidget BlocSelector return CircularProgressIndicator',
           );
-          return const Center(child: CircularProgressIndicator());
+          return const CustomCircularProgressIndicator();
         } else {
           print('MainWeatherInfoWidget BlocSelector return Column');
           return Column(

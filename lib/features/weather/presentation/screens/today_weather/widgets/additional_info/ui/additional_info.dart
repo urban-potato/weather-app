@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
 
 import '../../../../../../../../shared/ui/card_tile/index.dart';
+import '../../../../../../../../shared/ui/custom_circular_progress_indicator/index.dart';
 import '../../../../../../shared/ui/responsive_info_list/index.dart';
 import '../../../../../../shared/utils/wind_direction_helper/index.dart';
 import '../../../../../models/index.dart';
@@ -93,7 +94,7 @@ class _PrecipitationInfoCard extends StatelessWidget {
           print(
             'AdditionalInfoWidget BlocSelector return precipitationData CircularProgressIndicator',
           );
-          return const Center(child: CircularProgressIndicator());
+          return const CustomCircularProgressIndicator();
         } else {
           print('AdditionalInfoWidget BlocSelector return precipitationData');
 
@@ -123,7 +124,7 @@ class _OtherWeatherInfoCard extends StatelessWidget {
           print(
             'AdditionalInfoWidget BlocSelector return otherWeatherData CircularProgressIndicator',
           );
-          return const Center(child: CircularProgressIndicator());
+          return const CustomCircularProgressIndicator();
         } else {
           print('AdditionalInfoWidget BlocSelector return otherWeatherData');
 
@@ -155,7 +156,7 @@ class _MoonInfoCard extends StatelessWidget {
           print(
             'AdditionalInfoWidget BlocSelector return MoonInfoWidget CircularProgressIndicator',
           );
-          return const Center(child: CircularProgressIndicator());
+          return const CustomCircularProgressIndicator();
         } else {
           print('AdditionalInfoWidget BlocSelector return MoonInfoWidget');
 
@@ -180,7 +181,7 @@ class _SunInfoCard extends StatelessWidget {
           print(
             'AdditionalInfoWidget BlocSelector return SunInfoWidget CircularProgressIndicator',
           );
-          return const Center(child: CircularProgressIndicator());
+          return const CustomCircularProgressIndicator();
         } else {
           print('AdditionalInfoWidget BlocSelector return SunInfoWidget');
 
@@ -210,7 +211,7 @@ class _WindInfoCard extends StatelessWidget {
           print(
             'AdditionalInfoWidget BlocSelector return WindInfoWidget CircularProgressIndicator',
           );
-          return const Center(child: CircularProgressIndicator());
+          return const CustomCircularProgressIndicator();
         } else {
           print('AdditionalInfoWidget BlocSelector return WindInfoWidget');
 
