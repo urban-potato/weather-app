@@ -76,6 +76,8 @@ flutter:
   assets:
     - lib/shared/assets/svg/
     - lib/shared/assets/svg/moon_phases/
+    - lib/shared/assets/svg/cloud_faces/positive/
+    - lib/shared/assets/svg/cloud_faces/negative/
     - lib/shared/assets/image/icons/day/
     - lib/shared/assets/image/icons/night/
     - lib/shared/assets/json/conditions/

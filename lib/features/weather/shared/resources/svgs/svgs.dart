@@ -1,4 +1,7 @@
+import 'dart:math';
+
 part 'components/moon_phases.dart';
+part 'components/cloud_faces.dart';
 
 class AppSvgs {
   AppSvgs._();
@@ -6,5 +9,6 @@ class AppSvgs {
   static const _basePath = 'lib/shared/assets/svg/';
 
   static final SvgMoonPhases moonPhases = SvgMoonPhases.instance;
+  static final SvgCloudFaces cloudFaces = SvgCloudFaces.instance;
   static const String unknown = '${_basePath}unknown.svg';
 }

@@ -12,6 +12,7 @@ import '../widgets/custom_refresh_control/index.dart';
 import '../widgets/hourly_forecast/index.dart';
 import '../widgets/main_weather_info/index.dart';
 import '../widgets/custom_sliver_app_bar/index.dart';
+import '../widgets/no_data/index.dart';
 import '../widgets/weekly_forecast_preview/index.dart';
 
 @RoutePage()
@@ -41,37 +42,26 @@ class TodayWeatherScreen extends StatelessWidget {
               },
               builder: (context, state) {
                 print('+++++ TodayWeatherScreen BlocBuilder build +++++');
-                if (state is WeatherLoading) {
-                  print(
-                    '+++++ TodayWeatherScreen BlocBuilder CircularProgressIndicator +++++',
-                  );
-
-                  return const SliverFillRemaining(
-                    child: CustomCircularProgressIndicator(),
-                  );
-                } else if (state is WeatherFailure) {
-                  print(
-                    '+++++ TodayWeatherScreen BlocBuilder Text ERROR :( +++++',
-                  );
-
-                  return const SliverFillRemaining(
-                    child: Center(child: Text('ERROR :(')),
-                  );
-                } else if (state is WeatherLoaded) {
+                if (state is WeatherLoaded) {
                   print(
                     '+++++ TodayWeatherScreen BlocBuilder _BodyWidgets +++++',
                   );
-
                   return const _WeatherScreenBodyWidgets();
-                } else {
+                } else if (state is WeatherFailure) {
                   print(
-                    '+++++ TodayWeatherScreen BlocBuilder Text ERROR :(( +++++',
+                    '+++++ TodayWeatherScreen BlocBuilder _NoDataWidget +++++',
                   );
-
                   return const SliverFillRemaining(
-                    child: Center(child: Text('ERROR :((((((')),
+                    child: ScreenPadding(child: NoDataWidget()),
                   );
                 }
+
+                print(
+                  '+++++ TodayWeatherScreen BlocBuilder CustomCircularProgressIndicator +++++',
+                );
+                return const SliverFillRemaining(
+                  child: CustomCircularProgressIndicator(),
+                );
               },
             ),
           ],
@@ -81,17 +71,8 @@ class TodayWeatherScreen extends StatelessWidget {
   }
 }
 
-class _NoDataWidget extends StatelessWidget {
-  const _NoDataWidget({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return const Placeholder();
-  }
-}
-
 class _WeatherScreenBodyWidgets extends StatelessWidget {
-  const _WeatherScreenBodyWidgets({super.key});
+  const _WeatherScreenBodyWidgets();
 
   @override
   Widget build(BuildContext context) {
@@ -116,7 +97,7 @@ class _WeatherScreenBodyWidgets extends StatelessWidget {
 }
 
 class _MainWeatherInfoPadding extends StatelessWidget {
-  const _MainWeatherInfoPadding({super.key, required this.child});
+  const _MainWeatherInfoPadding({required this.child});
 
   final Widget child;
 
