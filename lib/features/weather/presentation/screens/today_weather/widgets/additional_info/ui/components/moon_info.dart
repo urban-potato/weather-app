@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart' show CupertinoIcons;
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -50,11 +51,12 @@ class MoonInfoWidget extends ConsumerWidget {
                         maxWidth: iconSize,
                         maxHeight: iconSize,
                       ),
-                      child: SvgPicture.asset(
-                        moonPhaseAssetPath,
-                        semanticsLabel: moonPhase,
-                        fit: BoxFit.scaleDown,
-                      ),
+                      child: moonPhaseAssetPath != null
+                          ? SvgPicture.asset(
+                              moonPhaseAssetPath,
+                              excludeFromSemantics: true,
+                            )
+                          : const Icon(CupertinoIcons.moon),
                     ),
                   ),
                 ],

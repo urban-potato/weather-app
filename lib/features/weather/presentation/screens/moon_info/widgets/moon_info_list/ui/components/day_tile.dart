@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart' show CupertinoIcons;
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
@@ -74,11 +75,12 @@ class _InfoWidgetsRow extends StatelessWidget {
                               maxWidth: constraintsMaxWidth,
                               maxHeight: constraintsMaxWidth,
                             ),
-                            child: SvgPicture.asset(
-                              moonPhaseAssetPath,
-                              semanticsLabel: data.moonPhase,
-                              fit: BoxFit.scaleDown,
-                            ),
+                            child: moonPhaseAssetPath != null
+                                ? SvgPicture.asset(
+                                    moonPhaseAssetPath,
+                                    excludeFromSemantics: true,
+                                  )
+                                : const Icon(CupertinoIcons.moon),
                           );
                         },
                   ),
