@@ -4,6 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 import '../../../../../../../../../shared/services/index.dart';
+import '../../../../../../../../../shared/ui/themed_text/index.dart';
 import '../../../../../../../../../shared/utils/size_helper/index.dart';
 import '../../../../../../../shared/utils/assets_path_helper/index.dart';
 
@@ -26,6 +27,8 @@ class MoonInfoWidget extends ConsumerWidget {
           final iconSize = AdjustableSize.scaleByUnit(constraintsMaxWidth, 20);
           final spacing = AdjustableSize.scaleByUnit(constraintsMaxWidth, 1.9);
 
+          print('LayoutBuilder MoonInfoWidget');
+
           return Column(
             mainAxisSize: MainAxisSize.min,
             children: [
@@ -35,11 +38,10 @@ class MoonInfoWidget extends ConsumerWidget {
                 children: [
                   Flexible(
                     flex: 3,
-                    child: Text(
-                      moonPhase,
-                      style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                        fontWeight: FontWeight.bold,
-                      ),
+                    child: ThemedText(
+                      text: moonPhase,
+                      styleType: AppTextStyle.bodyMedium,
+                      fontWeight: FontWeight.bold,
                       overflow: TextOverflow.clip,
                     ),
                   ),
@@ -61,10 +63,10 @@ class MoonInfoWidget extends ConsumerWidget {
                   ),
                 ],
               ),
-              Text(
-                'More info...',
+              const ThemedText(
+                text: 'More info...',
+                styleType: AppTextStyle.bodySmall,
                 textAlign: TextAlign.center,
-                style: Theme.of(context).textTheme.bodySmall,
               ),
             ],
           );

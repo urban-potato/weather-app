@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
+import '../../../../../../../../shared/ui/themed_text/index.dart';
 import '../../../../../../../../shared/utils/size_helper/index.dart';
 import '../../../../../../shared/resources/index.dart';
 
@@ -35,10 +36,11 @@ class NoDataWidget extends StatelessWidget {
                   excludeFromSemantics: true,
                   width: pictureWidth,
                 ),
-                Text(
-                  'Failed to load data. Please check your internet connection and try again.',
+                const ThemedText(
+                  text:
+                      'Failed to load data. Please check your internet connection and try again.',
+                  styleType: AppTextStyle.bodyLarge,
                   textAlign: TextAlign.center,
-                  style: Theme.of(context).textTheme.bodyLarge,
                 ),
               ],
             );

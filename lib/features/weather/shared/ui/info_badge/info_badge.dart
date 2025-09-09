@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../../../../shared/ui/card_tile/index.dart';
+import '../../../../../shared/ui/themed_text/index.dart';
 import '../../../../../shared/utils/size_helper/index.dart';
 
 class InfoBadge extends StatelessWidget {
@@ -59,12 +60,11 @@ class _InfoText extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Text(
-      text,
-      style: Theme.of(
-        context,
-      ).textTheme.labelMedium?.copyWith(color: Colors.white),
+    return ThemedText(
+      text: text,
+      styleType: AppTextStyle.labelMedium,
       overflow: TextOverflow.clip,
+      color: Colors.white,
     );
   }
 }

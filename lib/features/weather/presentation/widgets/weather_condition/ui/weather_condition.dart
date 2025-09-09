@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../../../../../../shared/ui/themed_text/index.dart';
 import '../../../../../../shared/utils/size_helper/index.dart';
 import '../../../../shared/ui/image_asset_with_network_fallback/index.dart';
 import '../../../models/index.dart';
@@ -7,11 +8,11 @@ import '../../../models/index.dart';
 class WeatherConditionWidget extends StatelessWidget {
   const WeatherConditionWidget({
     super.key,
-    this.sizeRatio = 1,
+    this.sizeRatio,
     required this.condition,
   });
 
-  final double sizeRatio;
+  final double? sizeRatio;
   final ConditionModelUI condition;
 
   @override
@@ -21,9 +22,11 @@ class WeatherConditionWidget extends StatelessWidget {
         final constraintsMaxWidth = constraints.maxWidth;
         final iconSize = AdjustableSize.scaleByUnit(
           constraintsMaxWidth,
-          22 * sizeRatio,
+          22 * (sizeRatio ?? 1),
         );
         final spacing = AdjustableSize.scaleByUnit(constraintsMaxWidth, 3);
+
+        print('LayoutBuilder WeatherConditionWidget');
 
         return Row(
           mainAxisSize: MainAxisSize.min,
@@ -31,17 +34,11 @@ class WeatherConditionWidget extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Flexible(
-              child: Text(
-                condition.text,
-                textAlign: TextAlign.center,
-                style: Theme.of(context).textTheme.labelLarge?.copyWith(
-                  fontSize:
-                      ((Theme.of(context).textTheme.labelLarge?.fontSize ?? 1) *
-                              sizeRatio)
-                          .round()
-                          .toDouble(),
-                ),
+              child: ThemedText(
+                text: condition.text,
+                styleType: AppTextStyle.labelLarge,
                 overflow: TextOverflow.clip,
+                fontSizeRatio: sizeRatio,
               ),
             ),
 

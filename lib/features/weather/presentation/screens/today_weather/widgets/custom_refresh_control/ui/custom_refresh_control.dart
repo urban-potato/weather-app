@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:weather_app/features/weather/presentation/provider/weather_cubit.dart';
 
+import '../../../../../../../../shared/ui/themed_text/index.dart';
 import '../../../../../../shared/utils/update_permission_helper/index.dart';
 import '../../../../../provider/weather_state.dart';
 import '../utils/last_updated_info_helper.dart';
@@ -51,38 +52,29 @@ class CustomRefreshControl extends StatelessWidget {
               double refreshTriggerPullDistance,
               double refreshIndicatorExtent,
             ) {
-              if (refreshState == RefreshIndicatorMode.refresh) {
-                return Text(
-                  'Updating...',
-                  textAlign: TextAlign.center,
-                  style: Theme.of(context).textTheme.bodySmall,
-                );
-              } else if (refreshState == RefreshIndicatorMode.armed) {
-                return Text(
-                  'Updating...',
-                  textAlign: TextAlign.center,
-                  style: Theme.of(context).textTheme.bodySmall,
-                );
+              print('CupertinoSliverRefreshControl builder');
+
+              String text = '';
+
+              if (refreshState == RefreshIndicatorMode.refresh ||
+                  refreshState == RefreshIndicatorMode.armed) {
+                text = 'Updating...';
               } else if (refreshState == RefreshIndicatorMode.done &&
                   weatherCubit.state is WeatherLoaded) {
-                return Text(
-                  'Updated successfully',
-                  textAlign: TextAlign.center,
-                  style: Theme.of(context).textTheme.bodySmall,
-                );
+                text = 'Updated successfully';
               } else if (refreshState == RefreshIndicatorMode.done &&
                   weatherCubit.state is WeatherFailure) {
-                return Text(
-                  'Error',
-                  textAlign: TextAlign.center,
-                  style: Theme.of(context).textTheme.bodySmall,
+                text = 'Error';
+              } else {
+                text = getLastUpdatedInfo(
+                  weatherCubit.state.weather?.lastUpdated,
                 );
               }
 
-              return Text(
-                getLastUpdatedInfo(weatherCubit.state.weather?.lastUpdated),
+              return ThemedText(
+                text: text,
+                styleType: AppTextStyle.bodySmall,
                 textAlign: TextAlign.center,
-                style: Theme.of(context).textTheme.bodySmall,
               );
             },
       ),

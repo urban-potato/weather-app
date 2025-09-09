@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../../../../../shared/ui/themed_text/index.dart';
 import '../../../../../shared/utils/size_helper/index.dart';
 
 class ResponsiveInfoList extends StatelessWidget {
@@ -31,6 +32,8 @@ class _InfoRow extends StatelessWidget {
         final constraintsMaxWidth = constraints.maxWidth;
         final spacing = AdjustableSize.scaleByUnit(constraintsMaxWidth, 1.9);
 
+        print('LayoutBuilder ResponsiveInfoList');
+
         return Column(
           children: [
             Row(
@@ -42,21 +45,20 @@ class _InfoRow extends StatelessWidget {
                   constraints: BoxConstraints(
                     maxWidth: constraintsMaxWidth * 0.7,
                   ),
-                  child: Text(
-                    label,
-                    style: Theme.of(context).textTheme.bodyMedium,
+                  child: ThemedText(
+                    text: label,
+                    styleType: AppTextStyle.bodyMedium,
                     overflow: TextOverflow.clip,
                   ),
                 ),
 
                 Flexible(
-                  child: Text(
-                    textAlign: TextAlign.right,
-                    value,
-                    style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                      fontWeight: FontWeight.w700,
-                    ),
+                  child: ThemedText(
+                    text: value,
+                    styleType: AppTextStyle.bodyMedium,
+                    fontWeight: FontWeight.w700,
                     overflow: TextOverflow.clip,
+                    textAlign: TextAlign.right,
                   ),
                 ),
               ],

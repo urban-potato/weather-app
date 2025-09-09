@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../../../../../shared/ui/scaled_child_box/index.dart';
+import '../../../../../../shared/ui/themed_text/index.dart';
 
 class MainTemperatureWidget extends StatelessWidget {
   const MainTemperatureWidget({
@@ -34,12 +35,11 @@ class MainTemperatureWidget extends StatelessWidget {
             WidgetSpan(
               child: Transform.translate(
                 offset: const Offset(0, -24),
-                child: Text(
-                  '°C',
-                  style: Theme.of(context).textTheme.headlineMedium?.copyWith(
-                    fontSize: 12,
-                    height: 0.1,
-                  ),
+                child: const ThemedText(
+                  text: '°C',
+                  styleType: AppTextStyle.headlineMedium,
+                  fontSize: 12,
+                  height: 0.1,
                 ),
               ),
             ),

@@ -43,6 +43,8 @@ class CardTile extends StatelessWidget {
     final finalColor =
         color?.withValues(alpha: 0.8) ?? theme.cardColor.withValues(alpha: 0.8);
 
+    print('CardTile');
+
     return Container(
       constraints: BoxConstraints(
         minWidth: minWidth,

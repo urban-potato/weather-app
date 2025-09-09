@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../../../../../../../../../shared/ui/themed_text/index.dart';
 import '../../../../../../../../../shared/utils/size_helper/index.dart';
 
 class WindInfoWidget extends StatelessWidget {
@@ -20,6 +21,8 @@ class WindInfoWidget extends StatelessWidget {
         final iconSize = AdjustableSize.scaleByUnit(constraintsMaxWidth, 20);
         final spacing = AdjustableSize.scaleByUnit(constraintsMaxWidth, 1.9);
 
+        print('LayoutBuilder WindInfoWidget');
+
         return Row(
           spacing: spacing,
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -30,18 +33,16 @@ class WindInfoWidget extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(
-                    windDirection,
-                    style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                      fontWeight: FontWeight.bold,
-                    ),
+                  ThemedText(
+                    text: windDirection,
+                    styleType: AppTextStyle.bodyMedium,
+                    fontWeight: FontWeight.bold,
                     overflow: TextOverflow.clip,
                   ),
-                  Text(
-                    windSpeed,
-                    style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                      fontWeight: FontWeight.bold,
-                    ),
+                  ThemedText(
+                    text: windSpeed,
+                    styleType: AppTextStyle.bodyMedium,
+                    fontWeight: FontWeight.bold,
                     overflow: TextOverflow.clip,
                   ),
                 ],

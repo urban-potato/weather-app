@@ -56,6 +56,8 @@ class _InfoWidgetsRow extends StatelessWidget {
         final textAreaMaxWidth = constraintsMaxWidth * 0.5;
         final spacing = AdjustableSize.scaleByUnit(constraintsMaxWidth, 3.2);
 
+        print('LayoutBuilder DayTileWidget 1');
+
         return Row(
           spacing: spacing,
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -69,6 +71,8 @@ class _InfoWidgetsRow extends StatelessWidget {
                     builder:
                         (BuildContext context, BoxConstraints constraints) {
                           final constraintsMaxWidth = constraints.maxWidth;
+
+                          print('LayoutBuilder DayTileWidget 2');
 
                           return ConstrainedBox(
                             constraints: BoxConstraints(

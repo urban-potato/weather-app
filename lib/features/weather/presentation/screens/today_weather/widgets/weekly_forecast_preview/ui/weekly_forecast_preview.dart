@@ -5,6 +5,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../../../../../../shared/services/index.dart';
 import '../../../../../../../../shared/ui/card_tile/index.dart';
 import '../../../../../../../../shared/ui/custom_circular_progress_indicator/index.dart';
+import '../../../../../../../../shared/ui/themed_text/index.dart';
 import '../../../../../../shared/ui/image_asset_with_network_fallback/index.dart';
 import '../../../../../../shared/ui/widget_title/index.dart';
 import '../../../../../../../../shared/utils/size_helper/index.dart';
@@ -63,10 +64,10 @@ class _WeeklyForecastPreviewWidgetState
                       ...state.weeklyForecastPreviewDayList.map(
                         (e) => _InfoRow(item: e),
                       ),
-                      Text(
-                        'More info...',
+                      const ThemedText(
+                        text: 'More info...',
+                        styleType: AppTextStyle.bodySmall,
                         textAlign: TextAlign.center,
-                        style: Theme.of(context).textTheme.bodySmall,
                       ),
                     ],
                   ),
@@ -104,6 +105,8 @@ class _InfoRow extends StatelessWidget {
 
         final day = getDay(item.dateTime);
 
+        print('LayoutBuilder WeeklyForecastPreviewWidget');
+
         return Row(
           children: [
             ConstrainedBox(
@@ -121,11 +124,10 @@ class _InfoRow extends StatelessWidget {
                     ),
                   ),
                   Flexible(
-                    child: Text(
-                      day,
-                      style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                        fontWeight: FontWeight.bold,
-                      ),
+                    child: ThemedText(
+                      text: day,
+                      styleType: AppTextStyle.bodyMedium,
+                      fontWeight: FontWeight.bold,
                       overflow: TextOverflow.ellipsis,
                     ),
                   ),
@@ -142,10 +144,10 @@ class _InfoRow extends StatelessWidget {
                       padding: EdgeInsets.symmetric(
                         horizontal: conditionTextHPadding,
                       ),
-                      child: Text(
-                        item.condition.text,
+                      child: ThemedText(
+                        text: item.condition.text,
+                        styleType: AppTextStyle.bodyMedium,
                         overflow: TextOverflow.ellipsis,
-                        style: Theme.of(context).textTheme.bodyMedium,
                       ),
                     ),
                   ),

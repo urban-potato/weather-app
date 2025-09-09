@@ -20,6 +20,8 @@ class SunInfoWidget extends StatelessWidget {
         final iconize = AdjustableSize.scaleByUnit(constraintsMaxWidth, 20);
         final spacing = AdjustableSize.scaleByUnit(constraintsMaxWidth, 1.9);
 
+        print('LayoutBuilder SunInfoWidget');
+
         return Row(
           spacing: spacing,
           mainAxisAlignment: MainAxisAlignment.spaceBetween,

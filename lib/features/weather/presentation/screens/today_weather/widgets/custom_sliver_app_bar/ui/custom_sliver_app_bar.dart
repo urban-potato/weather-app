@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../../../../../../../shared/ui/themed_text/index.dart';
 import '../../../../../../../../shared/utils/size_helper/index.dart';
 import '../../../../../provider/weather_cubit.dart';
 import '../../../../../provider/weather_state.dart';
@@ -19,12 +20,14 @@ class CustomSliverAppBar extends StatelessWidget {
       selector: (state) => state.weather?.location.name,
       builder: (context, state) {
         final title = state == null
-            ? Text('location...', style: Theme.of(context).textTheme.bodySmall)
-            : Text(
-                state,
-                style: Theme.of(
-                  context,
-                ).textTheme.headlineMedium?.copyWith(fontSize: contentSize),
+            ? const ThemedText(
+                text: 'location...',
+                styleType: AppTextStyle.bodySmall,
+              )
+            : ThemedText(
+                text: state,
+                styleType: AppTextStyle.headlineMedium,
+                fontSize: contentSize,
               );
 
         return SliverAppBar(
