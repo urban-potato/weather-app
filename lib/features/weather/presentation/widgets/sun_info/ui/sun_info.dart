@@ -20,7 +20,7 @@ class SunInfoWidget extends StatelessWidget {
         final iconize = AdjustableSize.scaleByUnit(constraintsMaxWidth, 20);
         final spacing = AdjustableSize.scaleByUnit(constraintsMaxWidth, 1.9);
 
-        print('LayoutBuilder SunInfoWidget');
+        print('SunInfoWidget LayoutBuilder');
 
         return Row(
           spacing: spacing,
@@ -32,8 +32,8 @@ class SunInfoWidget extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  _InfoText(time: sunriseTime, label: 'Sunrise'),
-                  _InfoText(time: sunsetTime, label: 'Sunset'),
+                  _ThemedRichText(time: sunriseTime, label: 'Sunrise'),
+                  _ThemedRichText(time: sunsetTime, label: 'Sunset'),
                 ],
               ),
             ),
@@ -49,14 +49,16 @@ class SunInfoWidget extends StatelessWidget {
   }
 }
 
-class _InfoText extends StatelessWidget {
-  const _InfoText({required this.time, required this.label});
+class _ThemedRichText extends StatelessWidget {
+  const _ThemedRichText({required this.time, required this.label});
 
   final String time;
   final String label;
 
   @override
   Widget build(BuildContext context) {
+    print('SunInfoWidget _InfoText');
+
     return RichText(
       text: TextSpan(
         text: time,
