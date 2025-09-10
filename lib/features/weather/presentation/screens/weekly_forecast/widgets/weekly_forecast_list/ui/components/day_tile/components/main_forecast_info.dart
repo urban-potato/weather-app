@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 
 import '../../../../../../../../models/index.dart';
-import '../../../../../../../../widgets/daily_temperature_range/index.dart';
+import '../../../../../../../../widgets/daily_temperature_range/index.dart'
+    show ScaledDailyTemperatureRangeWidget;
 import '../../../../../../../../widgets/main_temperature/index.dart';
 import '../../../../../../../../widgets/weather_condition/index.dart';
 
@@ -37,7 +38,7 @@ class MainForecastInfoWidget extends StatelessWidget {
         children: [
           MainTemperatureWidget(temperature: temperature.toString()),
           WeatherConditionWidget(condition: condition),
-          DailyTemperatureRangeWidget(
+          ScaledDailyTemperatureRangeWidget(
             maxTemp: maxTemp.toString(),
             minTemp: minTemp.toString(),
           ),

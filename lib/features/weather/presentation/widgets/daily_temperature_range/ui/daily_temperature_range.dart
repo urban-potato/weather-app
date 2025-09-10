@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 
-import '../../../../../../shared/ui/scaled_child_box/index.dart';
 import '../../../../../../shared/ui/themed_text/index.dart';
 
 class DailyTemperatureRangeWidget extends StatelessWidget {
@@ -8,26 +7,23 @@ class DailyTemperatureRangeWidget extends StatelessWidget {
     super.key,
     required this.maxTemp,
     required this.minTemp,
-    this.sizeRatio = 1,
+    this.spacing = 0.0,
   });
 
   final String maxTemp;
   final String minTemp;
-  final double sizeRatio;
+  final double spacing;
 
   @override
   Widget build(BuildContext context) {
-    return ScaledChildBox(
-      height: 6 * sizeRatio,
-      child: Row(
-        mainAxisSize: MainAxisSize.min,
-        spacing: 8,
-        children: [
-          Flexible(child: _TemperatureValueText(temperature: maxTemp)),
-          const ThemedText(text: '/', styleType: AppTextStyle.bodyMedium),
-          Flexible(child: _TemperatureValueText(temperature: minTemp)),
-        ],
-      ),
+    return Row(
+      mainAxisSize: MainAxisSize.min,
+      spacing: spacing,
+      children: [
+        Flexible(child: _TemperatureValueText(temperature: maxTemp)),
+        const ThemedText(text: '/', styleType: AppTextStyle.bodyMedium),
+        Flexible(child: _TemperatureValueText(temperature: minTemp)),
+      ],
     );
   }
 }
@@ -43,7 +39,6 @@ class _TemperatureValueText extends StatelessWidget {
       text: '$temperature°',
       styleType: AppTextStyle.bodyMedium,
       fontWeight: FontWeight.bold,
-      height: 1.0,
       overflow: TextOverflow.clip,
       textAlign: TextAlign.center,
     );

@@ -14,7 +14,8 @@ import '../../../../../../shared/utils/day_helper/index.dart';
 import '../../../../../models/index.dart';
 import '../../../../../provider/weather_cubit.dart';
 import '../../../../../provider/weather_state.dart';
-import 'components/daily_temperature_range.dart';
+import '../../../../../widgets/daily_temperature_range/index.dart'
+    show DailyTemperatureRangeWidget;
 
 class WeeklyForecastPreviewWidget extends ConsumerStatefulWidget {
   const WeeklyForecastPreviewWidget({super.key});
@@ -161,9 +162,27 @@ class _InfoRow extends StatelessWidget {
                     constraints: BoxConstraints(
                       maxWidth: temperatureRowMaxWidth,
                     ),
-                    child: DailyTemperatureRangeWidget(
-                      maxTemp: item.temperatureRange.maximum.celsius.toString(),
-                      minTemp: item.temperatureRange.minimum.celsius.toString(),
+                    child: LayoutBuilder(
+                      builder: (BuildContext context, BoxConstraints constraints) {
+                        final constraintsMaxWidth = constraints.maxWidth;
+                        final spacing = AdjustableSize.scaleByUnit(
+                          constraintsMaxWidth,
+                          1.2,
+                        );
+
+                        if (kDebugMode)
+                          print(
+                            'WeeklyForecastPreviewWidget LayoutBuilder _InfoRow LayoutBuilder 2',
+                          );
+
+                        return DailyTemperatureRangeWidget(
+                          maxTemp: item.temperatureRange.maximum.celsius
+                              .toString(),
+                          minTemp: item.temperatureRange.minimum.celsius
+                              .toString(),
+                          spacing: spacing,
+                        );
+                      },
                     ),
                   ),
                 ],

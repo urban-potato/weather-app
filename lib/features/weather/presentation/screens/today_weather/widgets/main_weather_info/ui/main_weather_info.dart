@@ -6,7 +6,8 @@ import '../../../../../../../../shared/ui/custom_circular_progress_indicator/ind
 import '../../../../../models/index.dart';
 import '../../../../../provider/weather_cubit.dart';
 import '../../../../../provider/weather_state.dart';
-import '../../../../../widgets/daily_temperature_range/index.dart';
+import '../../../../../widgets/daily_temperature_range/index.dart'
+    show ScaledDailyTemperatureRangeWidget;
 import '../../../../../widgets/main_temperature/index.dart';
 import '../../../../../widgets/uv_info/index.dart';
 import '../../../../../widgets/weather_condition/index.dart';
@@ -60,7 +61,7 @@ class _MainWeatherInfoWidgetState extends State<MainWeatherInfoWidget>
                 sizeRatio: 1.3,
                 condition: state.condition,
               ),
-              DailyTemperatureRangeWidget(
+              ScaledDailyTemperatureRangeWidget(
                 maxTemp: state.temperatureRange.maximum.celsius.toString(),
                 minTemp: state.temperatureRange.minimum.celsius.toString(),
               ),
