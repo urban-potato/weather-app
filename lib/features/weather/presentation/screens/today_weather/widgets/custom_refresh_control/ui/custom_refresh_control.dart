@@ -2,6 +2,7 @@ import 'dart:developer';
 
 import 'package:flutter/cupertino.dart'
     show CupertinoSliverRefreshControl, RefreshIndicatorMode;
+import 'package:flutter/foundation.dart' show kDebugMode;
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:weather_app/features/weather/presentation/provider/weather_cubit.dart';
@@ -18,7 +19,7 @@ class CustomRefreshControl extends StatelessWidget {
     final weatherCubit = context.read<WeatherCubit>();
     final textStyle = Theme.of(context).textTheme.bodySmall;
 
-    print('CustomRefreshControl build');
+    if (kDebugMode) print('CustomRefreshControl build');
 
     return CupertinoSliverRefreshControl(
       refreshIndicatorExtent: 20,
@@ -27,23 +28,23 @@ class CustomRefreshControl extends StatelessWidget {
         final lastUpdated = weatherCubit.state.weather?.lastUpdated;
 
         if (!isUpdateAllowed(lastUpdated)) {
-          log('WE DON\'T LET USER UPDATE HEHE');
+          if (kDebugMode) log('WE DON\'T LET USER UPDATE HEHE');
           await Future.delayed(const Duration(seconds: 1));
           return;
         }
 
         final futureWeatherState = weatherCubit.stream.firstWhere((state) {
-          print('weatherBloc.stream.firstWhere');
+          if (kDebugMode) print('weatherBloc.stream.firstWhere');
           return (state is WeatherLoaded || state is WeatherFailure);
         });
 
         weatherCubit.loadWeather();
-        print('weatherCubit.loadWeather();');
+        if (kDebugMode) print('weatherCubit.loadWeather();');
 
         final resultState = await futureWeatherState;
 
-        print('resultState = $resultState');
-        print('after await');
+        if (kDebugMode) print('resultState = $resultState');
+        if (kDebugMode) print('after await');
       },
       builder:
           (
@@ -53,7 +54,10 @@ class CustomRefreshControl extends StatelessWidget {
             double refreshTriggerPullDistance,
             double refreshIndicatorExtent,
           ) {
-            print('CustomRefreshControl CupertinoSliverRefreshControl builder');
+            if (kDebugMode)
+              print(
+                'CustomRefreshControl CupertinoSliverRefreshControl builder',
+              );
 
             String text = '';
 

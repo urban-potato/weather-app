@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart' show kDebugMode;
 import 'package:flutter/material.dart';
 
 class CustomCircularProgressIndicator extends StatelessWidget {
@@ -16,7 +17,7 @@ class CustomCircularProgressIndicator extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
 
-    print('CustomCircularProgressIndicator');
+    if (kDebugMode) print('CustomCircularProgressIndicator');
 
     return Center(
       child: SizedBox(

@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart' show kDebugMode;
 import 'package:flutter/material.dart';
 
 import '../../../../../shared/ui/themed_text/index.dart';
@@ -13,7 +14,7 @@ class WidgetTitle extends StatelessWidget {
     ScreenBasedSize.instance.init(context);
     final bottomPadding = ScreenBasedSize.instance.scaleByUnit(0.75);
 
-    print('WidgetTitle');
+    if (kDebugMode) print('WidgetTitle');
 
     return Padding(
       padding: EdgeInsets.only(bottom: bottomPadding),

@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart' show kDebugMode;
 import 'package:flutter/material.dart';
 
 enum AppTextStyle {
@@ -36,7 +37,7 @@ class ThemedText extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    print('ThemedText build');
+    if (kDebugMode) print('ThemedText build');
 
     final textTheme = Theme.of(context).textTheme;
     TextStyle? style;

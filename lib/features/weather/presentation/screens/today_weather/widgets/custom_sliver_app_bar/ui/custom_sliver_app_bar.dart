@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart' show kDebugMode;
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -15,12 +16,12 @@ class CustomSliverAppBar extends StatelessWidget {
     final toolbarHeight = ScreenBasedSize.instance.scaleByUnit(12);
     final contentSize = ScreenBasedSize.instance.scaleByUnit(5);
 
-    print('CustomSliverAppBar today_weather build');
+    if (kDebugMode) print('CustomSliverAppBar today_weather build');
 
     return BlocSelector<WeatherCubit, WeatherState, String?>(
       selector: (state) => state.weather?.location.name,
       builder: (context, state) {
-        print('CustomSliverAppBar today_weather BlocSelector');
+        if (kDebugMode) print('CustomSliverAppBar today_weather BlocSelector');
 
         final theme = Theme.of(context);
 

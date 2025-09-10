@@ -1,4 +1,5 @@
 import 'package:flutter/cupertino.dart' show CupertinoIcons;
+import 'package:flutter/foundation.dart' show kDebugMode;
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -18,6 +19,8 @@ class MoonInfoWidget extends ConsumerWidget {
     final moonPhaseAssetPath = getMoonPhaseAssetPath(moonPhase);
     final navigationService = ref.read(navigationServiceProvider);
 
+    if (kDebugMode) print('MoonInfoWidget build');
+
     return GestureDetector(
       onTap: () => navigationService.pushMoonInfoRoute(context),
 
@@ -27,7 +30,7 @@ class MoonInfoWidget extends ConsumerWidget {
           final iconSize = AdjustableSize.scaleByUnit(constraintsMaxWidth, 20);
           final spacing = AdjustableSize.scaleByUnit(constraintsMaxWidth, 1.9);
 
-          print('LayoutBuilder MoonInfoWidget');
+          if (kDebugMode) print('MoonInfoWidget LayoutBuilder');
 
           return Column(
             mainAxisSize: MainAxisSize.min,

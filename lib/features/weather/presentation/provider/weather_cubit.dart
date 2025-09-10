@@ -1,4 +1,5 @@
 import 'dart:developer';
+import 'package:flutter/foundation.dart' show kDebugMode;
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../domain/services/index.dart';
@@ -19,20 +20,20 @@ class WeatherCubit extends Cubit<WeatherState> {
   final ConditionsService conditionsService;
 
   Future<void> loadWeather() async {
-    print('--- CUBIT WeatherBloc _loadWeather ---');
+    if (kDebugMode) print('--- CUBIT WeatherBloc _loadWeather ---');
     final weather = state.weather;
     final lastUpdated = weather?.lastUpdated;
 
-    log('emit(WeatherLoading(weather: state.weather));');
+    if (kDebugMode) log('emit(WeatherLoading(weather: state.weather));');
     emit(WeatherLoading(weather: weather));
 
-    // log('emit(const WeatherLoading());');
+    // if (kDebugMode) log('emit(const WeatherLoading());');
     // emit(const WeatherLoading());
 
     if (!isUpdateAllowed(lastUpdated)) {
       await Future.delayed(const Duration(seconds: 1));
-      log('WE DON\'T UPDATE HEHEHEHEHE');
-      log('emit(WeatherLoaded(weather: state.weather));');
+      if (kDebugMode) log('WE DON\'T UPDATE HEHEHEHEHE');
+      if (kDebugMode) log('emit(WeatherLoaded(weather: state.weather));');
       emit(WeatherLoaded(weather: weather));
       return;
     }
@@ -41,12 +42,12 @@ class WeatherCubit extends Cubit<WeatherState> {
 
     if (dataState is RemoteDataSuccess && dataState.data != null) {
       final dataModelUI = dataState.data!.toWeatherModelUI(conditionsService);
-      log('emit(WeatherLoaded(dataModelUI));');
+      if (kDebugMode) log('emit(WeatherLoaded(dataModelUI));');
       emit(WeatherLoaded(weather: dataModelUI));
       return;
     }
 
-    log('emit(WeatherFailure(dataState.error));');
+    if (kDebugMode) log('emit(WeatherFailure(dataState.error));');
     emit(WeatherFailure(error: dataState.error));
   }
 }

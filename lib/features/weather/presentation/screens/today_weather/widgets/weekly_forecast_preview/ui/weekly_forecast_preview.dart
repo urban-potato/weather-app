@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart' show kDebugMode;
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -33,7 +34,7 @@ class _WeeklyForecastPreviewWidgetState
   Widget build(BuildContext context) {
     super.build(context);
 
-    print('WeekForecastPreviewWidget build');
+    if (kDebugMode) print('WeekForecastPreviewWidget build');
     final navigationService = ref.read(navigationServiceProvider);
 
     return Column(
@@ -46,14 +47,16 @@ class _WeeklyForecastPreviewWidgetState
           selector: (state) => state.weather?.today.weeklyForecastPreview,
           builder: (context, state) {
             if (state == null) {
-              print(
-                'WeekForecastPreviewWidget BlocSelector return CircularProgressIndicator',
-              );
+              if (kDebugMode)
+                print(
+                  'WeekForecastPreviewWidget BlocSelector return CircularProgressIndicator',
+                );
               return const CustomCircularProgressIndicator();
             } else {
-              print(
-                'WeekForecastPreviewWidget BlocSelector return GestureDetector',
-              );
+              if (kDebugMode)
+                print(
+                  'WeekForecastPreviewWidget BlocSelector return GestureDetector',
+                );
 
               return GestureDetector(
                 onTap: () => navigationService.pushWeeklyForecastRoute(context),
@@ -88,6 +91,8 @@ class _InfoRow extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    if (kDebugMode) print('WeeklyForecastPreviewWidget _InfoRow');
+
     return LayoutBuilder(
       builder: (BuildContext context, BoxConstraints constraints) {
         final constraintsMaxWidth = constraints.maxWidth;
@@ -105,7 +110,8 @@ class _InfoRow extends StatelessWidget {
 
         final day = getDay(item.dateTime);
 
-        print('LayoutBuilder WeeklyForecastPreviewWidget');
+        if (kDebugMode)
+          print('WeeklyForecastPreviewWidget _InfoRow LayoutBuilder');
 
         return Row(
           children: [

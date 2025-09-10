@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart' show kDebugMode;
 import 'package:flutter/material.dart';
 
 import '../../../../../../../../../shared/ui/themed_text/index.dart';
@@ -15,13 +16,15 @@ class WindInfoWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    if (kDebugMode) print('WindInfoWidget build');
+
     return LayoutBuilder(
       builder: (BuildContext context, BoxConstraints constraints) {
         final constraintsMaxWidth = constraints.maxWidth;
         final iconSize = AdjustableSize.scaleByUnit(constraintsMaxWidth, 20);
         final spacing = AdjustableSize.scaleByUnit(constraintsMaxWidth, 1.9);
 
-        print('LayoutBuilder WindInfoWidget');
+        if (kDebugMode) print('WindInfoWidget LayoutBuilder');
 
         return Row(
           spacing: spacing,

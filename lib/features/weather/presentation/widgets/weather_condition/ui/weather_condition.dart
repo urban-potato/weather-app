@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart' show kDebugMode;
 import 'package:flutter/material.dart';
 
 import '../../../../../../shared/ui/themed_text/index.dart';
@@ -17,6 +18,8 @@ class WeatherConditionWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    if (kDebugMode) print('WeatherConditionWidget build');
+
     return LayoutBuilder(
       builder: (BuildContext context, BoxConstraints constraints) {
         final constraintsMaxWidth = constraints.maxWidth;
@@ -26,7 +29,7 @@ class WeatherConditionWidget extends StatelessWidget {
         );
         final spacing = AdjustableSize.scaleByUnit(constraintsMaxWidth, 3);
 
-        print('LayoutBuilder WeatherConditionWidget');
+        if (kDebugMode) print('WeatherConditionWidget LayoutBuilder');
 
         return Row(
           mainAxisSize: MainAxisSize.min,

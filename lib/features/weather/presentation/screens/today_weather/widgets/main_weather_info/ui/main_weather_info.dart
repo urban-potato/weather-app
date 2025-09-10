@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart' show kDebugMode;
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -28,7 +29,7 @@ class _MainWeatherInfoWidgetState extends State<MainWeatherInfoWidget>
   Widget build(BuildContext context) {
     super.build(context);
 
-    print('MainWeatherInfoWidget build');
+    if (kDebugMode) print('MainWeatherInfoWidget build');
 
     ScreenBasedSize.instance.init(context);
     final spacing = ScreenBasedSize.instance.scaleByUnit(2);
@@ -37,12 +38,14 @@ class _MainWeatherInfoWidgetState extends State<MainWeatherInfoWidget>
       selector: (state) => state.weather?.today.mainWeather,
       builder: (context, state) {
         if (state == null) {
-          print(
-            'MainWeatherInfoWidget BlocSelector return CircularProgressIndicator',
-          );
+          if (kDebugMode)
+            print(
+              'MainWeatherInfoWidget BlocSelector return CircularProgressIndicator',
+            );
           return const CustomCircularProgressIndicator();
         } else {
-          print('MainWeatherInfoWidget BlocSelector return Column');
+          if (kDebugMode)
+            print('MainWeatherInfoWidget BlocSelector return Column');
           return Column(
             spacing: spacing,
             mainAxisSize: MainAxisSize.min,

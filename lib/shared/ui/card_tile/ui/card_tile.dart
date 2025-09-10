@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart' show kDebugMode;
 import 'package:flutter/material.dart';
 
 import '../../../utils/size_helper/index.dart';
@@ -39,7 +40,7 @@ class CardTile extends StatelessWidget {
         padding ??
         EdgeInsetsGeometry.symmetric(horizontal: hPadding, vertical: vPadding);
 
-    print('CardTile');
+    if (kDebugMode) print('CardTile build');
 
     return ConstrainedBox(
       constraints: BoxConstraints(
@@ -81,7 +82,7 @@ class _ThemedDecoratedBox extends StatelessWidget {
         color?.withValues(alpha: 0.8) ??
         Theme.of(context).cardColor.withValues(alpha: 0.8);
 
-    print('CardTile _ThemedDecoratedBox');
+    if (kDebugMode) print('CardTile _ThemedDecoratedBox');
 
     return DecoratedBox(
       decoration: BoxDecoration(

@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart' show kDebugMode;
 import 'package:flutter/material.dart';
 
 import '../../../../../../../../../shared/ui/themed_text/index.dart';
@@ -15,12 +16,14 @@ class DailyTemperatureRangeWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    if (kDebugMode) print('DailyTemperatureRangeWidget build');
+
     return LayoutBuilder(
       builder: (BuildContext context, BoxConstraints constraints) {
         final constraintsMaxWidth = constraints.maxWidth;
         final spacing = AdjustableSize.scaleByUnit(constraintsMaxWidth, 1.2);
 
-        print('LayoutBuilder DailyTemperatureRangeWidget');
+        if (kDebugMode) print('DailyTemperatureRangeWidget LayoutBuilder');
 
         return Row(
           mainAxisSize: MainAxisSize.min,
@@ -43,6 +46,8 @@ class _TemperatureValueText extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    if (kDebugMode) print('DailyTemperatureRangeWidget _TemperatureValueText');
+
     return ThemedText(
       text: '$temperature°',
       styleType: AppTextStyle.bodyMedium,

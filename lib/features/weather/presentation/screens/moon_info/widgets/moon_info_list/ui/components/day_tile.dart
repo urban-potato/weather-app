@@ -1,4 +1,5 @@
 import 'package:flutter/cupertino.dart' show CupertinoIcons;
+import 'package:flutter/foundation.dart' show kDebugMode;
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
@@ -56,7 +57,7 @@ class _InfoWidgetsRow extends StatelessWidget {
         final textAreaMaxWidth = constraintsMaxWidth * 0.5;
         final spacing = AdjustableSize.scaleByUnit(constraintsMaxWidth, 3.2);
 
-        print('LayoutBuilder DayTileWidget 1');
+        if (kDebugMode) print('LayoutBuilder DayTileWidget 1');
 
         return Row(
           spacing: spacing,
@@ -72,7 +73,8 @@ class _InfoWidgetsRow extends StatelessWidget {
                         (BuildContext context, BoxConstraints constraints) {
                           final constraintsMaxWidth = constraints.maxWidth;
 
-                          print('LayoutBuilder DayTileWidget 2');
+                          if (kDebugMode)
+                            print('LayoutBuilder DayTileWidget 2');
 
                           return ConstrainedBox(
                             constraints: BoxConstraints(

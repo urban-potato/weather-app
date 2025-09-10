@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart' show kDebugMode;
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
@@ -31,7 +32,7 @@ class _AdditionalInfoWidgetState extends State<AdditionalInfoWidget>
   Widget build(BuildContext context) {
     super.build(context);
 
-    print('AdditionalInfoWidget build');
+    if (kDebugMode) print('AdditionalInfoWidget build');
 
     ScreenBasedSize.instance.init(context);
 
@@ -85,18 +86,20 @@ class _PrecipitationInfoCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    print('AdditionalInfoWidget _PrecipitationInfoCard build');
+    if (kDebugMode) print('AdditionalInfoWidget _PrecipitationInfoCard build');
 
     return BlocSelector<WeatherCubit, WeatherState, PrecipitationModelUI?>(
       selector: (state) => state.weather?.today.additionalInfo.precipitation,
       builder: (context, state) {
         if (state == null) {
-          print(
-            'AdditionalInfoWidget BlocSelector return precipitationData CircularProgressIndicator',
-          );
+          if (kDebugMode)
+            print(
+              'AdditionalInfoWidget BlocSelector return precipitationData CircularProgressIndicator',
+            );
           return const CustomCircularProgressIndicator();
         } else {
-          print('AdditionalInfoWidget BlocSelector return precipitationData');
+          if (kDebugMode)
+            print('AdditionalInfoWidget BlocSelector return precipitationData');
 
           final precipitationData = {
             'Chance of rain': '${state.chanceOfRain}%',
@@ -115,18 +118,20 @@ class _OtherWeatherInfoCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    print('AdditionalInfoWidget _OtherWeatherInfoCard build');
+    if (kDebugMode) print('AdditionalInfoWidget _OtherWeatherInfoCard build');
 
     return BlocSelector<WeatherCubit, WeatherState, OtherWeatherInfoModelUI?>(
       selector: (state) => state.weather?.today.additionalInfo.otherWeatherInfo,
       builder: (context, state) {
         if (state == null) {
-          print(
-            'AdditionalInfoWidget BlocSelector return otherWeatherData CircularProgressIndicator',
-          );
+          if (kDebugMode)
+            print(
+              'AdditionalInfoWidget BlocSelector return otherWeatherData CircularProgressIndicator',
+            );
           return const CustomCircularProgressIndicator();
         } else {
-          print('AdditionalInfoWidget BlocSelector return otherWeatherData');
+          if (kDebugMode)
+            print('AdditionalInfoWidget BlocSelector return otherWeatherData');
 
           final otherWeatherData = {
             'Feels like': '${state.feelsLike.celsius}°',
@@ -147,18 +152,20 @@ class _MoonInfoCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    print('AdditionalInfoWidget _MoonInfoCard build');
+    if (kDebugMode) print('AdditionalInfoWidget _MoonInfoCard build');
 
     return BlocSelector<WeatherCubit, WeatherState, MoonModelUI?>(
       selector: (state) => state.weather?.today.additionalInfo.moon,
       builder: (context, state) {
         if (state == null) {
-          print(
-            'AdditionalInfoWidget BlocSelector return MoonInfoWidget CircularProgressIndicator',
-          );
+          if (kDebugMode)
+            print(
+              'AdditionalInfoWidget BlocSelector return MoonInfoWidget CircularProgressIndicator',
+            );
           return const CustomCircularProgressIndicator();
         } else {
-          print('AdditionalInfoWidget BlocSelector return MoonInfoWidget');
+          if (kDebugMode)
+            print('AdditionalInfoWidget BlocSelector return MoonInfoWidget');
 
           return CardTile(child: MoonInfoWidget(moonPhase: state.phase));
         }
@@ -172,18 +179,20 @@ class _SunInfoCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    print('AdditionalInfoWidget _SunInfoCard build');
+    if (kDebugMode) print('AdditionalInfoWidget _SunInfoCard build');
 
     return BlocSelector<WeatherCubit, WeatherState, SunModelUI?>(
       selector: (state) => state.weather?.today.additionalInfo.sun,
       builder: (context, state) {
         if (state == null) {
-          print(
-            'AdditionalInfoWidget BlocSelector return SunInfoWidget CircularProgressIndicator',
-          );
+          if (kDebugMode)
+            print(
+              'AdditionalInfoWidget BlocSelector return SunInfoWidget CircularProgressIndicator',
+            );
           return const CustomCircularProgressIndicator();
         } else {
-          print('AdditionalInfoWidget BlocSelector return SunInfoWidget');
+          if (kDebugMode)
+            print('AdditionalInfoWidget BlocSelector return SunInfoWidget');
 
           return CardTile(
             child: SunInfoWidget(
@@ -202,18 +211,20 @@ class _WindInfoCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    print('AdditionalInfoWidget _WindInfoCard build');
+    if (kDebugMode) print('AdditionalInfoWidget _WindInfoCard build');
 
     return BlocSelector<WeatherCubit, WeatherState, WindModelUI?>(
       selector: (state) => state.weather?.today.additionalInfo.wind,
       builder: (context, state) {
         if (state == null) {
-          print(
-            'AdditionalInfoWidget BlocSelector return WindInfoWidget CircularProgressIndicator',
-          );
+          if (kDebugMode)
+            print(
+              'AdditionalInfoWidget BlocSelector return WindInfoWidget CircularProgressIndicator',
+            );
           return const CustomCircularProgressIndicator();
         } else {
-          print('AdditionalInfoWidget BlocSelector return WindInfoWidget');
+          if (kDebugMode)
+            print('AdditionalInfoWidget BlocSelector return WindInfoWidget');
 
           return CardTile(
             child: WindInfoWidget(

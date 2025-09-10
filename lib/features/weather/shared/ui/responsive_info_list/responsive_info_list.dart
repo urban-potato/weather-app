@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart' show kDebugMode;
 import 'package:flutter/material.dart';
 
 import '../../../../../shared/ui/themed_text/index.dart';
@@ -10,7 +11,7 @@ class ResponsiveInfoList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    print('ResponsiveInfoList');
+    if (kDebugMode) print('ResponsiveInfoList build');
 
     return Column(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -29,12 +30,14 @@ class _InfoRow extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    if (kDebugMode) print('ResponsiveInfoList _InfoRow');
+
     return LayoutBuilder(
       builder: (BuildContext context, BoxConstraints constraints) {
         final constraintsMaxWidth = constraints.maxWidth;
         final spacing = AdjustableSize.scaleByUnit(constraintsMaxWidth, 1.9);
 
-        print('LayoutBuilder ResponsiveInfoList');
+        if (kDebugMode) print('ResponsiveInfoList _InfoRow LayoutBuilder');
 
         return Column(
           children: [

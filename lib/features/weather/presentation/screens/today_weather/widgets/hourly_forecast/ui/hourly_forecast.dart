@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart' show kDebugMode;
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
@@ -28,7 +29,7 @@ class _HourlyForecastWidgetState extends State<HourlyForecastWidget>
   Widget build(BuildContext context) {
     super.build(context);
 
-    print('HourlyForecastWidget build');
+    if (kDebugMode) print('HourlyForecastWidget build');
 
     ScreenBasedSize.instance.init(context);
     final scrollableAreaHeight = ScreenBasedSize.instance.scaleByUnit(33);
@@ -46,14 +47,16 @@ class _HourlyForecastWidgetState extends State<HourlyForecastWidget>
             selector: (state) => state.weather?.today.hourlyForecast,
             builder: (context, state) {
               if (state == null) {
-                print(
-                  'HourlyForecastWidget BlocSelector return CircularProgressIndicator',
-                );
+                if (kDebugMode)
+                  print(
+                    'HourlyForecastWidget BlocSelector return CircularProgressIndicator',
+                  );
                 return const CustomCircularProgressIndicator();
               } else {
-                print(
-                  'HourlyForecastWidget BlocSelector return ListView.separated',
-                );
+                if (kDebugMode)
+                  print(
+                    'HourlyForecastWidget BlocSelector return ListView.separated',
+                  );
 
                 return ListView.separated(
                   scrollDirection: Axis.horizontal,
@@ -82,7 +85,7 @@ class _ForecastItemTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    print('HourlyForecastWidget _ForecastItemTile build');
+    if (kDebugMode) print('HourlyForecastWidget _ForecastItemTile build');
     ScreenBasedSize.instance.init(context);
 
     final hPadding = ScreenBasedSize.instance.scaleByUnit(4.8);

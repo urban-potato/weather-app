@@ -1,4 +1,5 @@
 import 'package:auto_route/annotations.dart';
+import 'package:flutter/foundation.dart' show kDebugMode;
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -21,7 +22,7 @@ class TodayWeatherScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    print('+++++ TodayWeatherScreen build +++++');
+    if (kDebugMode) print('+++++ TodayWeatherScreen build +++++');
 
     return SafeArea(
       child: Scaffold(
@@ -41,24 +42,28 @@ class TodayWeatherScreen extends StatelessWidget {
                 return true;
               },
               builder: (context, state) {
-                print('+++++ TodayWeatherScreen BlocBuilder build +++++');
+                if (kDebugMode)
+                  print('+++++ TodayWeatherScreen BlocBuilder build +++++');
                 if (state is WeatherLoaded) {
-                  print(
-                    '+++++ TodayWeatherScreen BlocBuilder _BodyWidgets +++++',
-                  );
+                  if (kDebugMode)
+                    print(
+                      '+++++ TodayWeatherScreen BlocBuilder _BodyWidgets +++++',
+                    );
                   return const _WeatherScreenBodyWidgets();
                 } else if (state is WeatherFailure) {
-                  print(
-                    '+++++ TodayWeatherScreen BlocBuilder _NoDataWidget +++++',
-                  );
+                  if (kDebugMode)
+                    print(
+                      '+++++ TodayWeatherScreen BlocBuilder _NoDataWidget +++++',
+                    );
                   return const SliverFillRemaining(
                     child: ScreenPadding(child: NoDataWidget()),
                   );
                 }
 
-                print(
-                  '+++++ TodayWeatherScreen BlocBuilder CustomCircularProgressIndicator +++++',
-                );
+                if (kDebugMode)
+                  print(
+                    '+++++ TodayWeatherScreen BlocBuilder CustomCircularProgressIndicator +++++',
+                  );
                 return const SliverFillRemaining(
                   child: CustomCircularProgressIndicator(),
                 );
@@ -76,13 +81,16 @@ class _WeatherScreenBodyWidgets extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    print('======= TodayWeatherScreen _WeatherScreenBodyWidgets build =======');
+    if (kDebugMode)
+      print(
+        '======= TodayWeatherScreen _WeatherScreenBodyWidgets build =======',
+      );
 
     return SliverList(
       delegate: SliverChildListDelegate.fixed([
         ElevatedButton(
           onPressed: () {
-            print('--- onPressed ---');
+            if (kDebugMode) print('--- onPressed ---');
             context.read<WeatherCubit>().loadWeather();
           },
           child: const Text('Refresh'),

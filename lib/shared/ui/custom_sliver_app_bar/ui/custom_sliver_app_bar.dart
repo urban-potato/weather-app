@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart' show kDebugMode;
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -19,7 +20,7 @@ class CustomSliverAppBar extends ConsumerWidget {
 
     final theme = Theme.of(context);
 
-    print('CustomSliverAppBar build - shared/ui');
+    if (kDebugMode) print('CustomSliverAppBar build - shared/ui');
 
     return SliverAppBar(
       pinned: true,

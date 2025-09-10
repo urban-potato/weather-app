@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart' show kDebugMode;
 import 'package:flutter/material.dart';
 
 import '../../../../../../shared/ui/scaled_child_box/index.dart';
@@ -15,7 +16,7 @@ class MainTemperatureWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    print('MainTemperatureWidget build');
+    if (kDebugMode) print('MainTemperatureWidget build');
 
     return ScaledChildBox(
       height: 9 * sizeRatio,
@@ -31,7 +32,7 @@ class _ThemedRichText extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    print('MainTemperatureWidget _ThemedRichText');
+    if (kDebugMode) print('MainTemperatureWidget _ThemedRichText');
 
     return RichText(
       textHeightBehavior: const TextHeightBehavior(

@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart' show kDebugMode;
 import 'package:flutter/material.dart';
 
 import '../../../../../../shared/utils/size_helper/index.dart';
@@ -14,13 +15,15 @@ class SunInfoWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    if (kDebugMode) print('SunInfoWidget build');
+
     return LayoutBuilder(
       builder: (BuildContext context, BoxConstraints constraints) {
         final constraintsMaxWidth = constraints.maxWidth;
         final iconize = AdjustableSize.scaleByUnit(constraintsMaxWidth, 20);
         final spacing = AdjustableSize.scaleByUnit(constraintsMaxWidth, 1.9);
 
-        print('SunInfoWidget LayoutBuilder');
+        if (kDebugMode) print('SunInfoWidget LayoutBuilder');
 
         return Row(
           spacing: spacing,
@@ -57,7 +60,7 @@ class _ThemedRichText extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    print('SunInfoWidget _InfoText');
+    if (kDebugMode) print('SunInfoWidget _InfoText');
 
     return RichText(
       text: TextSpan(
