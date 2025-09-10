@@ -14,6 +14,10 @@ class CustomCircularProgressIndicator extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+
+    print('CustomCircularProgressIndicator');
+
     return Center(
       child: SizedBox(
         width: size,
@@ -21,9 +25,9 @@ class CustomCircularProgressIndicator extends StatelessWidget {
         child: CircularProgressIndicator(
           strokeCap: StrokeCap.round,
           semanticsLabel: semanticsLabel,
-          color: Theme.of(context).brightness == Brightness.light
-              ? Theme.of(context).primaryColorDark
-              : Theme.of(context).primaryColorLight,
+          color: theme.brightness == Brightness.light
+              ? theme.primaryColorDark
+              : theme.primaryColorLight,
           value:
               (loadingProgress != null &&
                   loadingProgress?.expectedTotalBytes != null)

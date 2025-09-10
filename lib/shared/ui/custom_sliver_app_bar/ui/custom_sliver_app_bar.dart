@@ -17,18 +17,21 @@ class CustomSliverAppBar extends ConsumerWidget {
     final toolbarHeight = ScreenBasedSize.instance.scaleByUnit(12);
     final contentSize = ScreenBasedSize.instance.scaleByUnit(5);
 
+    final theme = Theme.of(context);
+
+    print('CustomSliverAppBar build - shared/ui');
+
     return SliverAppBar(
       pinned: true,
       toolbarHeight: toolbarHeight,
       title: Text(
         title,
-        style: Theme.of(
-          context,
-        ).textTheme.headlineMedium?.copyWith(fontSize: contentSize),
+        style: theme.textTheme.headlineMedium?.copyWith(fontSize: contentSize),
       ),
+
       centerTitle: true,
-      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
-      surfaceTintColor: Theme.of(context).scaffoldBackgroundColor,
+      backgroundColor: theme.scaffoldBackgroundColor,
+      surfaceTintColor: theme.scaffoldBackgroundColor,
       automaticallyImplyLeading: false,
       leading: Align(
         alignment: Alignment.centerLeft,

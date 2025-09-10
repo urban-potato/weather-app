@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../../../../../../../shared/ui/themed_text/index.dart';
 import '../../../../../../../../shared/utils/size_helper/index.dart';
 import '../../../../../provider/weather_cubit.dart';
 import '../../../../../provider/weather_state.dart';
@@ -16,18 +15,22 @@ class CustomSliverAppBar extends StatelessWidget {
     final toolbarHeight = ScreenBasedSize.instance.scaleByUnit(12);
     final contentSize = ScreenBasedSize.instance.scaleByUnit(5);
 
+    print('CustomSliverAppBar today_weather build');
+
     return BlocSelector<WeatherCubit, WeatherState, String?>(
       selector: (state) => state.weather?.location.name,
       builder: (context, state) {
+        print('CustomSliverAppBar today_weather BlocSelector');
+
+        final theme = Theme.of(context);
+
         final title = state == null
-            ? const ThemedText(
-                text: 'location...',
-                styleType: AppTextStyle.bodySmall,
-              )
-            : ThemedText(
-                text: state,
-                styleType: AppTextStyle.headlineMedium,
-                fontSize: contentSize,
+            ? Text('location...', style: theme.textTheme.bodySmall)
+            : Text(
+                state,
+                style: theme.textTheme.headlineMedium?.copyWith(
+                  fontSize: contentSize,
+                ),
               );
 
         return SliverAppBar(
@@ -35,8 +38,8 @@ class CustomSliverAppBar extends StatelessWidget {
           toolbarHeight: toolbarHeight,
           title: title,
           centerTitle: true,
-          backgroundColor: Theme.of(context).scaffoldBackgroundColor,
-          surfaceTintColor: Theme.of(context).scaffoldBackgroundColor,
+          backgroundColor: theme.scaffoldBackgroundColor,
+          surfaceTintColor: theme.scaffoldBackgroundColor,
           actions: [
             IconButton(
               iconSize: contentSize,
