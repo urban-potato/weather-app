@@ -1,11 +1,11 @@
 import 'dart:developer';
 
-import 'package:flutter/cupertino.dart';
+import 'package:flutter/cupertino.dart'
+    show CupertinoSliverRefreshControl, RefreshIndicatorMode;
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:weather_app/features/weather/presentation/provider/weather_cubit.dart';
 
-import '../../../../../../../../shared/ui/themed_text/index.dart';
 import '../../../../../../shared/utils/update_permission_helper/index.dart';
 import '../../../../../provider/weather_state.dart';
 import '../utils/last_updated_info_helper.dart';
@@ -16,68 +16,64 @@ class CustomRefreshControl extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final weatherCubit = context.read<WeatherCubit>();
+    final textStyle = Theme.of(context).textTheme.bodySmall;
 
-    return BlocListener<WeatherCubit, WeatherState>(
-      listener: (context, state) {},
-      child: CupertinoSliverRefreshControl(
-        refreshIndicatorExtent: 20,
-        refreshTriggerPullDistance: 50,
-        onRefresh: () async {
-          final lastUpdated = weatherCubit.state.weather?.lastUpdated;
+    print('CustomRefreshControl build');
 
-          if (!isUpdateAllowed(lastUpdated)) {
-            log('WE DON\'T LET USER UPDATE HEHE');
-            await Future.delayed(const Duration(seconds: 1));
-            return;
-          }
+    return CupertinoSliverRefreshControl(
+      refreshIndicatorExtent: 20,
+      refreshTriggerPullDistance: 50,
+      onRefresh: () async {
+        final lastUpdated = weatherCubit.state.weather?.lastUpdated;
 
-          final futureWeatherState = weatherCubit.stream.firstWhere((state) {
-            print('weatherBloc.stream.firstWhere');
-            return (state is WeatherLoaded || state is WeatherFailure);
-          });
+        if (!isUpdateAllowed(lastUpdated)) {
+          log('WE DON\'T LET USER UPDATE HEHE');
+          await Future.delayed(const Duration(seconds: 1));
+          return;
+        }
 
-          weatherCubit.loadWeather();
-          print('weatherCubit.loadWeather();');
+        final futureWeatherState = weatherCubit.stream.firstWhere((state) {
+          print('weatherBloc.stream.firstWhere');
+          return (state is WeatherLoaded || state is WeatherFailure);
+        });
 
-          final resultState = await futureWeatherState;
+        weatherCubit.loadWeather();
+        print('weatherCubit.loadWeather();');
 
-          print('resultState = $resultState');
-          print('after await');
-        },
-        builder:
-            (
-              BuildContext context,
-              RefreshIndicatorMode refreshState,
-              double pulledExtent,
-              double refreshTriggerPullDistance,
-              double refreshIndicatorExtent,
-            ) {
-              print('CupertinoSliverRefreshControl builder');
+        final resultState = await futureWeatherState;
 
-              String text = '';
+        print('resultState = $resultState');
+        print('after await');
+      },
+      builder:
+          (
+            BuildContext context,
+            RefreshIndicatorMode refreshState,
+            double pulledExtent,
+            double refreshTriggerPullDistance,
+            double refreshIndicatorExtent,
+          ) {
+            print('CustomRefreshControl CupertinoSliverRefreshControl builder');
 
-              if (refreshState == RefreshIndicatorMode.refresh ||
-                  refreshState == RefreshIndicatorMode.armed) {
-                text = 'Updating...';
-              } else if (refreshState == RefreshIndicatorMode.done &&
-                  weatherCubit.state is WeatherLoaded) {
-                text = 'Updated successfully';
-              } else if (refreshState == RefreshIndicatorMode.done &&
-                  weatherCubit.state is WeatherFailure) {
-                text = 'Error';
-              } else {
-                text = getLastUpdatedInfo(
-                  weatherCubit.state.weather?.lastUpdated,
-                );
-              }
+            String text = '';
 
-              return ThemedText(
-                text: text,
-                styleType: AppTextStyle.bodySmall,
-                textAlign: TextAlign.center,
+            if (refreshState == RefreshIndicatorMode.refresh ||
+                refreshState == RefreshIndicatorMode.armed) {
+              text = 'Updating...';
+            } else if (refreshState == RefreshIndicatorMode.done &&
+                weatherCubit.state is WeatherLoaded) {
+              text = 'Updated successfully';
+            } else if (refreshState == RefreshIndicatorMode.done &&
+                weatherCubit.state is WeatherFailure) {
+              text = 'Error';
+            } else {
+              text = getLastUpdatedInfo(
+                weatherCubit.state.weather?.lastUpdated,
               );
-            },
-      ),
+            }
+
+            return Text(text, style: textStyle, textAlign: TextAlign.center);
+          },
     );
   }
 }
