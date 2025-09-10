@@ -82,7 +82,7 @@ class _AdditionalInfoWidgetState extends State<AdditionalInfoWidget>
 }
 
 class _PrecipitationInfoCard extends StatelessWidget {
-  const _PrecipitationInfoCard({super.key});
+  const _PrecipitationInfoCard();
 
   @override
   Widget build(BuildContext context) {
@@ -114,7 +114,7 @@ class _PrecipitationInfoCard extends StatelessWidget {
 }
 
 class _OtherWeatherInfoCard extends StatelessWidget {
-  const _OtherWeatherInfoCard({super.key});
+  const _OtherWeatherInfoCard();
 
   @override
   Widget build(BuildContext context) {
@@ -148,7 +148,7 @@ class _OtherWeatherInfoCard extends StatelessWidget {
 }
 
 class _MoonInfoCard extends StatelessWidget {
-  const _MoonInfoCard({super.key});
+  const _MoonInfoCard();
 
   @override
   Widget build(BuildContext context) {
@@ -175,7 +175,7 @@ class _MoonInfoCard extends StatelessWidget {
 }
 
 class _SunInfoCard extends StatelessWidget {
-  const _SunInfoCard({super.key});
+  const _SunInfoCard();
 
   @override
   Widget build(BuildContext context) {
@@ -207,7 +207,7 @@ class _SunInfoCard extends StatelessWidget {
 }
 
 class _WindInfoCard extends StatelessWidget {
-  const _WindInfoCard({super.key});
+  const _WindInfoCard();
 
   @override
   Widget build(BuildContext context) {

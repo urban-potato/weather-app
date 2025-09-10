@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-import '../../../../../models/index.dart';
-import '../../../../../widgets/sun_info/index.dart';
+// import '../../../../../models/index.dart';
+// import '../../../../../widgets/sun_info/index.dart';
 import '../../../../../../../../shared/utils/size_helper/index.dart';
 import 'components/day_tile/day_tile.dart';
 
