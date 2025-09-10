@@ -10,6 +10,8 @@ class ResponsiveInfoList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    print('ResponsiveInfoList');
+
     return Column(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: data.entries

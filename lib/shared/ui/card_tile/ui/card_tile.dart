@@ -30,7 +30,6 @@ class CardTile extends StatelessWidget {
   Widget build(BuildContext context) {
     ScreenBasedSize.instance.init(context);
 
-    final theme = Theme.of(context);
     final screenMinSide = ScreenBasedSize.instance.screenMinSide;
     final tileBorderRadius = screenMinSide / 25.7;
     final hPadding = ScreenBasedSize.instance.scaleByUnit(3.5);
@@ -40,26 +39,56 @@ class CardTile extends StatelessWidget {
         padding ??
         EdgeInsetsGeometry.symmetric(horizontal: hPadding, vertical: vPadding);
 
-    final finalColor =
-        color?.withValues(alpha: 0.8) ?? theme.cardColor.withValues(alpha: 0.8);
-
     print('CardTile');
 
-    return Container(
+    return ConstrainedBox(
       constraints: BoxConstraints(
         minWidth: minWidth,
         maxWidth: maxWidth,
         minHeight: minHeight,
         maxHeight: maxHeight,
       ),
-      width: width,
-      height: height,
-      padding: finalPadding,
+      child: SizedBox(
+        width: width,
+        height: height,
+        child: _ThemedDecoratedBox(
+          color: color,
+          tileBorderRadius: tileBorderRadius,
+          padding: finalPadding,
+          child: child,
+        ),
+      ),
+    );
+  }
+}
+
+class _ThemedDecoratedBox extends StatelessWidget {
+  const _ThemedDecoratedBox({
+    required this.color,
+    required this.tileBorderRadius,
+    required this.padding,
+    required this.child,
+  });
+
+  final Color? color;
+  final double tileBorderRadius;
+  final EdgeInsetsGeometry padding;
+  final Widget child;
+
+  @override
+  Widget build(BuildContext context) {
+    final finalColor =
+        color?.withValues(alpha: 0.8) ??
+        Theme.of(context).cardColor.withValues(alpha: 0.8);
+
+    print('CardTile _ThemedDecoratedBox');
+
+    return DecoratedBox(
       decoration: BoxDecoration(
         color: finalColor,
         borderRadius: BorderRadius.circular(tileBorderRadius),
       ),
-      child: child,
+      child: Padding(padding: padding, child: child),
     );
   }
 }
