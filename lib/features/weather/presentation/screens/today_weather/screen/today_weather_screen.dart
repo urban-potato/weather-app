@@ -12,7 +12,7 @@ import '../widgets/additional_info/index.dart';
 import '../widgets/custom_refresh_control/index.dart';
 import '../widgets/hourly_forecast/index.dart';
 import '../widgets/main_weather_info/index.dart';
-import '../widgets/custom_sliver_app_bar/index.dart';
+import '../widgets/weather_screen_sliver_app_bar/index.dart';
 import '../widgets/no_data/index.dart';
 import '../widgets/weekly_forecast_preview/index.dart';
 
@@ -31,7 +31,7 @@ class TodayWeatherScreen extends StatelessWidget {
             parent: AlwaysScrollableScrollPhysics(),
           ),
           slivers: [
-            const CustomSliverAppBar(),
+            const WeatherScreenSliverAppBar(),
             const CustomRefreshControl(),
 
             BlocBuilder<WeatherCubit, WeatherState>(
