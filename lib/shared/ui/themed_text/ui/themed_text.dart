@@ -68,7 +68,7 @@ class ThemedText extends StatelessWidget {
 
     style = style?.copyWith(
       fontSize: fontSizeRatio != null
-          ? (style.fontSize ?? 1 * fontSizeRatio!).round().toDouble()
+          ? ((style.fontSize ?? 1) * fontSizeRatio!).round().toDouble()
           : fontSize,
       fontWeight: fontWeight,
       height: height,
