@@ -42,6 +42,7 @@ class WeatherConditionWidget extends StatelessWidget {
                 styleType: AppTextStyle.labelLarge,
                 overflow: TextOverflow.clip,
                 fontSizeRatio: sizeRatio,
+                textAlign: TextAlign.center,
               ),
             ),
 
