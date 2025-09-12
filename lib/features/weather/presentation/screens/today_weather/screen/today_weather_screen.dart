@@ -5,6 +5,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../../../../shared/ui/custom_circular_progress_indicator/index.dart';
 import '../../../../../../shared/ui/screen_padding/index.dart';
+import '../../../../../../shared/utils/notification_helper/index.dart';
 import '../../../../../../shared/utils/size_helper/index.dart';
 import '../../../provider/weather_cubit.dart';
 import '../../../provider/weather_state.dart';
@@ -24,9 +25,9 @@ class TodayWeatherScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     if (kDebugMode) print('+++++ TodayWeatherScreen build +++++');
 
-    return SafeArea(
-      child: Scaffold(
-        body: CustomScrollView(
+    return Scaffold(
+      body: SafeArea(
+        child: CustomScrollView(
           physics: const BouncingScrollPhysics(
             parent: AlwaysScrollableScrollPhysics(),
           ),
@@ -34,38 +35,56 @@ class TodayWeatherScreen extends StatelessWidget {
             const WeatherScreenSliverAppBar(),
             const CustomRefreshControl(),
 
-            BlocBuilder<WeatherCubit, WeatherState>(
+            BlocConsumer<WeatherCubit, WeatherState>(
+              listener: (context, state) {
+                if (kDebugMode)
+                  print('+++++ TodayWeatherScreen BlocBuilder listener +++++');
+
+                if (state is WeatherFailure && state.weather != null) {
+                  NotificationHelper.showMessage(
+                    context,
+                    'Failed to load data. Please check your internet connection and try again.',
+                  );
+                }
+              },
               buildWhen: (previous, current) {
-                if (previous is! WeatherInitial && current is WeatherLoading) {
+                // TODO: сделать, чтобы во время обновления с ошибки без данных на ошибку без данных не мелькала крутилка, но картинка облака обновлялась(?)
+                if (current.weather != null &&
+                    previous.weather == current.weather) {
                   return false;
                 }
+
                 return true;
               },
               builder: (context, state) {
                 if (kDebugMode)
                   print('+++++ TodayWeatherScreen BlocBuilder build +++++');
-                if (state is WeatherLoaded) {
+
+                if (state.weather != null) {
                   if (kDebugMode)
                     print(
-                      '+++++ TodayWeatherScreen BlocBuilder _BodyWidgets +++++',
+                      '+++++ TodayWeatherScreen BlocBuilder _WeatherScreenBodyWidgets +++++',
                     );
+
                   return const _WeatherScreenBodyWidgets();
-                } else if (state is WeatherFailure) {
+                } else if (state is WeatherInitial || state is WeatherLoading) {
                   if (kDebugMode)
                     print(
-                      '+++++ TodayWeatherScreen BlocBuilder _NoDataWidget +++++',
+                      '+++++ TodayWeatherScreen BlocBuilder CustomCircularProgressIndicator +++++',
                     );
+
                   return const SliverFillRemaining(
-                    child: ScreenPadding(child: NoDataWidget()),
+                    child: CustomCircularProgressIndicator(),
                   );
                 }
 
                 if (kDebugMode)
                   print(
-                    '+++++ TodayWeatherScreen BlocBuilder CustomCircularProgressIndicator +++++',
+                    '+++++ TodayWeatherScreen BlocBuilder NoDataWidget +++++',
                   );
+
                 return const SliverFillRemaining(
-                  child: CustomCircularProgressIndicator(),
+                  child: ScreenPadding(child: NoDataWidget()),
                 );
               },
             ),

@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart' show kDebugMode;
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
@@ -11,6 +12,8 @@ class NoDataWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final cloudFacePicture = AppSvgs.cloudFaces.negative.randomPicture;
+
+    if (kDebugMode) print('NoDataWidget');
 
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
@@ -26,6 +29,8 @@ class NoDataWidget extends StatelessWidget {
               constraintsMaxWidth,
               52.4,
             );
+
+            if (kDebugMode) print('NoDataWidget LayoutBuilder');
 
             return Column(
               spacing: spacing,

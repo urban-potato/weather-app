@@ -48,6 +48,6 @@ class WeatherCubit extends Cubit<WeatherState> {
     }
 
     if (kDebugMode) log('emit(WeatherFailure(dataState.error));');
-    emit(WeatherFailure(error: dataState.error));
+    emit(WeatherFailure(weather: weather, error: dataState.error));
   }
 }

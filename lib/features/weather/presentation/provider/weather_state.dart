@@ -26,5 +26,5 @@ class WeatherLoaded extends WeatherState {
 }
 
 class WeatherFailure extends WeatherState {
-  const WeatherFailure({super.error});
+  const WeatherFailure({super.weather, super.error});
 }
