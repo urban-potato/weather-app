@@ -132,7 +132,7 @@ class _MainWeatherInfoPadding extends StatelessWidget {
   Widget build(BuildContext context) {
     ScreenBasedSize.instance.init(context);
 
-    final hPadding = ScreenBasedSize.instance.getSidesPadding();
+    final hPadding = ScreenBasedSize.instance.sidesPadding;
     final vPadding = ScreenBasedSize.instance.scaleByRatio(5);
     final mainWeatherWidgetMaxWidth = ScreenBasedSize.instance.scaleByUnit(49);
 

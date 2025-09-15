@@ -12,7 +12,7 @@ class MoonInfoScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     ScreenBasedSize.instance.init(context);
-    final padding = ScreenBasedSize.instance.getSidesPadding();
+    final padding = ScreenBasedSize.instance.sidesPadding;
 
     return SafeArea(
       child: Scaffold(

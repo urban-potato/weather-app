@@ -2,18 +2,18 @@ import 'dart:async' show Timer;
 
 import 'package:flutter/material.dart';
 
+import '../../size_helper/index.dart' show ScreenBasedSize;
+
 class NotificationBanner extends StatefulWidget {
   const NotificationBanner({
     super.key,
     required this.message,
     required this.statusBarHeight,
-    required this.appBarHeight,
     required this.onDismissed,
   });
 
   final String message;
   final double statusBarHeight;
-  final double appBarHeight;
   final VoidCallback onDismissed;
 
   @override
@@ -28,6 +28,8 @@ class NotificationBannerState extends State<NotificationBanner>
   @override
   void initState() {
     super.initState();
+
+    ScreenBasedSize.instance.init(context);
 
     _controller = AnimationController(
       vsync: this,
@@ -56,20 +58,24 @@ class NotificationBannerState extends State<NotificationBanner>
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
+    final elevation = ScreenBasedSize.instance.scaleByUnit(0.9);
+    final spacing = ScreenBasedSize.instance.scaleByUnit(1.4);
+    final textPadding = ScreenBasedSize.instance.scaleByUnit(3.3);
+    final sidesPadding = ScreenBasedSize.instance.sidesPadding;
+    final tileBorderRadius = ScreenBasedSize.instance.borderRadius;
+    final appBarHeight = ScreenBasedSize.instance.toolbarHeight;
 
-    // TODO: убрать хардкод значений
     return ClipRect(
       clipBehavior: Clip.hardEdge,
       child: SlideTransition(
         position: _slideAnimation,
         child: Column(
+          spacing: spacing,
           mainAxisSize: MainAxisSize.min,
           children: [
-            SizedBox(height: widget.appBarHeight),
-            const SizedBox(height: 6),
+            SizedBox(height: appBarHeight),
             Padding(
-              padding: const EdgeInsets.only(bottom: 16),
+              padding: EdgeInsets.only(bottom: tileBorderRadius),
               child: Dismissible(
                 key: UniqueKey(),
                 direction: DismissDirection.horizontal,
@@ -77,24 +83,50 @@ class NotificationBannerState extends State<NotificationBanner>
                   widget.onDismissed();
                 },
                 child: Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                  child: Material(
-                    elevation: 4.0,
-                    borderRadius: BorderRadius.circular(8),
-                    color: theme.cardColor,
-                    child: Padding(
-                      padding: const EdgeInsets.all(14),
-                      child: Text(
-                        widget.message,
-                        style: theme.textTheme.bodyMedium,
-                        textAlign: TextAlign.center,
-                      ),
-                    ),
+                  padding: EdgeInsets.symmetric(horizontal: sidesPadding),
+                  child: _ThemedMaterial(
+                    elevation: elevation,
+                    tileBorderRadius: tileBorderRadius,
+                    textPadding: textPadding,
+                    widget: widget,
                   ),
                 ),
               ),
             ),
           ],
+        ),
+      ),
+    );
+  }
+}
+
+class _ThemedMaterial extends StatelessWidget {
+  const _ThemedMaterial({
+    required this.elevation,
+    required this.tileBorderRadius,
+    required this.textPadding,
+    required this.widget,
+  });
+
+  final double elevation;
+  final double tileBorderRadius;
+  final double textPadding;
+  final NotificationBanner widget;
+
+  @override
+  Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+
+    return Material(
+      elevation: elevation,
+      borderRadius: BorderRadius.circular(tileBorderRadius),
+      color: theme.cardColor,
+      child: Padding(
+        padding: EdgeInsets.all(textPadding),
+        child: Text(
+          widget.message,
+          style: theme.textTheme.bodyMedium,
+          textAlign: TextAlign.center,
         ),
       ),
     );

@@ -1,35 +1,29 @@
 import 'package:flutter/foundation.dart' show kDebugMode;
 import 'package:flutter/material.dart';
-import 'package:weather_app/shared/utils/notification_helper/ui/notification_banner.dart';
 
-import '../size_helper/index.dart';
+import 'ui/notification_banner.dart';
 
 abstract class NotificationHelper {
+  static final _statusBarHeight =
+      WidgetsBinding.instance.platformDispatcher.views.first.viewPadding.top /
+      WidgetsBinding
+          .instance
+          .platformDispatcher
+          .views
+          .first
+          .display
+          .devicePixelRatio;
+
   static void showMessage(BuildContext context, String message) {
-    OverlayEntry? overlayEntry;
-
-    final double statusBarHeight =
-        WidgetsBinding.instance.platformDispatcher.views.first.viewPadding.top /
-        WidgetsBinding
-            .instance
-            .platformDispatcher
-            .views
-            .first
-            .display
-            .devicePixelRatio;
-
-    print(
-      '------------------------ statusBarHeight = $statusBarHeight ------------------------------',
-    );
-
-    // TODO: вынести куда-то или получать высоту апп бара
-    ScreenBasedSize.instance.init(context);
-    final double appBarHeight = ScreenBasedSize.instance.scaleByUnit(12);
+    if (kDebugMode)
+      print('------- statusBarHeight = $_statusBarHeight ---------');
 
     if (kDebugMode)
       print(
         '+++++ TodayWeatherScreen BlocBuilder listener _Messenger showErrorMessage +++++',
       );
+
+    OverlayEntry? overlayEntry;
 
     overlayEntry = OverlayEntry(
       builder: (context) {
@@ -39,13 +33,12 @@ abstract class NotificationHelper {
           );
 
         return Positioned(
-          top: statusBarHeight,
+          top: _statusBarHeight,
           left: 0,
           right: 0,
           child: NotificationBanner(
             message: message,
-            statusBarHeight: statusBarHeight,
-            appBarHeight: appBarHeight,
+            statusBarHeight: _statusBarHeight,
             onDismissed: () {
               overlayEntry?.remove();
             },

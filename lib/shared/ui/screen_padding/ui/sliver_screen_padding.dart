@@ -10,7 +10,7 @@ class SliverScreenPadding extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     ScreenBasedSize.instance.init(context);
-    final padding = ScreenBasedSize.instance.getSidesPadding();
+    final padding = ScreenBasedSize.instance.sidesPadding;
 
     return SliverPadding(
       padding: EdgeInsets.symmetric(
