@@ -1,8 +1,8 @@
-import 'dart:async' show Timer;
-
+import 'package:flutter/foundation.dart' show kDebugMode;
 import 'package:flutter/material.dart';
 
 import '../../size_helper/index.dart' show ScreenBasedSize;
+import '../notification_helper.dart';
 
 class NotificationBanner extends StatefulWidget {
   const NotificationBanner({
@@ -21,7 +21,8 @@ class NotificationBanner extends StatefulWidget {
 }
 
 class NotificationBannerState extends State<NotificationBanner>
-    with SingleTickerProviderStateMixin {
+    with SingleTickerProviderStateMixin
+    implements AnimatedBanner<NotificationBanner> {
   late AnimationController _controller;
   late Animation<Offset> _slideAnimation;
 
@@ -42,18 +43,33 @@ class NotificationBannerState extends State<NotificationBanner>
     ).animate(CurvedAnimation(parent: _controller, curve: Curves.easeInOut));
 
     _controller.forward();
-
-    Timer(const Duration(seconds: 5), () {
-      if (mounted) {
-        _controller.reverse().then((_) => widget.onDismissed());
-      }
-    });
   }
 
   @override
   void dispose() {
     _controller.dispose();
     super.dispose();
+  }
+
+  @override
+  void dismissWithAnimation() {
+    _controller.reverse().then((_) {
+      if (mounted) {
+        widget.onDismissed();
+      }
+    });
+  }
+
+  @override
+  void didUpdateWidget(covariant NotificationBanner oldWidget) {
+    super.didUpdateWidget(oldWidget);
+
+    if (kDebugMode) print('+++++ NotificationBanner didUpdateWidget +++++');
+
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      _controller.reset();
+      _controller.forward();
+    });
   }
 
   @override
