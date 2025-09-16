@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 
 import '../../../../shared/services/index.dart' show AnimatedBanner;
-import '../../../../shared/ui/card_tile/index.dart';
 import '../../../../shared/utils/size_helper/index.dart' show ScreenBasedSize;
 
 class NotificationBanner extends StatefulWidget {
