@@ -3,7 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../../../../../../../../shared/services/index.dart';
+import '../../../../../../../../shared/providers/index.dart'
+    show navigationServiceProvider;
 import '../../../../../../../../shared/ui/card_tile/index.dart';
 import '../../../../../../../../shared/ui/custom_circular_progress_indicator/index.dart';
 import '../../../../../../../../shared/ui/themed_text/index.dart';

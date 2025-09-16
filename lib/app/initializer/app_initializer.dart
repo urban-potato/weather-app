@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../../shared/services/index.dart';
+import '../../shared/providers/index.dart';
 import '../services/index.dart';
 
 class AppInitializer extends StatelessWidget {
@@ -15,6 +15,9 @@ class AppInitializer extends StatelessWidget {
       overrides: [
         navigationServiceProvider.overrideWithValue(
           const NavigationServiceImpl(),
+        ),
+        notificationServiceProvider.overrideWithValue(
+          NotificationServiceImpl(),
         ),
       ],
       child: child,

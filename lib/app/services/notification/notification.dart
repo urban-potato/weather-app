@@ -3,22 +3,15 @@ import 'dart:async' show Timer;
 import 'package:flutter/foundation.dart' show kDebugMode;
 import 'package:flutter/material.dart';
 
+import '../../../shared/services/index.dart'
+    show NotificationService, AnimatedBanner;
 import 'ui/notification_banner.dart';
 
-abstract interface class AnimatedBanner<S extends StatefulWidget>
-    implements State<S> {
-  void dismissWithAnimation();
-}
-
-class NotificationHelper {
-  NotificationHelper._();
-
-  static final _instance = NotificationHelper._();
-  static NotificationHelper get instance => _instance;
-
+class NotificationServiceImpl implements NotificationService {
   Timer? _timer;
   OverlayEntry? _currentOverlay;
 
+  @override
   void showMessage(BuildContext context, String message, {int duration = 5}) {
     if (kDebugMode)
       print(
@@ -88,5 +81,11 @@ class NotificationHelper {
     _timer = null;
     _currentOverlay?.remove();
     _currentOverlay = null;
+  }
+
+  @override
+  void dispose() {
+    if (kDebugMode) print('+++++ NotificationServiceImpl dispose() +++++');
+    _dismiss();
   }
 }

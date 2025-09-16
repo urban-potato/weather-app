@@ -2,7 +2,8 @@ import 'package:flutter/foundation.dart' show kDebugMode;
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../../../services/index.dart';
+import '../../../providers/index.dart' show navigationServiceProvider;
+import '../../../services/index.dart' show NavigationService;
 import '../../../utils/size_helper/index.dart';
 
 typedef ActionConfig = ({IconData icon, VoidCallback? onPressed});

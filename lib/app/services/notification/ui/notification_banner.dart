@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-import '../../size_helper/index.dart' show ScreenBasedSize;
-import '../notification_helper.dart';
+import '../../../../shared/services/index.dart' show AnimatedBanner;
+import '../../../../shared/utils/size_helper/index.dart' show ScreenBasedSize;
 
 class NotificationBanner extends StatefulWidget {
   const NotificationBanner({

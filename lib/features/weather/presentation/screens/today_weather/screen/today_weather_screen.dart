@@ -2,10 +2,12 @@ import 'package:auto_route/annotations.dart';
 import 'package:flutter/foundation.dart' show kDebugMode;
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../../../../shared/providers/index.dart'
+    show notificationServiceProvider;
 import '../../../../../../shared/ui/custom_circular_progress_indicator/index.dart';
 import '../../../../../../shared/ui/screen_padding/index.dart';
-import '../../../../../../shared/utils/notification_helper/index.dart';
 import '../../../../../../shared/utils/size_helper/index.dart';
 import '../../../provider/weather_cubit.dart';
 import '../../../provider/weather_state.dart';
@@ -18,11 +20,13 @@ import '../widgets/no_data/index.dart';
 import '../widgets/weekly_forecast_preview/index.dart';
 
 @RoutePage()
-class TodayWeatherScreen extends StatelessWidget {
+class TodayWeatherScreen extends ConsumerWidget {
   const TodayWeatherScreen({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final notificationService = ref.read(notificationServiceProvider);
+
     if (kDebugMode) print('+++++ TodayWeatherScreen build +++++');
 
     return Scaffold(
@@ -41,7 +45,7 @@ class TodayWeatherScreen extends StatelessWidget {
                   print('+++++ TodayWeatherScreen BlocBuilder listener +++++');
 
                 if (state is WeatherFailure && state.weather != null) {
-                  NotificationHelper.instance.showMessage(
+                  notificationService.showMessage(
                     context,
                     'Failed to load data. Please check your internet connection and try again.',
                   );
