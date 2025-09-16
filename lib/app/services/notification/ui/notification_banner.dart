@@ -64,11 +64,9 @@ class NotificationBannerState extends State<NotificationBanner>
   @override
   Widget build(BuildContext context) {
     final elevation = ScreenBasedSize.instance.scaleByUnit(0.9);
-    final spacing = ScreenBasedSize.instance.scaleByUnit(1.4);
     final textPadding = ScreenBasedSize.instance.scaleByUnit(3.3);
     final sidesPadding = ScreenBasedSize.instance.sidesPadding;
     final tileBorderRadius = ScreenBasedSize.instance.borderRadius;
-    final appBarHeight = ScreenBasedSize.instance.toolbarHeight;
 
     return Semantics(
       label: widget.message,
@@ -77,31 +75,24 @@ class NotificationBannerState extends State<NotificationBanner>
         clipBehavior: Clip.hardEdge,
         child: SlideTransition(
           position: _slideAnimation,
-          child: Column(
-            spacing: spacing,
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              SizedBox(height: appBarHeight),
-              Padding(
-                padding: EdgeInsets.only(bottom: tileBorderRadius),
-                child: Dismissible(
-                  key: UniqueKey(),
-                  direction: DismissDirection.horizontal,
-                  onDismissed: (direction) {
-                    widget.onDismissed();
-                  },
-                  child: Padding(
-                    padding: EdgeInsets.symmetric(horizontal: sidesPadding),
-                    child: _ThemedMaterial(
-                      elevation: elevation,
-                      tileBorderRadius: tileBorderRadius,
-                      textPadding: textPadding,
-                      widget: widget,
-                    ),
-                  ),
+          child: Padding(
+            padding: EdgeInsets.only(bottom: tileBorderRadius),
+            child: Dismissible(
+              key: UniqueKey(),
+              direction: DismissDirection.horizontal,
+              onDismissed: (direction) {
+                widget.onDismissed();
+              },
+              child: Padding(
+                padding: EdgeInsets.symmetric(horizontal: sidesPadding),
+                child: _ThemedMaterial(
+                  elevation: elevation,
+                  tileBorderRadius: tileBorderRadius,
+                  textPadding: textPadding,
+                  widget: widget,
                 ),
               ),
-            ],
+            ),
           ),
         ),
       ),

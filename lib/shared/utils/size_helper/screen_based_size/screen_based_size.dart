@@ -9,11 +9,9 @@ class ScreenBasedSize {
   static ScreenBasedSize get instance => _instance;
 
   static const _paddingSideRatio = 28.0;
-  static const _toolbarHeightFactor = 12.0;
   static const _borderRadiusFactor = 3.8;
 
   double get sidesPadding => scaleByRatio(_paddingSideRatio);
-  double get toolbarHeight => scaleByUnit(_toolbarHeightFactor);
   double get borderRadius => scaleByUnit(_borderRadiusFactor);
 
   double? _screenMinSide;

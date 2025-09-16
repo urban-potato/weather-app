@@ -33,7 +33,7 @@ class CustomSliverAppBar extends ConsumerWidget {
     final navigationService = ref.read(navigationServiceProvider);
     ScreenBasedSize.instance.init(context);
 
-    final toolbarHeight = ScreenBasedSize.instance.toolbarHeight;
+    final toolbarHeight = ScreenBasedSize.instance.scaleByUnit(12);
     final contentSize = ScreenBasedSize.instance.scaleByUnit(5);
 
     final theme = Theme.of(context);
