@@ -10,9 +10,13 @@ class ScreenBasedSize {
 
   static const _paddingSideRatio = 28.0;
   static const _borderRadiusFactor = 3.8;
+  static const _tileHorizontalPaddingFactor = 3.5;
+  static const _tileVerticalPaddingFactor = 3.0;
 
   double get sidesPadding => scaleByRatio(_paddingSideRatio);
   double get borderRadius => scaleByUnit(_borderRadiusFactor);
+  double get tileHorizontalPadding => scaleByUnit(_tileHorizontalPaddingFactor);
+  double get tileVerticalPadding => scaleByUnit(_tileVerticalPaddingFactor);
 
   double? _screenMinSide;
   double get screenMinSide {

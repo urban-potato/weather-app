@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../../../shared/services/index.dart' show AnimatedBanner;
+import '../../../../shared/ui/card_tile/index.dart';
 import '../../../../shared/utils/size_helper/index.dart' show ScreenBasedSize;
 
 class NotificationBanner extends StatefulWidget {
@@ -64,9 +65,16 @@ class NotificationBannerState extends State<NotificationBanner>
   @override
   Widget build(BuildContext context) {
     final elevation = ScreenBasedSize.instance.scaleByUnit(0.9);
-    final textPadding = ScreenBasedSize.instance.scaleByUnit(3.3);
     final sidesPadding = ScreenBasedSize.instance.sidesPadding;
     final tileBorderRadius = ScreenBasedSize.instance.borderRadius;
+    final textSize = ScreenBasedSize.instance.scaleByUnit(3.7);
+    final hPadding = ScreenBasedSize.instance.tileHorizontalPadding;
+    final vPadding = ScreenBasedSize.instance.tileVerticalPadding;
+
+    final textPadding = EdgeInsetsGeometry.symmetric(
+      horizontal: hPadding,
+      vertical: vPadding,
+    );
 
     return Semantics(
       label: widget.message,
@@ -89,6 +97,7 @@ class NotificationBannerState extends State<NotificationBanner>
                   elevation: elevation,
                   tileBorderRadius: tileBorderRadius,
                   textPadding: textPadding,
+                  textSize: textSize,
                   widget: widget,
                 ),
               ),
@@ -105,12 +114,14 @@ class _ThemedMaterial extends StatelessWidget {
     required this.elevation,
     required this.tileBorderRadius,
     required this.textPadding,
+    required this.textSize,
     required this.widget,
   });
 
   final double elevation;
   final double tileBorderRadius;
-  final double textPadding;
+  final EdgeInsetsGeometry textPadding;
+  final double textSize;
   final NotificationBanner widget;
 
   @override
@@ -122,10 +133,10 @@ class _ThemedMaterial extends StatelessWidget {
       borderRadius: BorderRadius.circular(tileBorderRadius),
       color: theme.cardColor,
       child: Padding(
-        padding: EdgeInsets.all(textPadding),
+        padding: textPadding,
         child: Text(
           widget.message,
-          style: theme.textTheme.bodyMedium,
+          style: theme.textTheme.bodyMedium?.copyWith(fontSize: textSize),
           textAlign: TextAlign.center,
         ),
       ),

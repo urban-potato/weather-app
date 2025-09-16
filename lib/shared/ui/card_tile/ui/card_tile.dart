@@ -32,8 +32,8 @@ class CardTile extends StatelessWidget {
     ScreenBasedSize.instance.init(context);
 
     final tileBorderRadius = ScreenBasedSize.instance.borderRadius;
-    final hPadding = ScreenBasedSize.instance.scaleByUnit(3.5);
-    final vPadding = ScreenBasedSize.instance.scaleByUnit(3);
+    final hPadding = ScreenBasedSize.instance.tileHorizontalPadding;
+    final vPadding = ScreenBasedSize.instance.tileVerticalPadding;
 
     final finalPadding =
         padding ??
