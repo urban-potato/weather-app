@@ -1,6 +1,6 @@
 import 'package:auto_route/auto_route.dart';
 
-import '../../../features/weather/index.dart';
+import '../../features/weather/index.dart';
 import 'wrappers/weather_screen_wrapper.dart';
 
 part 'router.gr.dart';

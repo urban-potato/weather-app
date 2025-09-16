@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../shared/utils/size_helper/index.dart';
 import 'initializer/app_initializer.dart';
-import 'navigation/router/index.dart';
+import 'router/index.dart';
 import 'theme/index.dart';
 
 class App extends StatefulWidget {
