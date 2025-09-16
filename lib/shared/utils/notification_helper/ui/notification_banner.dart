@@ -1,4 +1,3 @@
-import 'package:flutter/foundation.dart' show kDebugMode;
 import 'package:flutter/material.dart';
 
 import '../../size_helper/index.dart' show ScreenBasedSize;
@@ -8,12 +7,10 @@ class NotificationBanner extends StatefulWidget {
   const NotificationBanner({
     super.key,
     required this.message,
-    required this.statusBarHeight,
     required this.onDismissed,
   });
 
   final String message;
-  final double statusBarHeight;
   final VoidCallback onDismissed;
 
   @override
@@ -30,8 +27,6 @@ class NotificationBannerState extends State<NotificationBanner>
   void initState() {
     super.initState();
 
-    ScreenBasedSize.instance.init(context);
-
     _controller = AnimationController(
       vsync: this,
       duration: const Duration(milliseconds: 350),
@@ -43,6 +38,12 @@ class NotificationBannerState extends State<NotificationBanner>
     ).animate(CurvedAnimation(parent: _controller, curve: Curves.easeInOut));
 
     _controller.forward();
+  }
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    ScreenBasedSize.instance.init(context);
   }
 
   @override
@@ -61,18 +62,6 @@ class NotificationBannerState extends State<NotificationBanner>
   }
 
   @override
-  void didUpdateWidget(covariant NotificationBanner oldWidget) {
-    super.didUpdateWidget(oldWidget);
-
-    if (kDebugMode) print('+++++ NotificationBanner didUpdateWidget +++++');
-
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      _controller.reset();
-      _controller.forward();
-    });
-  }
-
-  @override
   Widget build(BuildContext context) {
     final elevation = ScreenBasedSize.instance.scaleByUnit(0.9);
     final spacing = ScreenBasedSize.instance.scaleByUnit(1.4);
@@ -81,35 +70,39 @@ class NotificationBannerState extends State<NotificationBanner>
     final tileBorderRadius = ScreenBasedSize.instance.borderRadius;
     final appBarHeight = ScreenBasedSize.instance.toolbarHeight;
 
-    return ClipRect(
-      clipBehavior: Clip.hardEdge,
-      child: SlideTransition(
-        position: _slideAnimation,
-        child: Column(
-          spacing: spacing,
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            SizedBox(height: appBarHeight),
-            Padding(
-              padding: EdgeInsets.only(bottom: tileBorderRadius),
-              child: Dismissible(
-                key: UniqueKey(),
-                direction: DismissDirection.horizontal,
-                onDismissed: (direction) {
-                  widget.onDismissed();
-                },
-                child: Padding(
-                  padding: EdgeInsets.symmetric(horizontal: sidesPadding),
-                  child: _ThemedMaterial(
-                    elevation: elevation,
-                    tileBorderRadius: tileBorderRadius,
-                    textPadding: textPadding,
-                    widget: widget,
+    return Semantics(
+      label: widget.message,
+      hint: 'Swipe to dismiss',
+      child: ClipRect(
+        clipBehavior: Clip.hardEdge,
+        child: SlideTransition(
+          position: _slideAnimation,
+          child: Column(
+            spacing: spacing,
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              SizedBox(height: appBarHeight),
+              Padding(
+                padding: EdgeInsets.only(bottom: tileBorderRadius),
+                child: Dismissible(
+                  key: UniqueKey(),
+                  direction: DismissDirection.horizontal,
+                  onDismissed: (direction) {
+                    widget.onDismissed();
+                  },
+                  child: Padding(
+                    padding: EdgeInsets.symmetric(horizontal: sidesPadding),
+                    child: _ThemedMaterial(
+                      elevation: elevation,
+                      tileBorderRadius: tileBorderRadius,
+                      textPadding: textPadding,
+                      widget: widget,
+                    ),
                   ),
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

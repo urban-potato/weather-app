@@ -10,31 +10,38 @@ abstract interface class AnimatedBanner<S extends StatefulWidget>
   void dismissWithAnimation();
 }
 
-abstract class NotificationHelper {
-  static Timer? _timer;
-  static OverlayEntry? _currentOverlay;
-  static final GlobalKey<AnimatedBanner<NotificationBanner>> _bannerKey =
-      GlobalKey<AnimatedBanner<NotificationBanner>>();
-  static final _statusBarHeight =
-      WidgetsBinding.instance.platformDispatcher.views.first.viewPadding.top /
-      WidgetsBinding
-          .instance
-          .platformDispatcher
-          .views
-          .first
-          .display
-          .devicePixelRatio;
+class NotificationHelper {
+  NotificationHelper._();
 
-  static void showMessage(BuildContext context, String message) {
-    if (kDebugMode)
-      print('------- statusBarHeight = $_statusBarHeight ---------');
+  static final _instance = NotificationHelper._();
+  static NotificationHelper get instance => _instance;
 
+  Timer? _timer;
+  OverlayEntry? _currentOverlay;
+
+  void showMessage(BuildContext context, String message, {int duration = 5}) {
     if (kDebugMode)
       print(
         '+++++ TodayWeatherScreen BlocBuilder listener _Messenger showErrorMessage +++++',
       );
 
     _dismiss();
+
+    final statusBarHeight =
+        WidgetsBinding.instance.platformDispatcher.views.first.viewPadding.top /
+        WidgetsBinding
+            .instance
+            .platformDispatcher
+            .views
+            .first
+            .display
+            .devicePixelRatio;
+
+    if (kDebugMode)
+      print('------- statusBarHeight = $statusBarHeight ---------');
+
+    final GlobalKey<AnimatedBanner<StatefulWidget>> bannerKey =
+        GlobalKey<AnimatedBanner<StatefulWidget>>();
 
     _currentOverlay = OverlayEntry(
       builder: (context) {
@@ -44,16 +51,13 @@ abstract class NotificationHelper {
           );
 
         return Positioned(
-          top: _statusBarHeight,
+          top: statusBarHeight,
           left: 0,
           right: 0,
           child: NotificationBanner(
-            key: _bannerKey,
+            key: bannerKey,
             message: message,
-            statusBarHeight: _statusBarHeight,
-            onDismissed: () {
-              _dismiss();
-            },
+            onDismissed: _dismiss,
           ),
         );
       },
@@ -61,14 +65,16 @@ abstract class NotificationHelper {
 
     Overlay.of(context).insert(_currentOverlay!);
 
-    _timer = Timer(const Duration(seconds: 5), () {
+    _timer = Timer(Duration(seconds: duration), () {
       if (kDebugMode) print('+++++ Auto-dismiss triggered +++++');
-      _performAnimatedDismiss();
+      _performAnimatedDismiss(bannerKey);
     });
   }
 
-  static void _performAnimatedDismiss() {
-    final bannerState = _bannerKey.currentState;
+  void _performAnimatedDismiss(
+    GlobalKey<AnimatedBanner<StatefulWidget>> bannerKey,
+  ) {
+    final bannerState = bannerKey.currentState;
 
     if (bannerState != null && bannerState.mounted) {
       bannerState.dismissWithAnimation();
@@ -77,7 +83,7 @@ abstract class NotificationHelper {
     }
   }
 
-  static void _dismiss() {
+  void _dismiss() {
     _timer?.cancel();
     _timer = null;
     _currentOverlay?.remove();

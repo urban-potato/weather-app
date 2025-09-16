@@ -41,7 +41,7 @@ class TodayWeatherScreen extends StatelessWidget {
                   print('+++++ TodayWeatherScreen BlocBuilder listener +++++');
 
                 if (state is WeatherFailure && state.weather != null) {
-                  NotificationHelper.showMessage(
+                  NotificationHelper.instance.showMessage(
                     context,
                     'Failed to load data. Please check your internet connection and try again.',
                   );
@@ -107,6 +107,8 @@ class _WeatherScreenBodyWidgets extends StatelessWidget {
 
     return SliverList(
       delegate: SliverChildListDelegate.fixed([
+        const _MainWeatherInfoPadding(child: MainWeatherInfoWidget()),
+        // TODO: временная кнопка, потом удалить
         ElevatedButton(
           onPressed: () {
             if (kDebugMode) print('--- onPressed ---');
@@ -114,7 +116,6 @@ class _WeatherScreenBodyWidgets extends StatelessWidget {
           },
           child: const Text('Refresh'),
         ),
-        const _MainWeatherInfoPadding(child: MainWeatherInfoWidget()),
         const ScreenPadding(child: WeeklyForecastPreviewWidget()),
         const ScreenPadding(child: HourlyForecastWidget()),
         const ScreenPadding(child: AdditionalInfoWidget()),
