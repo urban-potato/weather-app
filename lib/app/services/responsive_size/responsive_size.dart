@@ -3,10 +3,10 @@ import 'package:flutter/widgets.dart' show BuildContext, MediaQuery;
 import '../../../shared/services/index.dart' show ResponsiveSizeService;
 
 class ResponsiveSizeServiceImpl implements ResponsiveSizeService {
-  static const _paddingSideRatio = 28.0;
-  static const _borderRadiusFactor = 3.8;
-  static const _tileHorizontalPaddingFactor = 3.5;
-  static const _tileVerticalPaddingFactor = 3.0;
+  static const _paddingSidePercent = 3.6;
+  static const _borderRadiusPercent = 3.8;
+  static const _tileHorizontalPaddingPercent = 3.5;
+  static const _tileVerticalPaddingPercent = 3.0;
 
   double? _screenMinSide;
 
@@ -28,15 +28,20 @@ class ResponsiveSizeServiceImpl implements ResponsiveSizeService {
   bool get isInitialized => _screenMinSide != null;
 
   @override
-  double get sidesPadding => screenDividedBy(_paddingSideRatio);
+  double get sidesPadding {
+    final result = screenPercentage(_paddingSidePercent);
+
+    return result;
+  }
+
   @override
-  double get borderRadius => screenPercentage(_borderRadiusFactor);
+  double get borderRadius => screenPercentage(_borderRadiusPercent);
   @override
   double get tileHorizontalPadding =>
-      screenPercentage(_tileHorizontalPaddingFactor);
+      screenPercentage(_tileHorizontalPaddingPercent);
   @override
   double get tileVerticalPadding =>
-      screenPercentage(_tileVerticalPaddingFactor);
+      screenPercentage(_tileVerticalPaddingPercent);
 
   @override
   double get contentMaxWidth {
@@ -55,11 +60,6 @@ class ResponsiveSizeServiceImpl implements ResponsiveSizeService {
   }
 
   @override
-  double dividedBy(double base, double parts) {
-    return (base / parts).round().toDouble();
-  }
-
-  @override
   double screenPercentage(double percent) {
     if (_screenMinSide == null) {
       throw StateError(
@@ -68,16 +68,5 @@ class ResponsiveSizeServiceImpl implements ResponsiveSizeService {
     }
 
     return percentageOf(_screenMinSide!, percent);
-  }
-
-  @override
-  double screenDividedBy(double parts) {
-    if (_screenMinSide == null) {
-      throw StateError(
-        'ResponsiveSizeService is not initialized. Call init(context) first.',
-      );
-    }
-
-    return dividedBy(_screenMinSide!, parts);
   }
 }

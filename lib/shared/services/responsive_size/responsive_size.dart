@@ -13,7 +13,5 @@ abstract interface class ResponsiveSizeService {
   double get contentMaxWidth;
 
   double percentageOf(double base, double percent);
-  double dividedBy(double base, double parts);
   double screenPercentage(double percent);
-  double screenDividedBy(double parts);
 }
