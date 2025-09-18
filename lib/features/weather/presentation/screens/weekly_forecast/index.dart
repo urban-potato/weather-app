@@ -1,1 +1,1 @@
-export 'screen/weekly_forecast_screen.dart';
+export 'screen/weekly_forecast.dart';

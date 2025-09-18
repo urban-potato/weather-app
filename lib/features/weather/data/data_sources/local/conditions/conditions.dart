@@ -5,8 +5,8 @@ import '../../../../../../shared/resources/local_data_state/index.dart';
 import '../../../../shared/resources/index.dart';
 import '../../../models/index.dart';
 
-class ConditionsClient {
-  const ConditionsClient();
+class ConditionsLocalDataSource {
+  const ConditionsLocalDataSource();
 
   Future<LocalDataState<ConditionsModelData>> getConditions() async {
     try {

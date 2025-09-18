@@ -1,1 +1,1 @@
-export 'screen/moon_info_screen.dart';
+export 'screen/moon_info.dart';

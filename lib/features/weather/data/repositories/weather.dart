@@ -12,17 +12,18 @@ import '../data_sources/remote/index.dart';
 import '../mappers/index.dart';
 
 class WeatherRepositoryImpl implements WeatherRepository {
-  final WeatherApiClient _weatherApiService;
+  final WeatherRemoteDataSource _weatherRemoteDataSource;
 
-  WeatherRepositoryImpl({required WeatherApiClient weatherApiService})
-    : _weatherApiService = weatherApiService;
+  WeatherRepositoryImpl({
+    required WeatherRemoteDataSource weatherRemoteDataSource,
+  }) : _weatherRemoteDataSource = weatherRemoteDataSource;
 
   @override
   Future<RemoteDataState<WeatherModelDomain>> getWeather(
     String location,
   ) async {
     try {
-      final httpResponse = await _weatherApiService.getWeather(
+      final httpResponse = await _weatherRemoteDataSource.getWeather(
         apiKey: weatherApiKey,
         days: weatherApiDays,
         ifGetAqi: weatherApiIfGetAqi,

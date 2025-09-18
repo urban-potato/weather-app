@@ -5,15 +5,16 @@ import '../data_sources/local/index.dart';
 import '../mappers/index.dart';
 
 class ConditionsRepositoryImpl implements ConditionsRepository {
-  final ConditionsClient _conditionsService;
+  final ConditionsLocalDataSource _conditionsLocalDataSource;
 
-  ConditionsRepositoryImpl({required ConditionsClient conditionsService})
-    : _conditionsService = conditionsService;
+  ConditionsRepositoryImpl({
+    required ConditionsLocalDataSource conditionsLocalDataSource,
+  }) : _conditionsLocalDataSource = conditionsLocalDataSource;
 
   @override
   Future<LocalDataState<ConditionsModelDomain>> getConditions() async {
     try {
-      final response = await _conditionsService.getConditions();
+      final response = await _conditionsLocalDataSource.getConditions();
 
       if (response is LocalDataSuccess) {
         final conditionsModelData = response.data;
