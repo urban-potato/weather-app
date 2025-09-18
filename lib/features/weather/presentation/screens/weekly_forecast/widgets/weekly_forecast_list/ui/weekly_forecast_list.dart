@@ -1,15 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart'
+    show ConsumerWidget, WidgetRef;
 
 // import '../../../../../models/index.dart';
 // import '../../../../../widgets/sun_info/index.dart';
-import '../../../../../../../../shared/utils/size_helper/index.dart';
+import '../../../../../../../../shared/providers/index.dart'
+    show responsiveSizeServiceProvider;
 import 'components/day_tile/day_tile.dart';
 
-class WeeklyForecastListWidget extends StatelessWidget {
+class WeeklyForecastListWidget extends ConsumerWidget {
   const WeeklyForecastListWidget({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     final weekForecastMockData = [];
     // final weekForecastMockData = [
     //   WeatherForecastDayData(
@@ -98,12 +101,15 @@ class WeeklyForecastListWidget extends StatelessWidget {
     //   ),
     // ];
 
-    ScreenBasedSize.instance.init(context);
-    final separatorHeight = ScreenBasedSize.instance.scaleByUnit(4);
+    final sizeService = ref.read(responsiveSizeServiceProvider);
+
+    final separatorHeight = sizeService.screenPercentage(4);
 
     return SliverList.separated(
-      itemBuilder: (context, index) =>
-          DayTileWidget(data: weekForecastMockData[index]),
+      itemBuilder: (context, index) => DayTileWidget(
+        data: weekForecastMockData[index],
+        sizeService: sizeService,
+      ),
       separatorBuilder: (context, index) => SizedBox(height: separatorHeight),
       itemCount: weekForecastMockData.length,
     );

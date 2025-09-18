@@ -1,26 +1,32 @@
 import 'package:flutter/foundation.dart' show kDebugMode;
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart'
+    show ConsumerStatefulWidget, ConsumerState;
 import 'package:intl/intl.dart';
 
+import '../../../../../../../../shared/providers/index.dart'
+    show responsiveSizeServiceProvider;
+import '../../../../../../../../shared/services/index.dart'
+    show ResponsiveSizeService;
 import '../../../../../../../../shared/ui/card_tile/index.dart';
 import '../../../../../../../../shared/ui/custom_circular_progress_indicator/index.dart';
 import '../../../../../../../../shared/ui/themed_text/index.dart';
 import '../../../../../../shared/ui/image_asset_with_network_fallback/index.dart';
 import '../../../../../../shared/ui/widget_title/index.dart';
-import '../../../../../../../../shared/utils/size_helper/index.dart';
 import '../../../../../models/index.dart';
 import '../../../../../provider/weather_cubit.dart';
 import '../../../../../provider/weather_state.dart';
 
-class HourlyForecastWidget extends StatefulWidget {
+class HourlyForecastWidget extends ConsumerStatefulWidget {
   const HourlyForecastWidget({super.key});
 
   @override
-  State<HourlyForecastWidget> createState() => _HourlyForecastWidgetState();
+  ConsumerState<HourlyForecastWidget> createState() =>
+      _HourlyForecastWidgetState();
 }
 
-class _HourlyForecastWidgetState extends State<HourlyForecastWidget>
+class _HourlyForecastWidgetState extends ConsumerState<HourlyForecastWidget>
     with AutomaticKeepAliveClientMixin<HourlyForecastWidget> {
   @override
   bool get wantKeepAlive => true;
@@ -28,12 +34,12 @@ class _HourlyForecastWidgetState extends State<HourlyForecastWidget>
   @override
   Widget build(BuildContext context) {
     super.build(context);
+    final sizeService = ref.read(responsiveSizeServiceProvider);
 
     if (kDebugMode) print('HourlyForecastWidget build');
 
-    ScreenBasedSize.instance.init(context);
-    final scrollableAreaHeight = ScreenBasedSize.instance.scaleByUnit(33);
-    final separatorWidth = ScreenBasedSize.instance.scaleByUnit(2.4);
+    final scrollableAreaHeight = sizeService.screenPercentage(33);
+    final separatorWidth = sizeService.screenPercentage(2.4);
 
     return Column(
       mainAxisSize: MainAxisSize.min,
@@ -65,6 +71,7 @@ class _HourlyForecastWidgetState extends State<HourlyForecastWidget>
                   itemBuilder: (context, index) => _ForecastItemTile(
                     localtime: state.localtime,
                     hourInfo: state.hoursList[index],
+                    sizeService: sizeService,
                   ),
                   itemCount: state.hoursList.length,
                 );
@@ -78,18 +85,22 @@ class _HourlyForecastWidgetState extends State<HourlyForecastWidget>
 }
 
 class _ForecastItemTile extends StatelessWidget {
-  const _ForecastItemTile({required this.localtime, required this.hourInfo});
+  const _ForecastItemTile({
+    required this.localtime,
+    required this.hourInfo,
+    required this.sizeService,
+  });
 
   final DateTime localtime;
   final HourModelUI hourInfo;
+  final ResponsiveSizeService sizeService;
 
   @override
   Widget build(BuildContext context) {
     if (kDebugMode) print('HourlyForecastWidget _ForecastItemTile build');
-    ScreenBasedSize.instance.init(context);
 
-    final hPadding = ScreenBasedSize.instance.scaleByUnit(4.8);
-    final vPadding = ScreenBasedSize.instance.scaleByUnit(2.4);
+    final hPadding = sizeService.screenPercentage(4.8);
+    final vPadding = sizeService.screenPercentage(2.4);
 
     return CardTile(
       padding: EdgeInsets.symmetric(vertical: vPadding, horizontal: hPadding),

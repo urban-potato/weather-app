@@ -2,9 +2,9 @@ import 'package:flutter/foundation.dart' show kDebugMode;
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../../../providers/index.dart' show navigationServiceProvider;
+import '../../../providers/index.dart'
+    show navigationServiceProvider, responsiveSizeServiceProvider;
 import '../../../services/index.dart' show NavigationService;
-import '../../../utils/size_helper/index.dart';
 
 typedef ActionConfig = ({IconData icon, VoidCallback? onPressed});
 
@@ -31,10 +31,10 @@ class CustomSliverAppBar extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final navigationService = ref.read(navigationServiceProvider);
-    ScreenBasedSize.instance.init(context);
+    final sizeService = ref.read(responsiveSizeServiceProvider);
 
-    final toolbarHeight = ScreenBasedSize.instance.scaleByUnit(12);
-    final contentSize = ScreenBasedSize.instance.scaleByUnit(5);
+    final toolbarHeight = sizeService.screenPercentage(12);
+    final contentSize = sizeService.screenPercentage(5);
 
     final theme = Theme.of(context);
 

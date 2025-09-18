@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart'
+    show ConsumerWidget, WidgetRef;
 
+import '../../../../../shared/providers/index.dart'
+    show responsiveSizeServiceProvider;
 import '../../../../../shared/ui/card_tile/index.dart';
 import '../../../../../shared/ui/themed_text/index.dart';
-import '../../../../../shared/utils/size_helper/index.dart';
 
-class InfoBadge extends StatelessWidget {
+class InfoBadge extends ConsumerWidget {
   const InfoBadge({
     super.key,
     required this.color,
@@ -19,14 +22,14 @@ class InfoBadge extends StatelessWidget {
   final IconData icon;
 
   @override
-  Widget build(BuildContext context) {
-    ScreenBasedSize.instance.init(context);
+  Widget build(BuildContext context, WidgetRef ref) {
+    final sizeService = ref.read(responsiveSizeServiceProvider);
 
-    final hPadding = ScreenBasedSize.instance.scaleByUnit(2.5);
-    final vPadding = ScreenBasedSize.instance.scaleByUnit(1.9);
-    final iconSize = ScreenBasedSize.instance.scaleByUnit(6);
-    final iconSpacing = ScreenBasedSize.instance.scaleByUnit(2);
-    final textSpacing = ScreenBasedSize.instance.scaleByUnit(1);
+    final hPadding = sizeService.screenPercentage(2.5);
+    final vPadding = sizeService.screenPercentage(1.9);
+    final iconSize = sizeService.screenPercentage(6);
+    final iconSpacing = sizeService.screenPercentage(2);
+    final textSpacing = sizeService.screenPercentage(1);
 
     return CardTile(
       padding: EdgeInsets.symmetric(vertical: vPadding, horizontal: hPadding),

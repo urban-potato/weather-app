@@ -5,9 +5,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 import '../../../../../../../../../shared/providers/index.dart'
-    show navigationServiceProvider;
+    show navigationServiceProvider, responsiveSizeServiceProvider;
 import '../../../../../../../../../shared/ui/themed_text/index.dart';
-import '../../../../../../../../../shared/utils/size_helper/index.dart';
 import '../../../../../../../shared/utils/assets_path_helper/index.dart';
 
 class MoonInfoWidget extends ConsumerWidget {
@@ -19,6 +18,7 @@ class MoonInfoWidget extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final moonPhaseAssetPath = getMoonPhaseAssetPath(moonPhase);
     final navigationService = ref.read(navigationServiceProvider);
+    final sizeService = ref.read(responsiveSizeServiceProvider);
 
     if (kDebugMode) print('MoonInfoWidget build');
 
@@ -28,8 +28,8 @@ class MoonInfoWidget extends ConsumerWidget {
       child: LayoutBuilder(
         builder: (BuildContext context, BoxConstraints constraints) {
           final constraintsMaxWidth = constraints.maxWidth;
-          final iconSize = AdjustableSize.scaleByUnit(constraintsMaxWidth, 20);
-          final spacing = AdjustableSize.scaleByUnit(constraintsMaxWidth, 1.9);
+          final iconSize = sizeService.percentageOf(constraintsMaxWidth, 20);
+          final spacing = sizeService.percentageOf(constraintsMaxWidth, 1.9);
 
           if (kDebugMode) print('MoonInfoWidget LayoutBuilder');
 

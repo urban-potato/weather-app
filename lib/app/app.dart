@@ -2,9 +2,8 @@ import 'package:flutter/foundation.dart' show kDebugMode;
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../shared/providers/index.dart' show notificationServiceProvider;
-import '../shared/utils/size_helper/index.dart';
-import 'initializer/app_initializer.dart';
+import '../shared/providers/index.dart'
+    show notificationServiceProvider, responsiveSizeServiceProvider;
 import 'router/index.dart';
 import 'theme/index.dart';
 
@@ -44,16 +43,18 @@ class _AppState extends ConsumerState<App> with WidgetsBindingObserver {
 
   @override
   Widget build(BuildContext context) {
-    ScreenBasedSize.instance.init(context);
+    final sizeService = ref.read(responsiveSizeServiceProvider);
 
-    return AppInitializer(
-      child: MaterialApp.router(
-        routerConfig: _router.config(),
-        debugShowCheckedModeBanner: false,
-        title: 'Weather App',
-        theme: TAppTheme.lightTheme(context),
-        darkTheme: TAppTheme.darkTheme(context),
-      ),
+    if (!sizeService.isInitialized) {
+      sizeService.init(context);
+    }
+
+    return MaterialApp.router(
+      routerConfig: _router.config(),
+      debugShowCheckedModeBanner: false,
+      title: 'Weather App',
+      theme: TAppTheme.lightTheme(sizeService),
+      darkTheme: TAppTheme.darkTheme(sizeService),
     );
   }
 }

@@ -4,13 +4,14 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../../../../../../shared/providers/index.dart'
-    show navigationServiceProvider;
+    show navigationServiceProvider, responsiveSizeServiceProvider;
+import '../../../../../../../../shared/services/index.dart'
+    show ResponsiveSizeService;
 import '../../../../../../../../shared/ui/card_tile/index.dart';
 import '../../../../../../../../shared/ui/custom_circular_progress_indicator/index.dart';
 import '../../../../../../../../shared/ui/themed_text/index.dart';
 import '../../../../../../shared/ui/image_asset_with_network_fallback/index.dart';
 import '../../../../../../shared/ui/widget_title/index.dart';
-import '../../../../../../../../shared/utils/size_helper/index.dart';
 import '../../../../../../shared/utils/day_helper/index.dart';
 import '../../../../../models/index.dart';
 import '../../../../../provider/weather_cubit.dart';
@@ -38,6 +39,7 @@ class _WeeklyForecastPreviewWidgetState
 
     if (kDebugMode) print('WeekForecastPreviewWidget build');
     final navigationService = ref.read(navigationServiceProvider);
+    final sizeService = ref.read(responsiveSizeServiceProvider);
 
     return Column(
       mainAxisSize: MainAxisSize.min,
@@ -67,7 +69,7 @@ class _WeeklyForecastPreviewWidgetState
                   child: Column(
                     children: [
                       ...state.weeklyForecastPreviewDayList.map(
-                        (e) => _InfoRow(item: e),
+                        (e) => _InfoRow(item: e, sizeService: sizeService),
                       ),
                       const ThemedText(
                         text: 'More info...',
@@ -87,26 +89,24 @@ class _WeeklyForecastPreviewWidgetState
 }
 
 class _InfoRow extends StatelessWidget {
-  const _InfoRow({required this.item});
+  const _InfoRow({required this.item, required this.sizeService});
 
   final WeeklyForecastPreviewDayModelUI item;
+  final ResponsiveSizeService sizeService;
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext contex) {
     if (kDebugMode) print('WeeklyForecastPreviewWidget _InfoRow');
 
     return LayoutBuilder(
       builder: (BuildContext context, BoxConstraints constraints) {
         final constraintsMaxWidth = constraints.maxWidth;
-        final iconSize = AdjustableSize.scaleByUnit(constraintsMaxWidth, 10);
-        final conditionTextHPadding = AdjustableSize.scaleByUnit(
+        final iconSize = sizeService.percentageOf(constraintsMaxWidth, 10);
+        final conditionTextHPadding = sizeService.percentageOf(
           constraintsMaxWidth,
           1.8,
         );
-        final imageSpacing = AdjustableSize.scaleByUnit(
-          constraintsMaxWidth,
-          1.5,
-        );
+        final imageSpacing = sizeService.percentageOf(constraintsMaxWidth, 1.5);
         final temperatureRowMaxWidth = constraintsMaxWidth * 0.5;
         final firstRowMaxWidth = constraintsMaxWidth - temperatureRowMaxWidth;
 
@@ -166,7 +166,7 @@ class _InfoRow extends StatelessWidget {
                     child: LayoutBuilder(
                       builder: (BuildContext context, BoxConstraints constraints) {
                         final constraintsMaxWidth = constraints.maxWidth;
-                        final spacing = AdjustableSize.scaleByUnit(
+                        final spacing = sizeService.percentageOf(
                           constraintsMaxWidth,
                           1.2,
                         );

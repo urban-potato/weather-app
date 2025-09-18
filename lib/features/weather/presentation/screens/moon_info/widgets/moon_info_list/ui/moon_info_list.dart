@@ -1,13 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart'
+    show ConsumerWidget, WidgetRef;
 
-import '../../../../../../../../shared/utils/size_helper/index.dart';
+import '../../../../../../../../shared/providers/index.dart'
+    show responsiveSizeServiceProvider;
 import 'components/day_tile.dart';
 
-class MoonInfoListWidget extends StatelessWidget {
+class MoonInfoListWidget extends ConsumerWidget {
   const MoonInfoListWidget({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final sizeService = ref.read(responsiveSizeServiceProvider);
+
     final moonData = <MoonData>[
       MoonData(
         date: 'Today',
@@ -60,8 +65,7 @@ class MoonInfoListWidget extends StatelessWidget {
       ),
     ];
 
-    ScreenBasedSize.instance.init(context);
-    final separatorHeight = ScreenBasedSize.instance.scaleByUnit(4);
+    final separatorHeight = sizeService.screenPercentage(4);
 
     return SliverList.separated(
       itemBuilder: (context, index) => DayTileWidget(data: moonData[index]),

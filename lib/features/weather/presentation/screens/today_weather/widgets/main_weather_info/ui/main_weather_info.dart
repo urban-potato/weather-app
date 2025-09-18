@@ -1,7 +1,11 @@
 import 'package:flutter/foundation.dart' show kDebugMode;
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart'
+    show ConsumerStatefulWidget, ConsumerState, ConsumerWidget, WidgetRef;
 
+import '../../../../../../../../shared/providers/index.dart'
+    show responsiveSizeServiceProvider;
 import '../../../../../../../../shared/ui/custom_circular_progress_indicator/index.dart';
 import '../../../../../models/index.dart';
 import '../../../../../provider/weather_cubit.dart';
@@ -11,17 +15,17 @@ import '../../../../../widgets/daily_temperature_range/index.dart'
 import '../../../../../widgets/main_temperature/index.dart';
 import '../../../../../widgets/uv_info/index.dart';
 import '../../../../../widgets/weather_condition/index.dart';
-import '../../../../../../../../shared/utils/size_helper/index.dart';
 import 'components/aqi_info/ui/aqi_info.dart';
 
-class MainWeatherInfoWidget extends StatefulWidget {
+class MainWeatherInfoWidget extends ConsumerStatefulWidget {
   const MainWeatherInfoWidget({super.key});
 
   @override
-  State<MainWeatherInfoWidget> createState() => _MainWeatherInfoWidgetState();
+  ConsumerState<MainWeatherInfoWidget> createState() =>
+      _MainWeatherInfoWidgetState();
 }
 
-class _MainWeatherInfoWidgetState extends State<MainWeatherInfoWidget>
+class _MainWeatherInfoWidgetState extends ConsumerState<MainWeatherInfoWidget>
     with AutomaticKeepAliveClientMixin<MainWeatherInfoWidget> {
   @override
   bool get wantKeepAlive => true;
@@ -29,11 +33,11 @@ class _MainWeatherInfoWidgetState extends State<MainWeatherInfoWidget>
   @override
   Widget build(BuildContext context) {
     super.build(context);
+    final sizeService = ref.read(responsiveSizeServiceProvider);
 
     if (kDebugMode) print('MainWeatherInfoWidget build');
 
-    ScreenBasedSize.instance.init(context);
-    final spacing = ScreenBasedSize.instance.scaleByUnit(2);
+    final spacing = sizeService.screenPercentage(2);
 
     return BlocSelector<WeatherCubit, WeatherState, MainWeatherModelUI?>(
       selector: (state) => state.weather?.today.mainWeather,
@@ -74,16 +78,16 @@ class _MainWeatherInfoWidgetState extends State<MainWeatherInfoWidget>
   }
 }
 
-class _UVAndAQIInfoRow extends StatelessWidget {
+class _UVAndAQIInfoRow extends ConsumerWidget {
   const _UVAndAQIInfoRow({required this.aqi, required this.uv});
 
   final int aqi;
   final int uv;
 
   @override
-  Widget build(BuildContext context) {
-    ScreenBasedSize.instance.init(context);
-    final spacing = ScreenBasedSize.instance.scaleByUnit(1);
+  Widget build(BuildContext context, WidgetRef ref) {
+    final sizeService = ref.read(responsiveSizeServiceProvider);
+    final spacing = sizeService.screenPercentage(1);
 
     return Wrap(
       crossAxisAlignment: WrapCrossAlignment.center,

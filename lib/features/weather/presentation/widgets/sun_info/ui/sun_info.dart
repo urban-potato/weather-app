@@ -1,9 +1,12 @@
 import 'package:flutter/foundation.dart' show kDebugMode;
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart'
+    show ConsumerWidget, WidgetRef;
 
-import '../../../../../../shared/utils/size_helper/index.dart';
+import '../../../../../../shared/providers/index.dart'
+    show responsiveSizeServiceProvider;
 
-class SunInfoWidget extends StatelessWidget {
+class SunInfoWidget extends ConsumerWidget {
   const SunInfoWidget({
     super.key,
     required this.sunriseTime,
@@ -14,14 +17,16 @@ class SunInfoWidget extends StatelessWidget {
   final String sunsetTime;
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     if (kDebugMode) print('SunInfoWidget build');
+
+    final sizeService = ref.read(responsiveSizeServiceProvider);
 
     return LayoutBuilder(
       builder: (BuildContext context, BoxConstraints constraints) {
         final constraintsMaxWidth = constraints.maxWidth;
-        final iconize = AdjustableSize.scaleByUnit(constraintsMaxWidth, 20);
-        final spacing = AdjustableSize.scaleByUnit(constraintsMaxWidth, 1.9);
+        final iconize = sizeService.percentageOf(constraintsMaxWidth, 20);
+        final spacing = sizeService.percentageOf(constraintsMaxWidth, 1.9);
 
         if (kDebugMode) print('SunInfoWidget LayoutBuilder');
 

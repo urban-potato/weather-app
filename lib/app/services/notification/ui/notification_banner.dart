@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart'
+    show ConsumerStatefulWidget, ConsumerState;
 
+import '../../../../shared/providers/index.dart'
+    show responsiveSizeServiceProvider;
 import '../../../../shared/services/index.dart' show AnimatedBanner;
-import '../../../../shared/utils/size_helper/index.dart' show ScreenBasedSize;
 
-class NotificationBanner extends StatefulWidget {
+class NotificationBanner extends ConsumerStatefulWidget {
   const NotificationBanner({
     super.key,
     required this.message,
@@ -14,10 +17,10 @@ class NotificationBanner extends StatefulWidget {
   final VoidCallback onDismissed;
 
   @override
-  State<NotificationBanner> createState() => NotificationBannerState();
+  ConsumerState<NotificationBanner> createState() => NotificationBannerState();
 }
 
-class NotificationBannerState extends State<NotificationBanner>
+class NotificationBannerState extends ConsumerState<NotificationBanner>
     with SingleTickerProviderStateMixin
     implements AnimatedBanner<NotificationBanner> {
   late AnimationController _controller;
@@ -41,12 +44,6 @@ class NotificationBannerState extends State<NotificationBanner>
   }
 
   @override
-  void didChangeDependencies() {
-    super.didChangeDependencies();
-    ScreenBasedSize.instance.init(context);
-  }
-
-  @override
   void dispose() {
     _controller.dispose();
     super.dispose();
@@ -63,12 +60,14 @@ class NotificationBannerState extends State<NotificationBanner>
 
   @override
   Widget build(BuildContext context) {
-    final elevation = ScreenBasedSize.instance.scaleByUnit(0.9);
-    final sidesPadding = ScreenBasedSize.instance.sidesPadding;
-    final tileBorderRadius = ScreenBasedSize.instance.borderRadius;
-    final textSize = ScreenBasedSize.instance.scaleByUnit(3.7);
-    final hPadding = ScreenBasedSize.instance.tileHorizontalPadding;
-    final vPadding = ScreenBasedSize.instance.tileVerticalPadding;
+    final sizeService = ref.read(responsiveSizeServiceProvider);
+
+    final elevation = sizeService.screenPercentage(0.9);
+    final sidesPadding = sizeService.sidesPadding;
+    final tileBorderRadius = sizeService.borderRadius;
+    final textSize = sizeService.screenPercentage(3.7);
+    final hPadding = sizeService.tileHorizontalPadding;
+    final vPadding = sizeService.tileVerticalPadding;
 
     final textPadding = EdgeInsetsGeometry.symmetric(
       horizontal: hPadding,

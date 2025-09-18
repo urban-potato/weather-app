@@ -1,8 +1,12 @@
 import 'package:flutter/foundation.dart' show kDebugMode;
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart'
+    show ConsumerStatefulWidget, ConsumerState;
 import 'package:intl/intl.dart';
 
+import '../../../../../../../../shared/providers/index.dart'
+    show responsiveSizeServiceProvider;
 import '../../../../../../../../shared/ui/card_tile/index.dart';
 import '../../../../../../../../shared/ui/custom_circular_progress_indicator/index.dart';
 import '../../../../../../shared/ui/responsive_info_list/index.dart';
@@ -12,18 +16,18 @@ import '../../../../../provider/weather_cubit.dart';
 import '../../../../../provider/weather_state.dart';
 import '../../../../../widgets/sun_info/index.dart';
 import '../../../../../../shared/ui/widget_title/index.dart';
-import '../../../../../../../../shared/utils/size_helper/index.dart';
 import 'components/moon_info.dart';
 import 'components/wind_info.dart';
 
-class AdditionalInfoWidget extends StatefulWidget {
+class AdditionalInfoWidget extends ConsumerStatefulWidget {
   const AdditionalInfoWidget({super.key});
 
   @override
-  State<AdditionalInfoWidget> createState() => _AdditionalInfoWidgetState();
+  ConsumerState<AdditionalInfoWidget> createState() =>
+      _AdditionalInfoWidgetState();
 }
 
-class _AdditionalInfoWidgetState extends State<AdditionalInfoWidget>
+class _AdditionalInfoWidgetState extends ConsumerState<AdditionalInfoWidget>
     with AutomaticKeepAliveClientMixin<AdditionalInfoWidget> {
   @override
   bool get wantKeepAlive => true;
@@ -31,13 +35,12 @@ class _AdditionalInfoWidgetState extends State<AdditionalInfoWidget>
   @override
   Widget build(BuildContext context) {
     super.build(context);
+    final sizeService = ref.read(responsiveSizeServiceProvider);
 
     if (kDebugMode) print('AdditionalInfoWidget build');
 
-    ScreenBasedSize.instance.init(context);
-
-    final contentMaxWidth = ScreenBasedSize.instance.getContentMaxWidth();
-    final tilesSpacing = ScreenBasedSize.instance.scaleByUnit(2.7);
+    final contentMaxWidth = sizeService.contentMaxWidth;
+    final tilesSpacing = sizeService.screenPercentage(2.7);
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,

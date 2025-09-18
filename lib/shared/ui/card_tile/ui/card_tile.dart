@@ -1,9 +1,11 @@
 import 'package:flutter/foundation.dart' show kDebugMode;
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart'
+    show ConsumerWidget, WidgetRef;
 
-import '../../../utils/size_helper/index.dart';
+import '../../../providers/index.dart' show responsiveSizeServiceProvider;
 
-class CardTile extends StatelessWidget {
+class CardTile extends ConsumerWidget {
   const CardTile({
     super.key,
     required this.child,
@@ -28,12 +30,12 @@ class CardTile extends StatelessWidget {
   final Color? color;
 
   @override
-  Widget build(BuildContext context) {
-    ScreenBasedSize.instance.init(context);
+  Widget build(BuildContext context, WidgetRef ref) {
+    final sizeService = ref.read(responsiveSizeServiceProvider);
 
-    final tileBorderRadius = ScreenBasedSize.instance.borderRadius;
-    final hPadding = ScreenBasedSize.instance.tileHorizontalPadding;
-    final vPadding = ScreenBasedSize.instance.tileVerticalPadding;
+    final tileBorderRadius = sizeService.borderRadius;
+    final hPadding = sizeService.tileHorizontalPadding;
+    final vPadding = sizeService.tileVerticalPadding;
 
     final finalPadding =
         padding ??

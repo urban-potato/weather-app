@@ -1,18 +1,22 @@
 import 'package:flutter/foundation.dart' show kDebugMode;
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart'
+    show ConsumerWidget, WidgetRef;
 
+import '../../../../../shared/providers/index.dart'
+    show responsiveSizeServiceProvider;
 import '../../../../../shared/ui/themed_text/index.dart';
-import '../../../../../shared/utils/size_helper/index.dart';
 
-class WidgetTitle extends StatelessWidget {
+class WidgetTitle extends ConsumerWidget {
   const WidgetTitle({super.key, required this.title});
 
   final String title;
 
   @override
-  Widget build(BuildContext context) {
-    ScreenBasedSize.instance.init(context);
-    final bottomPadding = ScreenBasedSize.instance.scaleByUnit(0.75);
+  Widget build(BuildContext context, WidgetRef ref) {
+    final sizeService = ref.read(responsiveSizeServiceProvider);
+
+    final bottomPadding = sizeService.screenPercentage(0.75);
 
     if (kDebugMode) print('WidgetTitle');
 

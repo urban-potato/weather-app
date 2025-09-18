@@ -1,10 +1,13 @@
 import 'package:flutter/foundation.dart' show kDebugMode;
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart'
+    show ConsumerWidget, WidgetRef;
 
+import '../../../../../../../../../shared/providers/index.dart'
+    show responsiveSizeServiceProvider;
 import '../../../../../../../../../shared/ui/themed_text/index.dart';
-import '../../../../../../../../../shared/utils/size_helper/index.dart';
 
-class WindInfoWidget extends StatelessWidget {
+class WindInfoWidget extends ConsumerWidget {
   const WindInfoWidget({
     super.key,
     required this.windDirection,
@@ -15,14 +18,15 @@ class WindInfoWidget extends StatelessWidget {
   final String windSpeed;
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     if (kDebugMode) print('WindInfoWidget build');
+    final sizeService = ref.read(responsiveSizeServiceProvider);
 
     return LayoutBuilder(
       builder: (BuildContext context, BoxConstraints constraints) {
         final constraintsMaxWidth = constraints.maxWidth;
-        final iconSize = AdjustableSize.scaleByUnit(constraintsMaxWidth, 20);
-        final spacing = AdjustableSize.scaleByUnit(constraintsMaxWidth, 1.9);
+        final iconSize = sizeService.percentageOf(constraintsMaxWidth, 20);
+        final spacing = sizeService.percentageOf(constraintsMaxWidth, 1.9);
 
         if (kDebugMode) print('WindInfoWidget LayoutBuilder');
 

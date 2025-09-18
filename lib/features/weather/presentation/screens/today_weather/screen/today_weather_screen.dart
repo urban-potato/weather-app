@@ -5,10 +5,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../../../../shared/providers/index.dart'
-    show notificationServiceProvider;
+    show notificationServiceProvider, responsiveSizeServiceProvider;
 import '../../../../../../shared/ui/custom_circular_progress_indicator/index.dart';
 import '../../../../../../shared/ui/screen_padding/index.dart';
-import '../../../../../../shared/utils/size_helper/index.dart';
 import '../../../provider/weather_cubit.dart';
 import '../../../provider/weather_state.dart';
 import '../widgets/additional_info/index.dart';
@@ -128,18 +127,18 @@ class _WeatherScreenBodyWidgets extends StatelessWidget {
   }
 }
 
-class _MainWeatherInfoPadding extends StatelessWidget {
+class _MainWeatherInfoPadding extends ConsumerWidget {
   const _MainWeatherInfoPadding({required this.child});
 
   final Widget child;
 
   @override
-  Widget build(BuildContext context) {
-    ScreenBasedSize.instance.init(context);
+  Widget build(BuildContext context, WidgetRef ref) {
+    final sizeService = ref.read(responsiveSizeServiceProvider);
 
-    final hPadding = ScreenBasedSize.instance.sidesPadding;
-    final vPadding = ScreenBasedSize.instance.scaleByRatio(5);
-    final mainWeatherWidgetMaxWidth = ScreenBasedSize.instance.scaleByUnit(49);
+    final hPadding = sizeService.sidesPadding;
+    final vPadding = sizeService.screenDividedBy(5);
+    final mainWeatherWidgetMaxWidth = sizeService.screenPercentage(49);
 
     return Padding(
       padding: EdgeInsets.symmetric(horizontal: hPadding, vertical: vPadding),

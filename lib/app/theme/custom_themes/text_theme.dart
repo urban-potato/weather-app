@@ -1,19 +1,17 @@
 import 'package:flutter/material.dart';
 
-import '../../../shared/utils/size_helper/index.dart';
+import '../../../shared/services/index.dart' show ResponsiveSizeService;
 
 class TTextTheme {
   TTextTheme._();
 
-  static TextTheme lightTextTheme(BuildContext context) {
-    ScreenBasedSize.instance.init(context);
-
-    final titleMediumFontSize = ScreenBasedSize.instance.scaleByUnit(5.2);
-    final labelMediumFontSize = ScreenBasedSize.instance.scaleByUnit(4);
-    final labelLargeFontSize = ScreenBasedSize.instance.scaleByUnit(4.1);
-    final bodyLargeFontSize = ScreenBasedSize.instance.scaleByUnit(4.8);
-    final bodyMediumFontSize = ScreenBasedSize.instance.scaleByUnit(3.3);
-    final bodySmallFontSize = ScreenBasedSize.instance.scaleByUnit(3.1);
+  static TextTheme lightTextTheme(ResponsiveSizeService sizeService) {
+    final titleMediumFontSize = sizeService.screenPercentage(5.2);
+    final labelMediumFontSize = sizeService.screenPercentage(4);
+    final labelLargeFontSize = sizeService.screenPercentage(4.1);
+    final bodyLargeFontSize = sizeService.screenPercentage(4.8);
+    final bodyMediumFontSize = sizeService.screenPercentage(3.3);
+    final bodySmallFontSize = sizeService.screenPercentage(3.1);
 
     return TextTheme(
       headlineMedium: const TextStyle().copyWith(
@@ -55,15 +53,13 @@ class TTextTheme {
     );
   }
 
-  static TextTheme darkTextTheme(BuildContext context) {
-    ScreenBasedSize.instance.init(context);
-
-    final titleMediumFontSize = ScreenBasedSize.instance.scaleByUnit(5.2);
-    final labelMediumFontSize = ScreenBasedSize.instance.scaleByUnit(4);
-    final labelLargeFontSize = ScreenBasedSize.instance.scaleByUnit(4.1);
-    final bodyLargeFontSize = ScreenBasedSize.instance.scaleByUnit(4.8);
-    final bodyMediumFontSize = ScreenBasedSize.instance.scaleByUnit(3.3);
-    final bodySmallFontSize = ScreenBasedSize.instance.scaleByUnit(3.1);
+  static TextTheme darkTextTheme(ResponsiveSizeService sizeService) {
+    final titleMediumFontSize = sizeService.screenPercentage(5.2);
+    final labelMediumFontSize = sizeService.screenPercentage(4);
+    final labelLargeFontSize = sizeService.screenPercentage(4.1);
+    final bodyLargeFontSize = sizeService.screenPercentage(4.8);
+    final bodyMediumFontSize = sizeService.screenPercentage(3.3);
+    final bodySmallFontSize = sizeService.screenPercentage(3.1);
 
     return TextTheme(
       headlineMedium: const TextStyle().copyWith(

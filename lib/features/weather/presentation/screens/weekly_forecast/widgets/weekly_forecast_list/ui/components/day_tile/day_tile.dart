@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
 
+import '../../../../../../../../../../shared/services/index.dart'
+    show ResponsiveSizeService;
 import '../../../../../../../../../../shared/ui/card_tile/index.dart';
 import '../../../../../../../../shared/ui/responsive_info_list/index.dart';
 import '../../../../../../../models/index.dart';
 import '../../../../../../../widgets/sun_info/index.dart';
 import '../../../../../../../widgets/uv_info/index.dart';
 import '../../../../../../../../shared/ui/widget_title/index.dart';
-import '../../../../../../../../../../shared/utils/size_helper/index.dart';
 import 'components/main_forecast_info.dart';
 
 class MainForecastWidgetData {
@@ -58,14 +59,18 @@ class ExtraWeatherData {
 }
 
 class DayTileWidget extends StatelessWidget {
-  const DayTileWidget({super.key, required this.data});
+  const DayTileWidget({
+    super.key,
+    required this.data,
+    required this.sizeService,
+  });
 
   final WeatherForecastDayData data;
+  final ResponsiveSizeService sizeService;
 
   @override
   Widget build(BuildContext context) {
-    ScreenBasedSize.instance.init(context);
-    final contentMaxWidth = ScreenBasedSize.instance.getContentMaxWidth();
+    final contentMaxWidth = sizeService.contentMaxWidth;
 
     return ConstrainedBox(
       constraints: BoxConstraints(maxWidth: contentMaxWidth),
@@ -78,6 +83,7 @@ class DayTileWidget extends StatelessWidget {
             extraWeatherData: data.extraWeatherData,
             sunriseTime: data.sunriseTime,
             sunsetTime: data.sunsetTime,
+            sizeService: sizeService,
           ),
         ],
       ),
@@ -91,18 +97,18 @@ class _InfoWidgetsRow extends StatelessWidget {
     required this.extraWeatherData,
     required this.sunriseTime,
     required this.sunsetTime,
+    required this.sizeService,
   });
 
   final MainForecastWidgetData mainForecastWidgetData;
   final ExtraWeatherData extraWeatherData;
   final String sunriseTime;
   final String sunsetTime;
+  final ResponsiveSizeService sizeService;
 
   @override
   Widget build(BuildContext context) {
-    ScreenBasedSize.instance.init(context);
-
-    final contentMaxWidth = ScreenBasedSize.instance.getContentMaxWidth();
+    final contentMaxWidth = sizeService.contentMaxWidth;
     final spacing = contentMaxWidth / 2 / 17;
 
     final extraWeatherDataMap = <String, String>{

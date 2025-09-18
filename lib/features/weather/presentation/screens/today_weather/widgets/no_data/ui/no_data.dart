@@ -1,17 +1,21 @@
 import 'package:flutter/foundation.dart' show kDebugMode;
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart'
+    show ConsumerWidget, WidgetRef;
 import 'package:flutter_svg/flutter_svg.dart';
 
+import '../../../../../../../../shared/providers/index.dart'
+    show responsiveSizeServiceProvider;
 import '../../../../../../../../shared/ui/themed_text/index.dart';
-import '../../../../../../../../shared/utils/size_helper/index.dart';
 import '../../../../../../shared/resources/index.dart';
 
-class NoDataWidget extends StatelessWidget {
+class NoDataWidget extends ConsumerWidget {
   const NoDataWidget({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     final cloudFacePicture = AppSvgs.cloudFaces.negative.randomPicture;
+    final sizeService = ref.read(responsiveSizeServiceProvider);
 
     if (kDebugMode) print('NoDataWidget');
 
@@ -21,11 +25,8 @@ class NoDataWidget extends StatelessWidget {
         LayoutBuilder(
           builder: (BuildContext context, BoxConstraints constraints) {
             final constraintsMaxWidth = constraints.maxWidth;
-            final spacing = AdjustableSize.scaleByUnit(
-              constraintsMaxWidth,
-              4.6,
-            );
-            final pictureWidth = AdjustableSize.scaleByUnit(
+            final spacing = sizeService.percentageOf(constraintsMaxWidth, 4.6);
+            final pictureWidth = sizeService.percentageOf(
               constraintsMaxWidth,
               52.4,
             );

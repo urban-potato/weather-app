@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart'
+    show ConsumerWidget, WidgetRef;
 
-import '../../../utils/size_helper/index.dart';
+import '../../../providers/index.dart' show responsiveSizeServiceProvider;
 
-class ScaledChildBox extends StatelessWidget {
+class ScaledChildBox extends ConsumerWidget {
   const ScaledChildBox({
     super.key,
     required this.height,
@@ -15,10 +17,10 @@ class ScaledChildBox extends StatelessWidget {
   final AlignmentGeometry aligment;
 
   @override
-  Widget build(BuildContext context) {
-    ScreenBasedSize.instance.init(context);
+  Widget build(BuildContext context, WidgetRef ref) {
+    final sizeService = ref.read(responsiveSizeServiceProvider);
 
-    final double height = ScreenBasedSize.instance.scaleByUnit(this.height);
+    final double height = sizeService.screenPercentage(this.height);
 
     return SizedBox(
       height: height,
