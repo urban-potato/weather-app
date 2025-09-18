@@ -21,7 +21,7 @@ class ResponsiveSizeServiceImpl implements ResponsiveSizeService {
 
   @override
   void init(BuildContext context) {
-    _screenMinSide ??= _calculateScreenMinSide(context);
+    _screenMinSide = _calculateScreenMinSide(context);
   }
 
   @override
