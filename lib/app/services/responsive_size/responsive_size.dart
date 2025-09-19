@@ -8,7 +8,10 @@ class ResponsiveSizeServiceImpl implements ResponsiveSizeService {
   static const _tileHorizontalPaddingPercent = 3.5;
   static const _tileVerticalPaddingPercent = 3.0;
 
+  static const _defaultScreenMinSide = 360.0;
   double? _screenMinSide;
+
+  double get _screenSize => _screenMinSide ?? _defaultScreenMinSide;
 
   double _calculateScreenMinSide(BuildContext context) {
     final screenMinSide =
@@ -21,7 +24,10 @@ class ResponsiveSizeServiceImpl implements ResponsiveSizeService {
 
   @override
   void init(BuildContext context) {
-    _screenMinSide = _calculateScreenMinSide(context);
+    final newMinSide = _calculateScreenMinSide(context);
+    if (newMinSide != _screenMinSide) {
+      _screenMinSide = newMinSide;
+    }
   }
 
   @override
@@ -45,13 +51,7 @@ class ResponsiveSizeServiceImpl implements ResponsiveSizeService {
 
   @override
   double get contentMaxWidth {
-    if (_screenMinSide == null) {
-      throw StateError(
-        'ResponsiveSizeService is not initialized. Call init(context) first.',
-      );
-    }
-
-    return _screenMinSide! - (sidesPadding * 2);
+    return _screenSize - (sidesPadding * 2);
   }
 
   @override
@@ -61,12 +61,6 @@ class ResponsiveSizeServiceImpl implements ResponsiveSizeService {
 
   @override
   double screenPercentage(double percent) {
-    if (_screenMinSide == null) {
-      throw StateError(
-        'ResponsiveSizeService is not initialized. Call init(context) first.',
-      );
-    }
-
-    return percentageOf(_screenMinSide!, percent);
+    return percentageOf(_screenSize, percent);
   }
 }

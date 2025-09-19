@@ -42,6 +42,13 @@ class _AppState extends ConsumerState<App> with WidgetsBindingObserver {
   }
 
   @override
+  void didChangeMetrics() {
+    super.didChangeMetrics();
+
+    setState(() {});
+  }
+
+  @override
   Widget build(BuildContext context) {
     final sizeService = ref.read(responsiveSizeServiceProvider);
 
