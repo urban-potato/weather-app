@@ -4,7 +4,7 @@ import 'package:flutter/foundation.dart' show kDebugMode;
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../shared/providers/index.dart'
+import '../shared/presentation/providers/index.dart'
     show notificationServiceProvider, responsiveSizeServiceProvider;
 import 'router/index.dart';
 import 'theme/index.dart';

@@ -1,4 +1,4 @@
-import '../../../../shared/resources/remote_data_state/index.dart';
+import '../../../../shared/domain/data_states/remote/index.dart';
 import '../models/index.dart';
 
 abstract interface class WeatherRepository {

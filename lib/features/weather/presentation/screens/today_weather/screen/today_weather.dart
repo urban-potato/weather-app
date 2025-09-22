@@ -4,10 +4,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../../../../../../shared/providers/index.dart'
+import '../../../../../../shared/presentation/providers/index.dart'
     show notificationServiceProvider, responsiveSizeServiceProvider;
-import '../../../../../../shared/ui/custom_circular_progress_indicator/index.dart';
-import '../../../../../../shared/ui/screen_padding/index.dart';
+import '../../../../../../shared/presentation/ui/custom_circular_progress_indicator/index.dart';
+import '../../../../../../shared/presentation/ui/screen_padding/index.dart';
 import '../../../provider/weather_cubit.dart';
 import '../../../provider/weather_state.dart';
 import '../widgets/additional_info/index.dart';

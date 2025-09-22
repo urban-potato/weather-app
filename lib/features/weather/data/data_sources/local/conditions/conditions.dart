@@ -1,7 +1,7 @@
 import 'dart:convert';
 import 'package:flutter/services.dart';
 
-import '../../../../../../shared/resources/local_data_state/index.dart';
+import '../../../../../../shared/domain/data_states/local/index.dart';
 import '../../../../shared/resources/index.dart';
 import '../../../models/index.dart';
 

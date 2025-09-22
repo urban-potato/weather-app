@@ -1,4 +1,4 @@
-import '../env/env.dart';
+import '../env/index.dart';
 
 const String weatherApiBaseURL = 'https://api.weatherapi.com/v1';
 final String weatherApiKey = Env.weatherApiKay;

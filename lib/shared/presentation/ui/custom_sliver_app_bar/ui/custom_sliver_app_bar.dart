@@ -4,7 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../providers/index.dart'
     show navigationServiceProvider, responsiveSizeServiceProvider;
-import '../../../services/index.dart' show NavigationService;
+import '../../../../domain/services/index.dart' show NavigationService;
 
 typedef ActionConfig = ({IconData icon, VoidCallback? onPressed});
 

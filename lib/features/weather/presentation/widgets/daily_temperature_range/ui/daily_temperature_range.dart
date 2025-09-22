@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../../../../../shared/ui/themed_text/index.dart';
+import '../../../../../../shared/presentation/ui/themed_text/index.dart';
 
 class DailyTemperatureRangeWidget extends StatelessWidget {
   const DailyTemperatureRangeWidget({

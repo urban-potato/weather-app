@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../../shared/providers/index.dart';
+import '../../shared/presentation/providers/index.dart';
 import '../services/index.dart';
 
 ProviderScope appInitializer(Widget child) {

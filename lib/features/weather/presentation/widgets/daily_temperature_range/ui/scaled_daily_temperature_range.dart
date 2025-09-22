@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../../../../../shared/ui/scaled_child_box/index.dart';
+import '../../../../../../shared/presentation/ui/scaled_child_box/index.dart';
 import 'daily_temperature_range.dart';
 
 class ScaledDailyTemperatureRangeWidget extends StatelessWidget {

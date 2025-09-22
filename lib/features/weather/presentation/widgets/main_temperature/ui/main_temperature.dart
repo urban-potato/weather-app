@@ -1,8 +1,8 @@
 import 'package:flutter/foundation.dart' show kDebugMode;
 import 'package:flutter/material.dart';
 
-import '../../../../../../shared/ui/scaled_child_box/index.dart';
-import '../../../../../../shared/ui/themed_text/index.dart';
+import '../../../../../../shared/presentation/ui/scaled_child_box/index.dart';
+import '../../../../../../shared/presentation/ui/themed_text/index.dart';
 
 class MainTemperatureWidget extends StatelessWidget {
   const MainTemperatureWidget({

@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart'
     show ConsumerStatefulWidget, ConsumerState;
 
-import '../../../../shared/providers/index.dart'
+import '../../../../shared/presentation/providers/index.dart'
     show responsiveSizeServiceProvider;
-import '../../../../shared/services/index.dart' show AnimatedBanner;
+import '../../../../shared/domain/services/index.dart' show AnimatedBanner;
 
 class NotificationBanner extends ConsumerStatefulWidget {
   const NotificationBanner({

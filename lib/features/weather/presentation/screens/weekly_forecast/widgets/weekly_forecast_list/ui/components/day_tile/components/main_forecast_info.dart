@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart'
     show ConsumerWidget, WidgetRef;
 
-import '../../../../../../../../../../../shared/providers/index.dart'
+import '../../../../../../../../../../../shared/presentation/providers/index.dart'
     show responsiveSizeServiceProvider;
 import '../../../../../../../../models/index.dart';
 import '../../../../../../../../widgets/daily_temperature_range/index.dart'
@@ -10,7 +10,7 @@ import '../../../../../../../../widgets/daily_temperature_range/index.dart'
 import '../../../../../../../../widgets/main_temperature/index.dart';
 import '../../../../../../../../widgets/weather_condition/index.dart';
 
-import '../../../../../../../../../../../shared/ui/card_tile/index.dart';
+import '../../../../../../../../../../../shared/presentation/ui/card_tile/index.dart';
 
 class MainForecastInfoWidget extends ConsumerWidget {
   const MainForecastInfoWidget({

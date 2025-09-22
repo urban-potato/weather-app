@@ -1,6 +1,6 @@
 import 'package:flutter/widgets.dart' show BuildContext, MediaQuery;
 
-import '../../../shared/services/responsive_size/responsive_size_notifier.dart'
+import '../../../shared/domain/services/responsive_size/responsive_size_notifier.dart'
     show ResponsiveSizeNotifier;
 
 class ResponsiveSizeServiceImpl extends ResponsiveSizeNotifier {

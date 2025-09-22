@@ -5,10 +5,10 @@ import 'package:flutter_riverpod/flutter_riverpod.dart'
     show ConsumerStatefulWidget, ConsumerState;
 import 'package:intl/intl.dart';
 
-import '../../../../../../../../shared/providers/index.dart'
+import '../../../../../../../../shared/presentation/providers/index.dart'
     show responsiveSizeServiceProvider;
-import '../../../../../../../../shared/ui/card_tile/index.dart';
-import '../../../../../../../../shared/ui/custom_circular_progress_indicator/index.dart';
+import '../../../../../../../../shared/presentation/ui/card_tile/index.dart';
+import '../../../../../../../../shared/presentation/ui/custom_circular_progress_indicator/index.dart';
 import '../../../../../shared/ui/responsive_info_list/index.dart';
 import '../../../../../shared/utils/wind_direction_helper/index.dart';
 import '../../../../../models/index.dart';

@@ -1,5 +1,5 @@
-import '../../../../shared/resources/remote_data_state/index.dart';
-import '../../../../shared/usecases/index.dart';
+import '../../../../shared/domain/data_states/remote/index.dart';
+import '../../../../shared/domain/usecases/index.dart';
 import '../models/index.dart';
 import '../repositories/index.dart';
 

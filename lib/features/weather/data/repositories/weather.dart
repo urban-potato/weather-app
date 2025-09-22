@@ -5,8 +5,8 @@ import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart' show kDebugMode;
 import 'package:weather_app/features/weather/domain/models/weather/weather.dart';
 
-import '../../../../shared/constants/constants.dart';
-import '../../../../shared/resources/remote_data_state/index.dart';
+import '../../../../shared/infrastructure/configs/api_config.dart';
+import '../../../../shared/domain/data_states/remote/index.dart';
 import '../../domain/repositories/index.dart';
 import '../data_sources/remote/index.dart';
 import '../mappers/index.dart';

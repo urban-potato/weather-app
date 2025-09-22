@@ -1,7 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:retrofit/retrofit.dart';
 
-import '../../../../../../shared/constants/constants.dart';
+import '../../../../../../shared/infrastructure/configs/api_config.dart';
 import '../../../models/index.dart';
 
 part 'weather.g.dart';

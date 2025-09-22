@@ -4,9 +4,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart'
     show ConsumerStatefulWidget, ConsumerState, ConsumerWidget, WidgetRef;
 
-import '../../../../../../../../shared/providers/index.dart'
+import '../../../../../../../../shared/presentation/providers/index.dart'
     show responsiveSizeServiceProvider;
-import '../../../../../../../../shared/ui/custom_circular_progress_indicator/index.dart';
+import '../../../../../../../../shared/presentation/ui/custom_circular_progress_indicator/index.dart';
 import '../../../../../models/index.dart';
 import '../../../../../provider/weather_cubit.dart';
 import '../../../../../provider/weather_state.dart';

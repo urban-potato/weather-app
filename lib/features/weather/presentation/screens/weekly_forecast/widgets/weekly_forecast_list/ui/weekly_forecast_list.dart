@@ -4,7 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart'
 
 // import '../../../../../models/index.dart';
 // import '../../../../../widgets/sun_info/index.dart';
-import '../../../../../../../../shared/providers/index.dart'
+import '../../../../../../../../shared/presentation/providers/index.dart'
     show responsiveSizeServiceProvider;
 import 'components/day_tile/day_tile.dart';
 

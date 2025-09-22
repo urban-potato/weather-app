@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart'
     show ConsumerWidget, WidgetRef;
 
-import '../../../../../../shared/providers/index.dart'
+import '../../../../../../shared/presentation/providers/index.dart'
     show responsiveSizeServiceProvider;
 
 class SunInfoWidget extends ConsumerWidget {

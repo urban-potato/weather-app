@@ -1,4 +1,4 @@
-import '../../../../shared/resources/local_data_state/index.dart';
+import '../../../../shared/domain/data_states/local/index.dart';
 import '../../domain/models/index.dart';
 import '../../domain/services/index.dart';
 import '../../domain/usecases/index.dart';

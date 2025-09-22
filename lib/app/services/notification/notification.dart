@@ -3,7 +3,7 @@ import 'dart:async' show Timer;
 import 'package:flutter/foundation.dart' show kDebugMode;
 import 'package:flutter/material.dart';
 
-import '../../../shared/services/index.dart'
+import '../../../shared/domain/services/index.dart'
     show NotificationService, AnimatedBanner;
 import 'ui/notification_banner.dart';
 

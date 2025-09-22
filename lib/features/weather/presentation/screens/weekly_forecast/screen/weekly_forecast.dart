@@ -3,9 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart'
     show ConsumerWidget, WidgetRef;
 
-import '../../../../../../shared/providers/index.dart'
+import '../../../../../../shared/presentation/providers/index.dart'
     show responsiveSizeServiceProvider;
-import '../../../../../../shared/ui/custom_sliver_app_bar/index.dart';
+import '../../../../../../shared/presentation/ui/custom_sliver_app_bar/index.dart';
 import '../widgets/weekly_forecast_list/index.dart';
 
 @RoutePage()

@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
-import '../../../../../../../../../../shared/services/index.dart'
+import '../../../../../../../../../../shared/domain/services/index.dart'
     show ResponsiveSizeService;
-import '../../../../../../../../../../shared/ui/card_tile/index.dart';
+import '../../../../../../../../../../shared/presentation/ui/card_tile/index.dart';
 import '../../../../../../../shared/ui/responsive_info_list/index.dart';
 import '../../../../../../../models/index.dart';
 import '../../../../../../../widgets/sun_info/index.dart';
