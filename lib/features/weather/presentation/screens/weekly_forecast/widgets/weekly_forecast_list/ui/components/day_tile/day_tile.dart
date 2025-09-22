@@ -3,11 +3,11 @@ import 'package:flutter/material.dart';
 import '../../../../../../../../../../shared/services/index.dart'
     show ResponsiveSizeService;
 import '../../../../../../../../../../shared/ui/card_tile/index.dart';
-import '../../../../../../../../shared/ui/responsive_info_list/index.dart';
+import '../../../../../../../shared/ui/responsive_info_list/index.dart';
 import '../../../../../../../models/index.dart';
 import '../../../../../../../widgets/sun_info/index.dart';
 import '../../../../../../../widgets/uv_info/index.dart';
-import '../../../../../../../../shared/ui/widget_title/index.dart';
+import '../../../../../../../shared/ui/widget_title/index.dart';
 import 'components/main_forecast_info.dart';
 
 class MainForecastWidgetData {

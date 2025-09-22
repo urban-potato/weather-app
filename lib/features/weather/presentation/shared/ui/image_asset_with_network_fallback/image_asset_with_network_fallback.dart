@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../../../../shared/ui/custom_circular_progress_indicator/index.dart';
+import '../../../../../../shared/ui/custom_circular_progress_indicator/index.dart';
 
 class ImageAssetWithNetworkFallback extends StatelessWidget {
   const ImageAssetWithNetworkFallback({

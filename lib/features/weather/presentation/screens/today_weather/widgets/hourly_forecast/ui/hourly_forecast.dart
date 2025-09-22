@@ -12,8 +12,8 @@ import '../../../../../../../../shared/services/index.dart'
 import '../../../../../../../../shared/ui/card_tile/index.dart';
 import '../../../../../../../../shared/ui/custom_circular_progress_indicator/index.dart';
 import '../../../../../../../../shared/ui/themed_text/index.dart';
-import '../../../../../../shared/ui/image_asset_with_network_fallback/index.dart';
-import '../../../../../../shared/ui/widget_title/index.dart';
+import '../../../../../shared/ui/image_asset_with_network_fallback/index.dart';
+import '../../../../../shared/ui/widget_title/index.dart';
 import '../../../../../models/index.dart';
 import '../../../../../provider/weather_cubit.dart';
 import '../../../../../provider/weather_state.dart';

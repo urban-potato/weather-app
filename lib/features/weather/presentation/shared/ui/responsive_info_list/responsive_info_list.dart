@@ -3,10 +3,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart'
     show ConsumerWidget, WidgetRef;
 
-import '../../../../../shared/providers/index.dart'
+import '../../../../../../shared/providers/index.dart'
     show responsiveSizeServiceProvider;
-import '../../../../../shared/services/index.dart' show ResponsiveSizeService;
-import '../../../../../shared/ui/themed_text/index.dart';
+import '../../../../../../shared/services/index.dart'
+    show ResponsiveSizeService;
+import '../../../../../../shared/ui/themed_text/index.dart';
 
 class ResponsiveInfoList extends ConsumerWidget {
   const ResponsiveInfoList({super.key, required this.data});

@@ -6,7 +6,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart'
 import '../../../../../../shared/providers/index.dart'
     show responsiveSizeServiceProvider;
 import '../../../../../../shared/ui/themed_text/index.dart';
-import '../../../../shared/ui/image_asset_with_network_fallback/index.dart';
+import '../../../shared/ui/image_asset_with_network_fallback/index.dart';
 import '../../../models/index.dart';
 
 class WeatherConditionWidget extends ConsumerWidget {

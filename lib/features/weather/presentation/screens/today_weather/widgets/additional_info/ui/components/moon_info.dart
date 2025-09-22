@@ -7,7 +7,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import '../../../../../../../../../shared/providers/index.dart'
     show navigationServiceProvider, responsiveSizeServiceProvider;
 import '../../../../../../../../../shared/ui/themed_text/index.dart';
-import '../../../../../../../shared/utils/assets_path_helper/index.dart';
+import '../../../../../../shared/utils/assets_path_helper/index.dart';
 
 class MoonInfoWidget extends ConsumerWidget {
   const MoonInfoWidget({super.key, required this.moonPhase});

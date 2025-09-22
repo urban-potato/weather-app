@@ -3,7 +3,7 @@ import 'package:flutter/foundation.dart' show kDebugMode;
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../domain/services/index.dart';
-import '../../shared/utils/update_permission_helper/index.dart';
+import '../shared/utils/update_permission_helper/index.dart';
 import '../mappers/weather.dart';
 import '../../../../shared/resources/remote_data_state/index.dart';
 import '../../domain/usecases/index.dart';

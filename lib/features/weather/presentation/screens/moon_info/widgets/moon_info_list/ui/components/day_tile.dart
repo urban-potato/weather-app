@@ -8,9 +8,9 @@ import 'package:flutter_svg/flutter_svg.dart';
 import '../../../../../../../../../shared/providers/index.dart'
     show responsiveSizeServiceProvider;
 import '../../../../../../../../../shared/ui/card_tile/index.dart';
-import '../../../../../../../shared/ui/responsive_info_list/index.dart';
-import '../../../../../../../shared/ui/widget_title/index.dart';
-import '../../../../../../../shared/utils/assets_path_helper/index.dart';
+import '../../../../../../shared/ui/responsive_info_list/index.dart';
+import '../../../../../../shared/ui/widget_title/index.dart';
+import '../../../../../../shared/utils/assets_path_helper/index.dart';
 
 class MoonData {
   MoonData({

@@ -7,7 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:weather_app/features/weather/presentation/provider/weather_cubit.dart';
 
-import '../../../../../../shared/utils/update_permission_helper/index.dart';
+import '../../../../../shared/utils/update_permission_helper/index.dart';
 import '../../../../../provider/weather_state.dart';
 import '../utils/last_updated_info_helper.dart';
 

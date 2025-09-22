@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../../../shared/ui/info_badge/index.dart';
+import '../../../shared/ui/info_badge/index.dart';
 import '../utils/uv_color_helper/uv_color_helper.dart';
 
 class UvInfoWidget extends StatelessWidget {

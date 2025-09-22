@@ -3,9 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart'
     show ConsumerWidget, WidgetRef;
 
-import '../../../../../shared/providers/index.dart'
+import '../../../../../../shared/providers/index.dart'
     show responsiveSizeServiceProvider;
-import '../../../../../shared/ui/themed_text/index.dart';
+import '../../../../../../shared/ui/themed_text/index.dart';
 
 class WidgetTitle extends ConsumerWidget {
   const WidgetTitle({super.key, required this.title});

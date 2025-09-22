@@ -1,4 +1,4 @@
-import '../../../resources/index.dart';
+import '../../../../../shared/resources/index.dart';
 
 enum MoonPhase {
   newMoon,
