@@ -43,8 +43,7 @@ class NoDataWidget extends ConsumerWidget {
                   width: pictureWidth,
                 ),
                 const ThemedText(
-                  text:
-                      'Failed to load data. Please check your internet connection and try again.',
+                  text: 'Couldn\'t load data',
                   styleType: AppTextStyle.bodyLarge,
                   textAlign: TextAlign.center,
                 ),

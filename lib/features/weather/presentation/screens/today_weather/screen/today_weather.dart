@@ -43,7 +43,7 @@ class TodayWeatherScreen extends ConsumerWidget {
                 if (kDebugMode)
                   print('+++++ TodayWeatherScreen BlocBuilder listener +++++');
 
-                if (state is WeatherFailure && state.weather != null) {
+                if (state is WeatherFailure) {
                   notificationService.showMessage(
                     context,
                     'Failed to load data. Please check your internet connection and try again.',
