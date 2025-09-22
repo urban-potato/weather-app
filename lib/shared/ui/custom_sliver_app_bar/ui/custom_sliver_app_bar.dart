@@ -31,7 +31,7 @@ class CustomSliverAppBar extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final navigationService = ref.read(navigationServiceProvider);
-    final sizeService = ref.read(responsiveSizeServiceProvider);
+    final sizeService = ref.read(responsiveSizeServiceProvider.notifier);
 
     final toolbarHeight = sizeService.screenPercentage(12);
     final contentSize = sizeService.screenPercentage(5);

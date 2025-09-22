@@ -134,7 +134,7 @@ class _MainWeatherInfoPadding extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final sizeService = ref.read(responsiveSizeServiceProvider);
+    final sizeService = ref.read(responsiveSizeServiceProvider.notifier);
 
     final hPadding = sizeService.sidesPadding;
     final vPadding = sizeService.screenPercentage(19.9);

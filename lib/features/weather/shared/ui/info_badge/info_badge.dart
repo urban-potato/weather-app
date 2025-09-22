@@ -23,7 +23,7 @@ class InfoBadge extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final sizeService = ref.read(responsiveSizeServiceProvider);
+    final sizeService = ref.read(responsiveSizeServiceProvider.notifier);
 
     final hPadding = sizeService.screenPercentage(2.5);
     final vPadding = sizeService.screenPercentage(1.9);

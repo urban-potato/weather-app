@@ -17,7 +17,7 @@ class ResponsiveInfoList extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     if (kDebugMode) print('ResponsiveInfoList build');
 
-    final sizeService = ref.read(responsiveSizeServiceProvider);
+    final sizeService = ref.read(responsiveSizeServiceProvider.notifier);
 
     return Column(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,

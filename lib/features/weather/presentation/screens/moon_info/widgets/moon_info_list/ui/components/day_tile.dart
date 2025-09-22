@@ -53,7 +53,7 @@ class _InfoWidgetsRow extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final moonPhaseAssetPath = getMoonPhaseAssetPath(data.moonPhase);
-    final sizeService = ref.read(responsiveSizeServiceProvider);
+    final sizeService = ref.read(responsiveSizeServiceProvider.notifier);
 
     return LayoutBuilder(
       builder: (BuildContext context, BoxConstraints constraints) {

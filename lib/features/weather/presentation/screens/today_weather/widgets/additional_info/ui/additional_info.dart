@@ -35,7 +35,7 @@ class _AdditionalInfoWidgetState extends ConsumerState<AdditionalInfoWidget>
   @override
   Widget build(BuildContext context) {
     super.build(context);
-    final sizeService = ref.read(responsiveSizeServiceProvider);
+    final sizeService = ref.read(responsiveSizeServiceProvider.notifier);
 
     if (kDebugMode) print('AdditionalInfoWidget build');
 

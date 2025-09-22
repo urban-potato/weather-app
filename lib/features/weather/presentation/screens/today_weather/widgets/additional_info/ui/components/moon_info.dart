@@ -18,7 +18,7 @@ class MoonInfoWidget extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final moonPhaseAssetPath = getMoonPhaseAssetPath(moonPhase);
     final navigationService = ref.read(navigationServiceProvider);
-    final sizeService = ref.read(responsiveSizeServiceProvider);
+    final sizeService = ref.read(responsiveSizeServiceProvider.notifier);
 
     if (kDebugMode) print('MoonInfoWidget build');
 

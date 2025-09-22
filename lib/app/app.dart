@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/foundation.dart' show kDebugMode;
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -21,6 +23,19 @@ class _AppState extends ConsumerState<App> with WidgetsBindingObserver {
   void initState() {
     super.initState();
     WidgetsBinding.instance.addObserver(this);
+
+    final sizeService = ref.read(responsiveSizeServiceProvider.notifier);
+
+    if (!sizeService.isInitialized) {
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        sizeService.updateReferenceScreenSize(context);
+
+        if (kDebugMode)
+          log(
+            '+++++++++ ResponsiveSize init: ${sizeService.referenceScreenSize} +++++++++',
+          );
+      });
+    }
   }
 
   @override
@@ -34,7 +49,7 @@ class _AppState extends ConsumerState<App> with WidgetsBindingObserver {
     super.didChangeAppLifecycleState(state);
 
     if (state == AppLifecycleState.detached) {
-      if (kDebugMode) print('+++++ App detached - disposing services +++++');
+      if (kDebugMode) log('+++++ App detached - disposing services +++++');
 
       final notificationService = ref.read(notificationServiceProvider);
       notificationService.dispose();
@@ -45,14 +60,23 @@ class _AppState extends ConsumerState<App> with WidgetsBindingObserver {
   void didChangeMetrics() {
     super.didChangeMetrics();
 
-    setState(() {});
+    final sizeService = ref.read(responsiveSizeServiceProvider.notifier);
+    sizeService.updateReferenceScreenSize(context);
+
+    if (kDebugMode)
+      log('++++++++++++++++++ didChangeMetrics ++++++++++++++++++');
   }
 
   @override
   Widget build(BuildContext context) {
-    final sizeService = ref.read(responsiveSizeServiceProvider);
+    if (kDebugMode)
+      log(
+        '++++++++++++++++++++++++++++++ App build +++++++++++++++++++++++++++++++',
+      );
 
-    sizeService.init(context);
+    ref.watch(responsiveSizeServiceProvider);
+
+    final sizeService = ref.read(responsiveSizeServiceProvider.notifier);
 
     return MaterialApp.router(
       routerConfig: _router.config(),

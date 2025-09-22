@@ -101,7 +101,7 @@ class WeeklyForecastListWidget extends ConsumerWidget {
     //   ),
     // ];
 
-    final sizeService = ref.read(responsiveSizeServiceProvider);
+    final sizeService = ref.read(responsiveSizeServiceProvider.notifier);
 
     final separatorHeight = sizeService.screenPercentage(4);
 

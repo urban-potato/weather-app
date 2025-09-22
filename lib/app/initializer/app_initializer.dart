@@ -11,8 +11,9 @@ ProviderScope appInitializer(Widget child) {
         const NavigationServiceImpl(),
       ),
       notificationServiceProvider.overrideWithValue(NotificationServiceImpl()),
-      responsiveSizeServiceProvider.overrideWithValue(
-        ResponsiveSizeServiceImpl(),
+
+      responsiveSizeServiceProvider.overrideWith(
+        () => ResponsiveSizeServiceImpl(),
       ),
     ],
     child: child,

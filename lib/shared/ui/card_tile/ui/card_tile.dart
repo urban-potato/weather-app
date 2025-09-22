@@ -31,7 +31,7 @@ class CardTile extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final sizeService = ref.read(responsiveSizeServiceProvider);
+    final sizeService = ref.read(responsiveSizeServiceProvider.notifier);
 
     final tileBorderRadius = sizeService.borderRadius;
     final hPadding = sizeService.tileHorizontalPadding;

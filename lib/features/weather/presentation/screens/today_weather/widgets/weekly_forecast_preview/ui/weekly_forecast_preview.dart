@@ -39,7 +39,7 @@ class _WeeklyForecastPreviewWidgetState
 
     if (kDebugMode) print('WeekForecastPreviewWidget build');
     final navigationService = ref.read(navigationServiceProvider);
-    final sizeService = ref.read(responsiveSizeServiceProvider);
+    final sizeService = ref.read(responsiveSizeServiceProvider.notifier);
 
     return Column(
       mainAxisSize: MainAxisSize.min,

@@ -60,7 +60,7 @@ class NotificationBannerState extends ConsumerState<NotificationBanner>
 
   @override
   Widget build(BuildContext context) {
-    final sizeService = ref.read(responsiveSizeServiceProvider);
+    final sizeService = ref.read(responsiveSizeServiceProvider.notifier);
 
     final elevation = sizeService.screenPercentage(0.9);
     final sidesPadding = sizeService.sidesPadding;

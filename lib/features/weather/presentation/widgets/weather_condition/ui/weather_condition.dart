@@ -23,7 +23,7 @@ class WeatherConditionWidget extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     if (kDebugMode) print('WeatherConditionWidget build');
 
-    final sizeService = ref.read(responsiveSizeServiceProvider);
+    final sizeService = ref.read(responsiveSizeServiceProvider.notifier);
 
     return LayoutBuilder(
       builder: (BuildContext context, BoxConstraints constraints) {

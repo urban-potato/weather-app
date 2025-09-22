@@ -1,7 +1,9 @@
-import 'package:flutter_riverpod/flutter_riverpod.dart' show Provider;
+import 'package:flutter_riverpod/flutter_riverpod.dart' show NotifierProvider;
 
-import '../../services/index.dart' show ResponsiveSizeService;
+import '../../services/responsive_size/responsive_size_notifier.dart'
+    show ResponsiveSizeNotifier;
 
-final responsiveSizeServiceProvider = Provider<ResponsiveSizeService>((ref) {
-  throw UnimplementedError('ResponsiveSizeService not initialized');
-});
+final responsiveSizeServiceProvider =
+    NotifierProvider<ResponsiveSizeNotifier, double?>(() {
+      throw UnimplementedError('ResponsiveSizeService not initialized');
+    });

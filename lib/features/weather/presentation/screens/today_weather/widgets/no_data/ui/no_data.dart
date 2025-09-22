@@ -15,7 +15,7 @@ class NoDataWidget extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final cloudFacePicture = AppSvgs.cloudFaces.negative.randomPicture;
-    final sizeService = ref.read(responsiveSizeServiceProvider);
+    final sizeService = ref.read(responsiveSizeServiceProvider.notifier);
 
     if (kDebugMode) print('NoDataWidget');
 

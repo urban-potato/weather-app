@@ -33,7 +33,7 @@ class _MainWeatherInfoWidgetState extends ConsumerState<MainWeatherInfoWidget>
   @override
   Widget build(BuildContext context) {
     super.build(context);
-    final sizeService = ref.read(responsiveSizeServiceProvider);
+    final sizeService = ref.read(responsiveSizeServiceProvider.notifier);
 
     if (kDebugMode) print('MainWeatherInfoWidget build');
 
@@ -86,7 +86,7 @@ class _UVAndAQIInfoRow extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final sizeService = ref.read(responsiveSizeServiceProvider);
+    final sizeService = ref.read(responsiveSizeServiceProvider.notifier);
     final spacing = sizeService.screenPercentage(1);
 
     return Wrap(
