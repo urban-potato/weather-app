@@ -1,6 +1,4 @@
-import 'package:flutter/widgets.dart' show BuildContext, MediaQuery;
-
-import '../../../shared/domain/services/responsive_size/responsive_size_notifier.dart'
+import '../../../shared/presentation/providers/index.dart'
     show ResponsiveSizeNotifier;
 
 class ResponsiveSizeServiceImpl extends ResponsiveSizeNotifier {
@@ -18,18 +16,22 @@ class ResponsiveSizeServiceImpl extends ResponsiveSizeNotifier {
   double get _screenSize => state ?? _defaultScreenMinSide;
 
   @override
-  void updateReferenceScreenSize(BuildContext context) {
-    final newMinSide = _calculateScreenMinSide(context);
+  void updateReferenceScreenSize({
+    required double width,
+    required double height,
+  }) {
+    final newMinSide = _calculateScreenMinSide(width: width, height: height);
     if (newMinSide != state) {
       state = newMinSide;
     }
   }
 
-  double _calculateScreenMinSide(BuildContext context) {
-    final screenMinSide =
-        MediaQuery.of(context).size.width < MediaQuery.of(context).size.height
-        ? MediaQuery.of(context).size.width
-        : MediaQuery.of(context).size.height;
+  double _calculateScreenMinSide({
+    required double width,
+    required double height,
+  }) {
+    final screenMinSide = width < height ? width : height;
+
     return screenMinSide;
   }
 

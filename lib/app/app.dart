@@ -28,7 +28,12 @@ class _AppState extends ConsumerState<App> with WidgetsBindingObserver {
 
     if (!sizeService.isInitialized) {
       WidgetsBinding.instance.addPostFrameCallback((_) {
-        sizeService.updateReferenceScreenSize(context);
+        final size = MediaQuery.of(context).size;
+
+        sizeService.updateReferenceScreenSize(
+          width: size.width,
+          height: size.height,
+        );
 
         if (kDebugMode)
           log(
@@ -61,7 +66,12 @@ class _AppState extends ConsumerState<App> with WidgetsBindingObserver {
     super.didChangeMetrics();
 
     final sizeService = ref.read(responsiveSizeServiceProvider.notifier);
-    sizeService.updateReferenceScreenSize(context);
+    final size = MediaQuery.of(context).size;
+
+    sizeService.updateReferenceScreenSize(
+      width: size.width,
+      height: size.height,
+    );
 
     if (kDebugMode)
       log('++++++++++++++++++ didChangeMetrics ++++++++++++++++++');

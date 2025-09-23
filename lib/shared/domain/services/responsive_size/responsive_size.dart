@@ -1,7 +1,8 @@
-import 'package:flutter/widgets.dart' show BuildContext;
-
 abstract interface class ResponsiveSizeService {
-  void updateReferenceScreenSize(BuildContext context);
+  void updateReferenceScreenSize({
+    required double width,
+    required double height,
+  });
 
   double? get referenceScreenSize;
 
