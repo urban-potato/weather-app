@@ -5,7 +5,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../../../../../../shared/presentation/providers/index.dart'
     show navigationServiceProvider, responsiveSizeServiceProvider;
-import '../../../../../../../../shared/domain/services/index.dart'
+import '../../../../../../../../shared/presentation/services/index.dart'
     show ResponsiveSizeService;
 import '../../../../../../../../shared/presentation/ui/card_tile/index.dart';
 import '../../../../../../../../shared/presentation/ui/custom_circular_progress_indicator/index.dart';

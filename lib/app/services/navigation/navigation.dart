@@ -1,7 +1,7 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 
-import '../../../shared/domain/services/index.dart';
+import '../../../shared/presentation/services/index.dart';
 import '../../router/index.dart';
 
 class NavigationServiceImpl implements NavigationService {

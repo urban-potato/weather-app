@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../../../../../../../../../shared/domain/services/index.dart'
+import '../../../../../../../../../../shared/presentation/services/index.dart'
     show ResponsiveSizeService;
 import '../../../../../../../../../../shared/presentation/ui/card_tile/index.dart';
 import '../../../../../../../shared/ui/responsive_info_list/index.dart';

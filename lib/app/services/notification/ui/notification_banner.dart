@@ -4,7 +4,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart'
 
 import '../../../../shared/presentation/providers/index.dart'
     show responsiveSizeServiceProvider;
-import '../../../../shared/domain/services/index.dart' show AnimatedBanner;
+import '../../../../shared/presentation/services/index.dart'
+    show AnimatedBanner;
 
 class NotificationBanner extends ConsumerStatefulWidget {
   const NotificationBanner({

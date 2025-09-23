@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
-import '../../../shared/domain/services/index.dart' show ResponsiveSizeService;
+import '../../../shared/presentation/services/index.dart'
+    show ResponsiveSizeService;
 
 class TTextTheme {
   TTextTheme._();
