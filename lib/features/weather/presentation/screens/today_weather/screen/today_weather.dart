@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:auto_route/annotations.dart';
 import 'package:flutter/foundation.dart' show kDebugMode;
 import 'package:flutter/material.dart';
@@ -26,7 +28,8 @@ class TodayWeatherScreen extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final notificationService = ref.read(notificationServiceProvider);
 
-    if (kDebugMode) print('+++++ TodayWeatherScreen build +++++');
+    if (kDebugMode)
+      log('------------------- TodayWeatherScreen build -------------------');
 
     return Scaffold(
       body: SafeArea(

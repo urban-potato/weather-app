@@ -1,4 +1,7 @@
+import 'dart:developer' show log;
+
 import 'package:auto_route/annotations.dart';
+import 'package:flutter/foundation.dart' show kDebugMode;
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart'
     show ConsumerWidget, WidgetRef;
@@ -17,6 +20,9 @@ class MoonInfoScreen extends ConsumerWidget {
     final sizeService = ref.read(responsiveSizeServiceProvider.notifier);
 
     final padding = sizeService.sidesPadding;
+
+    if (kDebugMode)
+      log('------------------- MoonInfoScreen build -------------------');
 
     return SafeArea(
       child: Scaffold(
