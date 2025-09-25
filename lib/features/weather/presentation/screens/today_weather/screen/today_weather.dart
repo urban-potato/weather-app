@@ -5,9 +5,12 @@ import 'package:flutter/foundation.dart' show kDebugMode;
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:weather_app/features/home/presentation/provider/home_cubit.dart';
 
 import '../../../../../../shared/presentation/providers/index.dart'
     show notificationServiceProvider, responsiveSizeServiceProvider;
+import '../../../../../../shared/presentation/providers/navigation/navigation.dart'
+    show navigationServiceProvider;
 import '../../../../../../shared/presentation/ui/custom_circular_progress_indicator/index.dart';
 import '../../../../../../shared/presentation/ui/screen_padding/index.dart';
 import '../../../provider/weather_cubit.dart';
@@ -21,15 +24,44 @@ import '../widgets/no_data/index.dart';
 import '../widgets/weekly_forecast_preview/index.dart';
 
 @RoutePage()
-class TodayWeatherScreen extends ConsumerWidget {
+class TodayWeatherScreen extends ConsumerStatefulWidget {
   const TodayWeatherScreen({super.key});
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    final notificationService = ref.read(notificationServiceProvider);
+  ConsumerState<TodayWeatherScreen> createState() => _TodayWeatherScreenState();
+}
 
+class _TodayWeatherScreenState extends ConsumerState<TodayWeatherScreen>
+    with AutomaticKeepAliveClientMixin {
+  @override
+  bool get wantKeepAlive => true;
+
+  @override
+  Widget build(BuildContext context) {
     if (kDebugMode)
       log('------------------- TodayWeatherScreen build -------------------');
+
+    super.build(context);
+
+    final notificationService = ref.read(notificationServiceProvider);
+    final navigationService = ref.read(navigationServiceProvider);
+
+    final cubit = context.read<WeatherCubit>();
+    final location = cubit.state.weather?.location.name;
+    final homeCubit = context.read<HomeCubit>();
+
+    homeCubit.changeAppBar(
+      title: location,
+      leadingIcon: Icons.add,
+      leadingCallback: () =>
+          navigationService.pushLocationsManagerRoute(context),
+      actionConfigs: [
+        (
+          icon: Icons.menu,
+          onPressed: () => navigationService.pushSettingsRoute(context),
+        ),
+      ],
+    );
 
     return Scaffold(
       body: SafeArea(
@@ -38,7 +70,7 @@ class TodayWeatherScreen extends ConsumerWidget {
             parent: AlwaysScrollableScrollPhysics(),
           ),
           slivers: [
-            const WeatherScreenSliverAppBar(),
+            // const WeatherScreenSliverAppBar(),
             const CustomRefreshControl(),
 
             BlocConsumer<WeatherCubit, WeatherState>(
@@ -71,6 +103,10 @@ class TodayWeatherScreen extends ConsumerWidget {
                     print(
                       '+++++ TodayWeatherScreen BlocBuilder _WeatherScreenBodyWidgets +++++',
                     );
+
+                  homeCubit.updateAppBarTitle(
+                    title: state.weather?.location.name,
+                  );
 
                   return const _WeatherScreenBodyWidgets();
                 } else if (state is WeatherInitial || state is WeatherLoading) {

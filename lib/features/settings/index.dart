@@ -1,1 +1,1 @@
-export '';
+export 'presentation/screen/settings.dart';

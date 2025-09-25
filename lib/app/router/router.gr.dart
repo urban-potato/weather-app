@@ -11,6 +11,38 @@
 part of 'router.dart';
 
 /// generated route for
+/// [LocationsManagerScreen]
+class LocationsManagerRoute extends PageRouteInfo<void> {
+  const LocationsManagerRoute({List<PageRouteInfo>? children})
+    : super(LocationsManagerRoute.name, initialChildren: children);
+
+  static const String name = 'LocationsManagerRoute';
+
+  static PageInfo page = PageInfo(
+    name,
+    builder: (data) {
+      return const LocationsManagerScreen();
+    },
+  );
+}
+
+/// generated route for
+/// [MainScreen]
+class MainRoute extends PageRouteInfo<void> {
+  const MainRoute({List<PageRouteInfo>? children})
+    : super(MainRoute.name, initialChildren: children);
+
+  static const String name = 'MainRoute';
+
+  static PageInfo page = PageInfo(
+    name,
+    builder: (data) {
+      return const MainScreen();
+    },
+  );
+}
+
+/// generated route for
 /// [MoonInfoScreen]
 class MoonInfoRoute extends PageRouteInfo<void> {
   const MoonInfoRoute({List<PageRouteInfo>? children})
@@ -22,6 +54,22 @@ class MoonInfoRoute extends PageRouteInfo<void> {
     name,
     builder: (data) {
       return const MoonInfoScreen();
+    },
+  );
+}
+
+/// generated route for
+/// [SettingsScreen]
+class SettingsRoute extends PageRouteInfo<void> {
+  const SettingsRoute({List<PageRouteInfo>? children})
+    : super(SettingsRoute.name, initialChildren: children);
+
+  static const String name = 'SettingsRoute';
+
+  static PageInfo page = PageInfo(
+    name,
+    builder: (data) {
+      return const SettingsScreen();
     },
   );
 }

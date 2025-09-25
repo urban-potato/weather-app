@@ -2,6 +2,8 @@ import 'package:flutter/foundation.dart' show kDebugMode;
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../../../../../../../shared/presentation/models/index.dart'
+    show AppBarModelUI;
 import '../../../../../../../../shared/presentation/ui/custom_sliver_app_bar/index.dart';
 import '../../../../../provider/weather_cubit.dart';
 import '../../../../../provider/weather_state.dart';
@@ -19,10 +21,16 @@ class WeatherScreenSliverAppBar extends StatelessWidget {
         if (kDebugMode) print('WeatherScreenSliverAppBar BlocSelector');
 
         return CustomSliverAppBar(
-          title: state,
-          leadingIcon: Icons.add,
-          leadingCallback: () {},
-          actionConfigs: [(icon: Icons.menu, onPressed: () {})],
+          appBarModelUI: AppBarModelUI(
+            title: state,
+            leadingIcon: Icons.add,
+            leadingCallback: () {},
+            actionConfigs: [(icon: Icons.menu, onPressed: () {})],
+          ),
+          // title: state,
+          // leadingIcon: Icons.add,
+          // leadingCallback: () {},
+          // actionConfigs: [(icon: Icons.menu, onPressed: () {})],
         );
       },
     );
