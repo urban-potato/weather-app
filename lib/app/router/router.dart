@@ -12,9 +12,14 @@ class AppRouter extends RootStackRouter {
     AutoRoute(
       page: WeatherRouteWrapper.page,
       path: '/',
-      initial: true,
+      // initial: true,
       children: [
-        AutoRoute(page: TodayWeatherRoute.page, path: 'weather', initial: true),
+        AutoRoute(
+          page: TodayWeatherRoute.page,
+          // path: 'weather',
+          path: '',
+          // initial: true
+        ),
         AutoRoute(page: WeeklyForecastRoute.page, path: 'weekForecast'),
         AutoRoute(page: MoonInfoRoute.page, path: 'moon'),
       ],

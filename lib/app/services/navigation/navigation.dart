@@ -9,16 +9,19 @@ class NavigationServiceImpl implements NavigationService {
 
   @override
   void pushMoonInfoRoute(BuildContext context) {
-    context.router.push(const MoonInfoRoute());
+    // context.router.push(const MoonInfoRoute());
+    AutoTabsRouter.of(context).setActiveIndex(2);
   }
 
   @override
   void pushWeeklyForecastRoute(BuildContext context) {
-    context.router.push(const WeeklyForecastRoute());
+    // context.router.push(const WeeklyForecastRoute());
+    AutoTabsRouter.of(context).setActiveIndex(1);
   }
 
   @override
   void pop(BuildContext context) {
-    context.router.pop();
+    // context.router.pop();
+    AutoTabsRouter.of(context).setActiveIndex(0);
   }
 }
