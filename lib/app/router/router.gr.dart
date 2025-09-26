@@ -11,6 +11,22 @@
 part of 'router.dart';
 
 /// generated route for
+/// [HomeScreen]
+class HomeRoute extends PageRouteInfo<void> {
+  const HomeRoute({List<PageRouteInfo>? children})
+    : super(HomeRoute.name, initialChildren: children);
+
+  static const String name = 'HomeRoute';
+
+  static PageInfo page = PageInfo(
+    name,
+    builder: (data) {
+      return const HomeScreen();
+    },
+  );
+}
+
+/// generated route for
 /// [LocationsManagerScreen]
 class LocationsManagerRoute extends PageRouteInfo<void> {
   const LocationsManagerRoute({List<PageRouteInfo>? children})
@@ -22,22 +38,6 @@ class LocationsManagerRoute extends PageRouteInfo<void> {
     name,
     builder: (data) {
       return const LocationsManagerScreen();
-    },
-  );
-}
-
-/// generated route for
-/// [MainScreen]
-class MainRoute extends PageRouteInfo<void> {
-  const MainRoute({List<PageRouteInfo>? children})
-    : super(MainRoute.name, initialChildren: children);
-
-  static const String name = 'MainRoute';
-
-  static PageInfo page = PageInfo(
-    name,
-    builder: (data) {
-      return const MainScreen();
     },
   );
 }
@@ -101,7 +101,7 @@ class WeatherRouteWrapper extends PageRouteInfo<void> {
   static PageInfo page = PageInfo(
     name,
     builder: (data) {
-      return const WeatherScreenWrapper();
+      return WrappedRoute(child: const WeatherScreenWrapper());
     },
   );
 }

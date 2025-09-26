@@ -5,12 +5,9 @@ import 'package:flutter/foundation.dart' show kDebugMode;
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:weather_app/features/home/presentation/provider/home_cubit.dart';
 
 import '../../../../../../shared/presentation/providers/index.dart'
     show notificationServiceProvider, responsiveSizeServiceProvider;
-import '../../../../../../shared/presentation/providers/navigation/navigation.dart'
-    show navigationServiceProvider;
 import '../../../../../../shared/presentation/ui/custom_circular_progress_indicator/index.dart';
 import '../../../../../../shared/presentation/ui/screen_padding/index.dart';
 import '../../../provider/weather_cubit.dart';
@@ -44,95 +41,67 @@ class _TodayWeatherScreenState extends ConsumerState<TodayWeatherScreen>
     super.build(context);
 
     final notificationService = ref.read(notificationServiceProvider);
-    final navigationService = ref.read(navigationServiceProvider);
 
-    final cubit = context.read<WeatherCubit>();
-    final location = cubit.state.weather?.location.name;
-    final homeCubit = context.read<HomeCubit>();
+    return CustomScrollView(
+      physics: const BouncingScrollPhysics(
+        parent: AlwaysScrollableScrollPhysics(),
+      ),
+      slivers: [
+        const WeatherScreenSliverAppBar(),
+        const CustomRefreshControl(),
 
-    homeCubit.changeAppBar(
-      title: location,
-      leadingIcon: Icons.add,
-      leadingCallback: () =>
-          navigationService.pushLocationsManagerRoute(context),
-      actionConfigs: [
-        (
-          icon: Icons.menu,
-          onPressed: () => navigationService.pushSettingsRoute(context),
+        BlocConsumer<WeatherCubit, WeatherState>(
+          listener: (context, state) {
+            if (kDebugMode)
+              print('+++++ TodayWeatherScreen BlocBuilder listener +++++');
+
+            if (state is WeatherFailure) {
+              notificationService.showMessage(
+                context,
+                'Failed to load data. Please check your internet connection and try again.',
+              );
+            }
+          },
+          buildWhen: (previous, current) {
+            // TODO: сделать, чтобы во время обновления с ошибки без данных на ошибку без данных не мелькала крутилка, но картинка облака обновлялась(?)
+            if (current.weather != null &&
+                previous.weather == current.weather) {
+              return false;
+            }
+
+            return true;
+          },
+          builder: (context, state) {
+            if (kDebugMode)
+              print('+++++ TodayWeatherScreen BlocBuilder build +++++');
+
+            if (state.weather != null) {
+              if (kDebugMode)
+                print(
+                  '+++++ TodayWeatherScreen BlocBuilder _WeatherScreenBodyWidgets +++++',
+                );
+
+              return const _WeatherScreenBodyWidgets();
+            } else if (state is WeatherInitial || state is WeatherLoading) {
+              if (kDebugMode)
+                print(
+                  '+++++ TodayWeatherScreen BlocBuilder CustomCircularProgressIndicator +++++',
+                );
+
+              return const SliverFillRemaining(
+                child: CustomCircularProgressIndicator(),
+              );
+            }
+
+            if (kDebugMode)
+              print('+++++ TodayWeatherScreen BlocBuilder NoDataWidget +++++');
+
+            return const SliverFillRemaining(
+              child: ScreenPadding(child: NoDataWidget()),
+            );
+          },
         ),
       ],
-    );
-
-    return Scaffold(
-      body: SafeArea(
-        child: CustomScrollView(
-          physics: const BouncingScrollPhysics(
-            parent: AlwaysScrollableScrollPhysics(),
-          ),
-          slivers: [
-            // const WeatherScreenSliverAppBar(),
-            const CustomRefreshControl(),
-
-            BlocConsumer<WeatherCubit, WeatherState>(
-              listener: (context, state) {
-                if (kDebugMode)
-                  print('+++++ TodayWeatherScreen BlocBuilder listener +++++');
-
-                if (state is WeatherFailure) {
-                  notificationService.showMessage(
-                    context,
-                    'Failed to load data. Please check your internet connection and try again.',
-                  );
-                }
-              },
-              buildWhen: (previous, current) {
-                // TODO: сделать, чтобы во время обновления с ошибки без данных на ошибку без данных не мелькала крутилка, но картинка облака обновлялась(?)
-                if (current.weather != null &&
-                    previous.weather == current.weather) {
-                  return false;
-                }
-
-                return true;
-              },
-              builder: (context, state) {
-                if (kDebugMode)
-                  print('+++++ TodayWeatherScreen BlocBuilder build +++++');
-
-                if (state.weather != null) {
-                  if (kDebugMode)
-                    print(
-                      '+++++ TodayWeatherScreen BlocBuilder _WeatherScreenBodyWidgets +++++',
-                    );
-
-                  homeCubit.updateAppBarTitle(
-                    title: state.weather?.location.name,
-                  );
-
-                  return const _WeatherScreenBodyWidgets();
-                } else if (state is WeatherInitial || state is WeatherLoading) {
-                  if (kDebugMode)
-                    print(
-                      '+++++ TodayWeatherScreen BlocBuilder CustomCircularProgressIndicator +++++',
-                    );
-
-                  return const SliverFillRemaining(
-                    child: CustomCircularProgressIndicator(),
-                  );
-                }
-
-                if (kDebugMode)
-                  print(
-                    '+++++ TodayWeatherScreen BlocBuilder NoDataWidget +++++',
-                  );
-
-                return const SliverFillRemaining(
-                  child: ScreenPadding(child: NoDataWidget()),
-                );
-              },
-            ),
-          ],
-        ),
-      ),
     );
   }
 }

@@ -2,7 +2,6 @@ import 'package:flutter/foundation.dart' show kDebugMode;
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../../../models/index.dart' show AppBarModelUI;
 import '../../../providers/index.dart'
     show navigationServiceProvider, responsiveSizeServiceProvider;
 import '../../../services/index.dart' show NavigationService;
@@ -10,9 +9,24 @@ import '../../../services/index.dart' show NavigationService;
 typedef ActionConfig = ({IconData icon, VoidCallback? onPressed});
 
 class CustomSliverAppBar extends ConsumerWidget {
-  const CustomSliverAppBar({super.key, required this.appBarModelUI});
+  const CustomSliverAppBar({
+    super.key,
+    this.title,
+    this.ifShowArrowBack = true,
+    this.leading,
+    this.leadingIcon,
+    this.leadingCallback,
+    this.actions,
+    this.actionConfigs,
+  });
 
-  final AppBarModelUI appBarModelUI;
+  final String? title;
+  final bool ifShowArrowBack;
+  final Widget? leading;
+  final IconData? leadingIcon;
+  final VoidCallback? leadingCallback;
+  final List<Widget>? actions;
+  final List<ActionConfig>? actionConfigs;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -51,10 +65,10 @@ class CustomSliverAppBar extends ConsumerWidget {
   }
 
   Widget? _buildTitle({required ThemeData theme, required double contentSize}) {
-    if (appBarModelUI.title == null) return null;
+    if (title == null) return null;
 
     final finalTitle = Text(
-      appBarModelUI.title!,
+      title!,
       style: theme.textTheme.headlineMedium?.copyWith(fontSize: contentSize),
     );
 
@@ -62,13 +76,12 @@ class CustomSliverAppBar extends ConsumerWidget {
   }
 
   List<Widget>? _buildActions({required double contentSize}) {
-    if (appBarModelUI.actions == null && appBarModelUI.actionConfigs == null)
-      return null;
+    if (actions == null && actionConfigs == null) return null;
 
-    List<Widget>? finalActions = appBarModelUI.actions;
+    List<Widget>? finalActions = actions;
 
-    if (finalActions == null && appBarModelUI.actionConfigs != null) {
-      finalActions = appBarModelUI.actionConfigs!.map((config) {
+    if (finalActions == null && actionConfigs != null) {
+      finalActions = actionConfigs!.map((config) {
         return IconButton(
           icon: Icon(config.icon),
           iconSize: contentSize,
@@ -84,10 +97,10 @@ class CustomSliverAppBar extends ConsumerWidget {
     required NavigationService navigationService,
     required double contentSize,
   }) {
-    if (appBarModelUI.leading == null && appBarModelUI.leadingIcon == null) {
-      if (appBarModelUI.ifShowArrowBack == true) {
+    if (leading == null && leadingIcon == null) {
+      if (ifShowArrowBack) {
         return IconButton(
-          icon: const Icon(Icons.arrow_back),
+          icon: const Icon(Icons.arrow_back_ios_new_rounded),
           iconSize: contentSize,
           onPressed: () => navigationService.pop(context),
         );
@@ -97,13 +110,13 @@ class CustomSliverAppBar extends ConsumerWidget {
 
     Widget? finalLeading;
 
-    if (appBarModelUI.leading != null) {
-      finalLeading = appBarModelUI.leading;
-    } else if (appBarModelUI.leadingIcon != null) {
+    if (leading != null) {
+      finalLeading = leading;
+    } else if (leadingIcon != null) {
       finalLeading = IconButton(
-        icon: Icon(appBarModelUI.leadingIcon),
+        icon: Icon(leadingIcon),
         iconSize: contentSize,
-        onPressed: appBarModelUI.leadingCallback ?? () {},
+        onPressed: leadingCallback ?? () {},
       );
     }
 

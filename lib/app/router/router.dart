@@ -15,20 +15,20 @@ class AppRouter extends RootStackRouter {
   @override
   List<AutoRoute> get routes => [
     AutoRoute(
-      page: MainRoute.page,
+      page: HomeRoute.page,
       path: '/',
       initial: true,
       children: [
+        RedirectRoute(path: '', redirectTo: 'weather'),
         AutoRoute(
           page: WeatherRouteWrapper.page,
           path: 'weather',
-          // path: '/',
           initial: true,
           children: [
+            RedirectRoute(path: '', redirectTo: 'today'),
             AutoRoute(
               page: TodayWeatherRoute.page,
-              // path: 'weather',
-              path: '',
+              path: 'today',
               initial: true,
             ),
             AutoRoute(page: WeeklyForecastRoute.page, path: 'weekForecast'),
@@ -41,25 +41,3 @@ class AppRouter extends RootStackRouter {
     ),
   ];
 }
-
-// @AutoRouterConfig()
-// class AppRouter extends RootStackRouter {
-//   @override
-//   List<AutoRoute> get routes => [
-//     AutoRoute(
-//       page: WeatherRouteWrapper.page,
-//       path: '/',
-//       // initial: true,
-//       children: [
-//         AutoRoute(
-//           page: TodayWeatherRoute.page,
-//           // path: 'weather',
-//           path: '',
-//           // initial: true
-//         ),
-//         AutoRoute(page: WeeklyForecastRoute.page, path: 'weekForecast'),
-//         AutoRoute(page: MoonInfoRoute.page, path: 'moon'),
-//       ],
-//     ),
-//   ];
-// }
