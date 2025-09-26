@@ -1,9 +1,19 @@
-import 'package:flutter/material.dart';
+import '../../../infrastructure/configs/router_paths.dart';
+
+enum AppRoute {
+  root(RouterPaths.root),
+  weather(RouterPaths.weather),
+  today(RouterPaths.today),
+  weeklyForecast(RouterPaths.weeklyForecast),
+  moonInfo(RouterPaths.moonInfo),
+  locationsManager(RouterPaths.locationsManager),
+  settings(RouterPaths.settings);
+
+  final RouterPaths routerPath;
+  const AppRoute(this.routerPath);
+}
 
 abstract interface class NavigationService {
-  void pushMoonInfoRoute(BuildContext context);
-  void pushWeeklyForecastRoute(BuildContext context);
-  void pushSettingsRoute(BuildContext context);
-  void pushLocationsManagerRoute(BuildContext context);
-  void pop(BuildContext context);
+  void push(AppRoute route);
+  void pop();
 }

@@ -6,7 +6,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../shared/presentation/providers/index.dart'
     show notificationServiceProvider, responsiveSizeServiceProvider;
-import 'router/index.dart';
+import 'router/index.dart' show appRouterProvider;
 import 'theme/index.dart';
 
 class App extends ConsumerStatefulWidget {
@@ -17,8 +17,6 @@ class App extends ConsumerStatefulWidget {
 }
 
 class _AppState extends ConsumerState<App> with WidgetsBindingObserver {
-  final _router = AppRouter();
-
   @override
   void initState() {
     super.initState();
@@ -87,9 +85,10 @@ class _AppState extends ConsumerState<App> with WidgetsBindingObserver {
     ref.watch(responsiveSizeServiceProvider);
 
     final sizeService = ref.read(responsiveSizeServiceProvider.notifier);
+    final router = ref.read(appRouterProvider);
 
     return MaterialApp.router(
-      routerConfig: _router.config(),
+      routerConfig: router.config(),
       debugShowCheckedModeBanner: false,
       title: 'Weather App',
       theme: TAppTheme.lightTheme(sizeService),

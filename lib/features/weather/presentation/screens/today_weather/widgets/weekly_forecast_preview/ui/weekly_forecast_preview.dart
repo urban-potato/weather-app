@@ -6,7 +6,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../../../../../../shared/presentation/providers/index.dart'
     show navigationServiceProvider, responsiveSizeServiceProvider;
 import '../../../../../../../../shared/presentation/services/index.dart'
-    show ResponsiveSizeService;
+    show AppRoute, ResponsiveSizeService;
 import '../../../../../../../../shared/presentation/ui/card_tile/index.dart';
 import '../../../../../../../../shared/presentation/ui/custom_circular_progress_indicator/index.dart';
 import '../../../../../../../../shared/presentation/ui/themed_text/index.dart';
@@ -63,7 +63,7 @@ class _WeeklyForecastPreviewWidgetState
                 );
 
               return GestureDetector(
-                onTap: () => navigationService.pushWeeklyForecastRoute(context),
+                onTap: () => navigationService.push(AppRoute.weeklyForecast),
 
                 child: CardTile(
                   child: Column(

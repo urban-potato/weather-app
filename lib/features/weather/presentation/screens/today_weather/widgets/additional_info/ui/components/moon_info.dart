@@ -6,6 +6,8 @@ import 'package:flutter_svg/flutter_svg.dart';
 
 import '../../../../../../../../../shared/presentation/providers/index.dart'
     show navigationServiceProvider, responsiveSizeServiceProvider;
+import '../../../../../../../../../shared/presentation/services/index.dart'
+    show AppRoute;
 import '../../../../../../../../../shared/presentation/ui/themed_text/index.dart';
 import '../../../../../../shared/utils/assets_path_helper/index.dart';
 
@@ -23,7 +25,7 @@ class MoonInfoWidget extends ConsumerWidget {
     if (kDebugMode) print('MoonInfoWidget build');
 
     return GestureDetector(
-      onTap: () => navigationService.pushMoonInfoRoute(context),
+      onTap: () => navigationService.push(AppRoute.moonInfo),
 
       child: LayoutBuilder(
         builder: (BuildContext context, BoxConstraints constraints) {

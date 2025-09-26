@@ -102,7 +102,7 @@ class CustomSliverAppBar extends ConsumerWidget {
         return IconButton(
           icon: const Icon(Icons.arrow_back_ios_new_rounded),
           iconSize: contentSize,
-          onPressed: () => navigationService.pop(context),
+          onPressed: () => navigationService.pop(),
         );
       }
       return null;

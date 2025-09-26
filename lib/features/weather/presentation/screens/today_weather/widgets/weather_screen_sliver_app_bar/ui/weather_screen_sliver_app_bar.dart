@@ -6,6 +6,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart'
 
 import '../../../../../../../../shared/presentation/providers/index.dart'
     show navigationServiceProvider;
+import '../../../../../../../../shared/presentation/services/index.dart'
+    show AppRoute;
 import '../../../../../../../../shared/presentation/ui/custom_sliver_app_bar/index.dart';
 import '../../../../../provider/weather_cubit.dart';
 import '../../../../../provider/weather_state.dart';
@@ -28,11 +30,11 @@ class WeatherScreenSliverAppBar extends ConsumerWidget {
           title: state,
           leadingIcon: Icons.add,
           leadingCallback: () =>
-              navigationService.pushLocationsManagerRoute(context),
+              navigationService.push(AppRoute.locationsManager),
           actionConfigs: [
             (
               icon: Icons.menu,
-              onPressed: () => navigationService.pushSettingsRoute(context),
+              onPressed: () => navigationService.push(AppRoute.settings),
             ),
           ],
         );
