@@ -15,14 +15,18 @@ class SettingsScreen extends StatelessWidget {
     if (kDebugMode)
       log('------------------- SettingsScreen build -------------------');
 
-    return CustomScrollView(
-      slivers: [
-        const CustomSliverAppBar(title: 'Settings'),
+    return Scaffold(
+      body: SafeArea(
+        child: CustomScrollView(
+          slivers: [
+            const CustomSliverAppBar(title: 'Settings'),
 
-        SliverToBoxAdapter(
-          child: Container(width: 100, height: 100, color: Colors.red),
+            SliverToBoxAdapter(
+              child: Container(width: 100, height: 100, color: Colors.red),
+            ),
+          ],
         ),
-      ],
+      ),
     );
   }
 }

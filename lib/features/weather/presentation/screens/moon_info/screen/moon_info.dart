@@ -23,17 +23,21 @@ class MoonInfoScreen extends ConsumerWidget {
 
     final padding = sizeService.sidesPadding;
 
-    return CustomScrollView(
-      slivers: [
-        const CustomSliverAppBar(title: 'Moon Info'),
+    return Scaffold(
+      body: SafeArea(
+        child: CustomScrollView(
+          slivers: [
+            const CustomSliverAppBar(title: 'Moon Info'),
 
-        SliverPadding(
-          padding: EdgeInsets.symmetric(
-            horizontal: padding,
-          ).copyWith(bottom: padding),
-          sliver: const MoonInfoListWidget(),
+            SliverPadding(
+              padding: EdgeInsets.symmetric(
+                horizontal: padding,
+              ).copyWith(bottom: padding),
+              sliver: const MoonInfoListWidget(),
+            ),
+          ],
         ),
-      ],
+      ),
     );
   }
 }

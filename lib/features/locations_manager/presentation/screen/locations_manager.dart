@@ -17,14 +17,18 @@ class LocationsManagerScreen extends StatelessWidget {
         '------------------- LocationsManagerScreen build -------------------',
       );
 
-    return CustomScrollView(
-      slivers: [
-        const CustomSliverAppBar(title: 'Locations Manager'),
+    return Scaffold(
+      body: SafeArea(
+        child: CustomScrollView(
+          slivers: [
+            const CustomSliverAppBar(title: 'Locations Manager'),
 
-        SliverToBoxAdapter(
-          child: Container(width: 100, height: 100, color: Colors.blue),
+            SliverToBoxAdapter(
+              child: Container(width: 100, height: 100, color: Colors.blue),
+            ),
+          ],
         ),
-      ],
+      ),
     );
   }
 }

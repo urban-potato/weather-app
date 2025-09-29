@@ -13,6 +13,6 @@ class HomeScreen extends StatelessWidget {
     if (kDebugMode)
       log('------------------- MainScreen build -------------------');
 
-    return const Scaffold(body: SafeArea(child: AutoRouter()));
+    return const AutoRouter();
   }
 }

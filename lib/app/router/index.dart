@@ -1,2 +1,2 @@
 export 'router.dart';
-export 'app_router_provider.dart';
+export 'router_provider.dart';

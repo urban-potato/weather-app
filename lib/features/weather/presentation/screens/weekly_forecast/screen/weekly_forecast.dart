@@ -23,17 +23,21 @@ class WeeklyForecastScreen extends ConsumerWidget {
 
     final padding = sizeService.sidesPadding;
 
-    return CustomScrollView(
-      slivers: [
-        const CustomSliverAppBar(title: 'Weekly Forecast'),
+    return Scaffold(
+      body: SafeArea(
+        child: CustomScrollView(
+          slivers: [
+            const CustomSliverAppBar(title: 'Weekly Forecast'),
 
-        SliverPadding(
-          padding: EdgeInsets.symmetric(
-            horizontal: padding,
-          ).copyWith(bottom: padding),
-          sliver: const WeeklyForecastListWidget(),
+            SliverPadding(
+              padding: EdgeInsets.symmetric(
+                horizontal: padding,
+              ).copyWith(bottom: padding),
+              sliver: const WeeklyForecastListWidget(),
+            ),
+          ],
         ),
-      ],
+      ),
     );
   }
 }

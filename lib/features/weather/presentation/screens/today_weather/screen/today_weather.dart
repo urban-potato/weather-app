@@ -64,66 +64,72 @@ class _TodayWeatherScreenState extends ConsumerState<TodayWeatherScreen>
 
     final notificationService = ref.read(notificationServiceProvider);
 
-    return CustomScrollView(
-      physics: const BouncingScrollPhysics(
-        parent: AlwaysScrollableScrollPhysics(),
-      ),
-      slivers: [
-        const WeatherScreenSliverAppBar(),
-        const CustomRefreshControl(),
+    return Scaffold(
+      body: SafeArea(
+        child: CustomScrollView(
+          physics: const BouncingScrollPhysics(
+            parent: AlwaysScrollableScrollPhysics(),
+          ),
+          slivers: [
+            const WeatherScreenSliverAppBar(),
+            const CustomRefreshControl(),
 
-        BlocConsumer<WeatherCubit, WeatherState>(
-          listener: (context, state) {
-            if (kDebugMode)
-              print('+++++ TodayWeatherScreen BlocBuilder listener +++++');
+            BlocConsumer<WeatherCubit, WeatherState>(
+              listener: (context, state) {
+                if (kDebugMode)
+                  print('+++++ TodayWeatherScreen BlocBuilder listener +++++');
 
-            if (state is WeatherFailure) {
-              notificationService.showMessage(
-                context,
-                'Failed to load data. Please check your internet connection and try again.',
-              );
-            }
-          },
-          buildWhen: (previous, current) {
-            // TODO: сделать, чтобы во время обновления с ошибки без данных на ошибку без данных не мелькала крутилка, но картинка облака обновлялась(?)
-            if (current.weather != null &&
-                previous.weather == current.weather) {
-              return false;
-            }
+                if (state is WeatherFailure) {
+                  notificationService.showMessage(
+                    context,
+                    'Failed to load data. Please check your internet connection and try again.',
+                  );
+                }
+              },
+              buildWhen: (previous, current) {
+                // TODO: сделать, чтобы во время обновления с ошибки без данных на ошибку без данных не мелькала крутилка, но картинка облака обновлялась(?)
+                if (current.weather != null &&
+                    previous.weather == current.weather) {
+                  return false;
+                }
 
-            return true;
-          },
-          builder: (context, state) {
-            if (kDebugMode)
-              print('+++++ TodayWeatherScreen BlocBuilder build +++++');
+                return true;
+              },
+              builder: (context, state) {
+                if (kDebugMode)
+                  print('+++++ TodayWeatherScreen BlocBuilder build +++++');
 
-            if (state.weather != null) {
-              if (kDebugMode)
-                print(
-                  '+++++ TodayWeatherScreen BlocBuilder _WeatherScreenBodyWidgets +++++',
+                if (state.weather != null) {
+                  if (kDebugMode)
+                    print(
+                      '+++++ TodayWeatherScreen BlocBuilder _WeatherScreenBodyWidgets +++++',
+                    );
+
+                  return const _WeatherScreenBodyWidgets();
+                } else if (state is WeatherInitial || state is WeatherLoading) {
+                  if (kDebugMode)
+                    print(
+                      '+++++ TodayWeatherScreen BlocBuilder CustomCircularProgressIndicator +++++',
+                    );
+
+                  return const SliverFillRemaining(
+                    child: CustomCircularProgressIndicator(),
+                  );
+                }
+
+                if (kDebugMode)
+                  print(
+                    '+++++ TodayWeatherScreen BlocBuilder NoDataWidget +++++',
+                  );
+
+                return const SliverFillRemaining(
+                  child: ScreenPadding(child: NoDataWidget()),
                 );
-
-              return const _WeatherScreenBodyWidgets();
-            } else if (state is WeatherInitial || state is WeatherLoading) {
-              if (kDebugMode)
-                print(
-                  '+++++ TodayWeatherScreen BlocBuilder CustomCircularProgressIndicator +++++',
-                );
-
-              return const SliverFillRemaining(
-                child: CustomCircularProgressIndicator(),
-              );
-            }
-
-            if (kDebugMode)
-              print('+++++ TodayWeatherScreen BlocBuilder NoDataWidget +++++');
-
-            return const SliverFillRemaining(
-              child: ScreenPadding(child: NoDataWidget()),
-            );
-          },
+              },
+            ),
+          ],
         ),
-      ],
+      ),
     );
   }
 }

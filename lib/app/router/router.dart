@@ -8,12 +8,21 @@ import '../../features/weather/index.dart'
     show TodayWeatherScreen, WeeklyForecastScreen, MoonInfoScreen;
 import '../../features/home/presentation/screen/home.dart';
 import '../../shared/infrastructure/configs/router_paths.dart';
+import 'transitions/custom_slide_left.dart';
 import 'wrappers/weather_screen_wrapper.dart';
 
 part 'router.gr.dart';
 
 @AutoRouterConfig()
 class AppRouter extends RootStackRouter {
+  @override
+  RouteType get defaultRouteType => RouteType.custom(
+    transitionsBuilder: customSlideLeft,
+    duration: const Duration(milliseconds: 250),
+    reverseDuration: const Duration(milliseconds: 250),
+    opaque: true,
+  );
+
   @override
   List<AutoRoute> get routes => [
     AutoRoute(
