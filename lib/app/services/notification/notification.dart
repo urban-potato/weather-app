@@ -14,9 +14,7 @@ class NotificationServiceImpl implements NotificationService {
   @override
   void showMessage(BuildContext context, String message, {int duration = 5}) {
     if (kDebugMode)
-      print(
-        '+++++ TodayWeatherScreen BlocBuilder listener _Messenger showErrorMessage +++++',
-      );
+      print('+++++ NotificationServiceImpl showErrorMessage +++++');
 
     _dismiss();
 
@@ -40,7 +38,7 @@ class NotificationServiceImpl implements NotificationService {
       builder: (context) {
         if (kDebugMode)
           print(
-            '+++++ TodayWeatherScreen BlocBuilder listener _Messenger showErrorMessage OverlayEntry +++++',
+            '+++++ NotificationServiceImpl showErrorMessage OverlayEntry +++++',
           );
 
         return Positioned(
@@ -59,7 +57,8 @@ class NotificationServiceImpl implements NotificationService {
     Overlay.of(context).insert(_currentOverlay!);
 
     _timer = Timer(Duration(seconds: duration), () {
-      if (kDebugMode) print('+++++ Auto-dismiss triggered +++++');
+      if (kDebugMode)
+        print('+++++ NotificationServiceImpl Auto-dismiss triggered +++++');
       _performAnimatedDismiss(bannerKey);
     });
   }

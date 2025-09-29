@@ -1,6 +1,8 @@
 import 'dart:developer';
 
 import 'package:auto_route/annotations.dart';
+
+// import 'package:auto_route/auto_route.dart';
 import 'package:flutter/foundation.dart' show kDebugMode;
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -22,7 +24,9 @@ import '../widgets/weekly_forecast_preview/index.dart';
 
 @RoutePage()
 class TodayWeatherScreen extends ConsumerStatefulWidget {
-  const TodayWeatherScreen({super.key});
+  const TodayWeatherScreen({super.key, @queryParam this.navError = false});
+
+  final bool navError;
 
   @override
   ConsumerState<TodayWeatherScreen> createState() => _TodayWeatherScreenState();
@@ -32,6 +36,24 @@ class _TodayWeatherScreenState extends ConsumerState<TodayWeatherScreen>
     with AutomaticKeepAliveClientMixin {
   @override
   bool get wantKeepAlive => true;
+
+  @override
+  void initState() {
+    super.initState();
+
+    if (widget.navError) {
+      if (kDebugMode) log('((((( TodayWeatherScreen navError true )))))');
+
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        final notificationService = ref.read(notificationServiceProvider);
+
+        notificationService.showMessage(
+          context,
+          'Navigation error occurred. Please try again.',
+        );
+      });
+    }
+  }
 
   @override
   Widget build(BuildContext context) {

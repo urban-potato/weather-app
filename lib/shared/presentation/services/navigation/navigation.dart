@@ -1,8 +1,6 @@
 import '../../../infrastructure/configs/router_paths.dart';
 
 enum AppRoute {
-  root(RouterPaths.root),
-  weather(RouterPaths.weather),
   today(RouterPaths.today),
   weeklyForecast(RouterPaths.weeklyForecast),
   moonInfo(RouterPaths.moonInfo),

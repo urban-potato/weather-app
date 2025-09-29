@@ -76,18 +76,55 @@ class SettingsRoute extends PageRouteInfo<void> {
 
 /// generated route for
 /// [TodayWeatherScreen]
-class TodayWeatherRoute extends PageRouteInfo<void> {
-  const TodayWeatherRoute({List<PageRouteInfo>? children})
-    : super(TodayWeatherRoute.name, initialChildren: children);
+class TodayWeatherRoute extends PageRouteInfo<TodayWeatherRouteArgs> {
+  TodayWeatherRoute({
+    Key? key,
+    bool navError = false,
+    List<PageRouteInfo>? children,
+  }) : super(
+         TodayWeatherRoute.name,
+         args: TodayWeatherRouteArgs(key: key, navError: navError),
+         rawQueryParams: {'navError': navError},
+         initialChildren: children,
+       );
 
   static const String name = 'TodayWeatherRoute';
 
   static PageInfo page = PageInfo(
     name,
     builder: (data) {
-      return const TodayWeatherScreen();
+      final queryParams = data.queryParams;
+      final args = data.argsAs<TodayWeatherRouteArgs>(
+        orElse: () => TodayWeatherRouteArgs(
+          navError: queryParams.getBool('navError', false),
+        ),
+      );
+      return TodayWeatherScreen(key: args.key, navError: args.navError);
     },
   );
+}
+
+class TodayWeatherRouteArgs {
+  const TodayWeatherRouteArgs({this.key, this.navError = false});
+
+  final Key? key;
+
+  final bool navError;
+
+  @override
+  String toString() {
+    return 'TodayWeatherRouteArgs{key: $key, navError: $navError}';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) return true;
+    if (other is! TodayWeatherRouteArgs) return false;
+    return key == other.key && navError == other.navError;
+  }
+
+  @override
+  int get hashCode => key.hashCode ^ navError.hashCode;
 }
 
 /// generated route for
