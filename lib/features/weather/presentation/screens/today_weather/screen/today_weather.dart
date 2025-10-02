@@ -32,14 +32,12 @@ class TodayWeatherScreen extends ConsumerStatefulWidget {
   ConsumerState<TodayWeatherScreen> createState() => _TodayWeatherScreenState();
 }
 
-class _TodayWeatherScreenState extends ConsumerState<TodayWeatherScreen>
-    with AutomaticKeepAliveClientMixin {
-  @override
-  bool get wantKeepAlive => true;
-
+class _TodayWeatherScreenState extends ConsumerState<TodayWeatherScreen> {
   @override
   void initState() {
     super.initState();
+
+    if (kDebugMode) log('@@@@@@@@@ TodayWeatherScreen initState @@@@@@@@@');
 
     if (widget.navError) {
       if (kDebugMode) log('((((( TodayWeatherScreen navError true )))))');
@@ -59,8 +57,6 @@ class _TodayWeatherScreenState extends ConsumerState<TodayWeatherScreen>
   Widget build(BuildContext context) {
     if (kDebugMode)
       log('------------------- TodayWeatherScreen build -------------------');
-
-    super.build(context);
 
     final notificationService = ref.read(notificationServiceProvider);
 
