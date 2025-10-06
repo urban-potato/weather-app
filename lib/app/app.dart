@@ -2,7 +2,9 @@ import 'dart:developer';
 
 import 'package:flutter/foundation.dart' show kDebugMode;
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:talker_flutter/talker_flutter.dart';
 
 import '../shared/presentation/providers/index.dart'
     show notificationServiceProvider, responsiveSizeServiceProvider;
@@ -86,9 +88,12 @@ class _AppState extends ConsumerState<App> with WidgetsBindingObserver {
 
     final sizeService = ref.read(responsiveSizeServiceProvider.notifier);
     final router = ref.read(appRouterProvider);
+    final talker = context.read<Talker>();
 
     return MaterialApp.router(
-      routerConfig: router.config(),
+      routerConfig: router.config(
+        navigatorObservers: () => [TalkerRouteObserver(talker)],
+      ),
       debugShowCheckedModeBanner: false,
       title: 'Weather App',
       theme: TAppTheme.lightTheme(sizeService),
