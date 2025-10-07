@@ -1,17 +1,8 @@
-import 'dart:developer' show log;
-
-import 'package:flutter/foundation.dart' show kDebugMode;
-
 import '../../../shared/presentation/providers/index.dart'
     show ResponsiveSizeNotifier;
 
 class ResponsiveSizeServiceImpl extends ResponsiveSizeNotifier {
-  ResponsiveSizeServiceImpl() {
-    if (kDebugMode)
-      log(
-        '------------------- ResponsiveSizeServiceImpl create -------------------',
-      );
-  }
+  ResponsiveSizeServiceImpl();
 
   @override
   double? build() => null;

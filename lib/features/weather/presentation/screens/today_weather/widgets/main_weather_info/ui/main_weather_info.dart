@@ -1,8 +1,8 @@
-import 'package:flutter/foundation.dart' show kDebugMode;
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart'
     show ConsumerStatefulWidget, ConsumerState, ConsumerWidget, WidgetRef;
+import 'package:talker_flutter/talker_flutter.dart' show Talker;
 
 import '../../../../../../../../shared/presentation/providers/index.dart'
     show responsiveSizeServiceProvider;
@@ -33,24 +33,24 @@ class _MainWeatherInfoWidgetState extends ConsumerState<MainWeatherInfoWidget>
   @override
   Widget build(BuildContext context) {
     super.build(context);
+
+    final talker = context.read<Talker>();
+    talker.info('MainWeatherInfoWidget build');
+
     final sizeService = ref.read(responsiveSizeServiceProvider.notifier);
-
-    if (kDebugMode) print('MainWeatherInfoWidget build');
-
     final spacing = sizeService.screenPercentage(2);
 
     return BlocSelector<WeatherCubit, WeatherState, MainWeatherModelUI?>(
       selector: (state) => state.weather?.today.mainWeather,
       builder: (context, state) {
         if (state == null) {
-          if (kDebugMode)
-            print(
-              'MainWeatherInfoWidget BlocSelector return CircularProgressIndicator',
-            );
+          talker.info(
+            'MainWeatherInfoWidget BlocSelector CustomCircularProgressIndicator',
+          );
           return const CustomCircularProgressIndicator();
         } else {
-          if (kDebugMode)
-            print('MainWeatherInfoWidget BlocSelector return Column');
+          talker.info('MainWeatherInfoWidget BlocSelector Column');
+
           return Column(
             spacing: spacing,
             mainAxisSize: MainAxisSize.min,

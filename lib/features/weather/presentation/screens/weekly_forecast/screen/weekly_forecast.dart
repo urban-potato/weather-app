@@ -1,10 +1,9 @@
-import 'dart:developer' show log;
-
 import 'package:auto_route/annotations.dart';
-import 'package:flutter/foundation.dart' show kDebugMode;
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart'
     show ConsumerWidget, WidgetRef;
+import 'package:talker_flutter/talker_flutter.dart' show Talker;
 import '../../../../../../shared/presentation/providers/index.dart'
     show responsiveSizeServiceProvider;
 import '../../../../../../shared/presentation/ui/custom_sliver_app_bar/index.dart';
@@ -16,11 +15,9 @@ class WeeklyForecastScreen extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    if (kDebugMode)
-      log('------------------- WeeklyForecastScreen build -------------------');
+    context.read<Talker>().debug('WeeklyForecastScreen build');
 
     final sizeService = ref.read(responsiveSizeServiceProvider.notifier);
-
     final padding = sizeService.sidesPadding;
 
     return Scaffold(

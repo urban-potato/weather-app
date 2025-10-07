@@ -1,7 +1,8 @@
-import 'package:flutter/foundation.dart' show kDebugMode;
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart'
     show ConsumerWidget, WidgetRef;
+import 'package:talker_flutter/talker_flutter.dart' show Talker;
 
 import '../../../../../../../../../shared/presentation/providers/index.dart'
     show responsiveSizeServiceProvider;
@@ -19,16 +20,18 @@ class WindInfoWidget extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    if (kDebugMode) print('WindInfoWidget build');
+    final talker = context.read<Talker>();
+    talker.info('WindInfoWidget build');
+
     final sizeService = ref.read(responsiveSizeServiceProvider.notifier);
 
     return LayoutBuilder(
       builder: (BuildContext context, BoxConstraints constraints) {
+        talker.info('WindInfoWidget LayoutBuilder');
+
         final constraintsMaxWidth = constraints.maxWidth;
         final iconSize = sizeService.percentageOf(constraintsMaxWidth, 20);
         final spacing = sizeService.percentageOf(constraintsMaxWidth, 1.9);
-
-        if (kDebugMode) print('WindInfoWidget LayoutBuilder');
 
         return Row(
           spacing: spacing,

@@ -1,8 +1,8 @@
-import 'package:flutter/foundation.dart' show kDebugMode;
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart'
     show ConsumerWidget, WidgetRef;
+import 'package:talker_flutter/talker_flutter.dart' show Talker;
 
 import '../../../../../../../../shared/presentation/providers/index.dart'
     show navigationServiceProvider;
@@ -17,12 +17,13 @@ class WeatherScreenSliverAppBar extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    if (kDebugMode) print('WeatherScreenSliverAppBar build');
+    final talker = context.read<Talker>();
+    talker.info('WeatherScreenSliverAppBar build');
 
     return BlocSelector<WeatherCubit, WeatherState, String?>(
       selector: (state) => state.weather?.location.name,
       builder: (context, state) {
-        if (kDebugMode) print('WeatherScreenSliverAppBar BlocSelector');
+        talker.info('WeatherScreenSliverAppBar BlocSelector');
 
         final navigationService = ref.read(navigationServiceProvider);
 

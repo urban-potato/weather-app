@@ -1,6 +1,5 @@
 import 'dart:async' show Timer;
 
-import 'package:flutter/foundation.dart' show kDebugMode;
 import 'package:flutter/material.dart';
 
 import '../../../shared/presentation/services/index.dart'
@@ -13,9 +12,6 @@ class NotificationServiceImpl implements NotificationService {
 
   @override
   void showMessage(BuildContext context, String message, {int duration = 5}) {
-    if (kDebugMode)
-      print('+++++ NotificationServiceImpl showErrorMessage +++++');
-
     _dismiss();
 
     final statusBarHeight =
@@ -28,19 +24,11 @@ class NotificationServiceImpl implements NotificationService {
             .display
             .devicePixelRatio;
 
-    if (kDebugMode)
-      print('------- statusBarHeight = $statusBarHeight ---------');
-
     final GlobalKey<AnimatedBanner<StatefulWidget>> bannerKey =
         GlobalKey<AnimatedBanner<StatefulWidget>>();
 
     _currentOverlay = OverlayEntry(
       builder: (context) {
-        if (kDebugMode)
-          print(
-            '+++++ NotificationServiceImpl showErrorMessage OverlayEntry +++++',
-          );
-
         return Positioned(
           top: statusBarHeight,
           left: 0,
@@ -57,8 +45,6 @@ class NotificationServiceImpl implements NotificationService {
     Overlay.of(context).insert(_currentOverlay!);
 
     _timer = Timer(Duration(seconds: duration), () {
-      if (kDebugMode)
-        print('+++++ NotificationServiceImpl Auto-dismiss triggered +++++');
       _performAnimatedDismiss(bannerKey);
     });
   }
@@ -84,7 +70,6 @@ class NotificationServiceImpl implements NotificationService {
 
   @override
   void dispose() {
-    if (kDebugMode) print('+++++ NotificationServiceImpl dispose() +++++');
     _dismiss();
   }
 }

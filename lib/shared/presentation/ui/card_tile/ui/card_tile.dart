@@ -1,4 +1,3 @@
-import 'package:flutter/foundation.dart' show kDebugMode;
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart'
     show ConsumerWidget, WidgetRef;
@@ -41,8 +40,6 @@ class CardTile extends ConsumerWidget {
         padding ??
         EdgeInsetsGeometry.symmetric(horizontal: hPadding, vertical: vPadding);
 
-    if (kDebugMode) print('CardTile build');
-
     return ConstrainedBox(
       constraints: BoxConstraints(
         minWidth: minWidth,
@@ -82,8 +79,6 @@ class _ThemedDecoratedBox extends StatelessWidget {
     final finalColor =
         color?.withValues(alpha: 0.8) ??
         Theme.of(context).cardColor.withValues(alpha: 0.8);
-
-    if (kDebugMode) print('CardTile _ThemedDecoratedBox');
 
     return DecoratedBox(
       decoration: BoxDecoration(

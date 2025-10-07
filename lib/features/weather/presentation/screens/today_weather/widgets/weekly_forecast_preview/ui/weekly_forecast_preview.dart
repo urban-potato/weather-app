@@ -1,7 +1,7 @@
-import 'package:flutter/foundation.dart' show kDebugMode;
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:talker_flutter/talker_flutter.dart' show Talker;
 
 import '../../../../../../../../shared/presentation/providers/index.dart'
     show navigationServiceProvider, responsiveSizeServiceProvider;
@@ -37,7 +37,9 @@ class _WeeklyForecastPreviewWidgetState
   Widget build(BuildContext context) {
     super.build(context);
 
-    if (kDebugMode) print('WeekForecastPreviewWidget build');
+    final talker = context.read<Talker>();
+    talker.info('WeekForecastPreviewWidget build');
+
     final navigationService = ref.read(navigationServiceProvider);
     final sizeService = ref.read(responsiveSizeServiceProvider.notifier);
 
@@ -51,16 +53,14 @@ class _WeeklyForecastPreviewWidgetState
           selector: (state) => state.weather?.today.weeklyForecastPreview,
           builder: (context, state) {
             if (state == null) {
-              if (kDebugMode)
-                print(
-                  'WeekForecastPreviewWidget BlocSelector return CircularProgressIndicator',
-                );
+              talker.info(
+                'WeekForecastPreviewWidget BlocSelector CustomCircularProgressIndicator',
+              );
               return const CustomCircularProgressIndicator();
             } else {
-              if (kDebugMode)
-                print(
-                  'WeekForecastPreviewWidget BlocSelector return GestureDetector',
-                );
+              talker.info(
+                'WeekForecastPreviewWidget BlocSelector GestureDetector',
+              );
 
               return GestureDetector(
                 onTap: () => navigationService.push(AppRoute.weeklyForecast),
@@ -95,11 +95,14 @@ class _InfoRow extends StatelessWidget {
   final ResponsiveSizeService sizeService;
 
   @override
-  Widget build(BuildContext contex) {
-    if (kDebugMode) print('WeeklyForecastPreviewWidget _InfoRow');
+  Widget build(BuildContext context) {
+    final talker = context.read<Talker>();
+    talker.info('WeekForecastPreviewWidget _InfoRow');
 
     return LayoutBuilder(
       builder: (BuildContext context, BoxConstraints constraints) {
+        talker.info('WeekForecastPreviewWidget _InfoRow LayoutBuilder 1');
+
         final constraintsMaxWidth = constraints.maxWidth;
         final iconSize = sizeService.percentageOf(constraintsMaxWidth, 10);
         final conditionTextHPadding = sizeService.percentageOf(
@@ -111,9 +114,6 @@ class _InfoRow extends StatelessWidget {
         final firstRowMaxWidth = constraintsMaxWidth - temperatureRowMaxWidth;
 
         final day = getDay(item.dateTime);
-
-        if (kDebugMode)
-          print('WeeklyForecastPreviewWidget _InfoRow LayoutBuilder');
 
         return Row(
           children: [
@@ -165,16 +165,15 @@ class _InfoRow extends StatelessWidget {
                     ),
                     child: LayoutBuilder(
                       builder: (BuildContext context, BoxConstraints constraints) {
+                        talker.info(
+                          'WeekForecastPreviewWidget _InfoRow LayoutBuilder 2',
+                        );
+
                         final constraintsMaxWidth = constraints.maxWidth;
                         final spacing = sizeService.percentageOf(
                           constraintsMaxWidth,
                           1.2,
                         );
-
-                        if (kDebugMode)
-                          print(
-                            'WeeklyForecastPreviewWidget LayoutBuilder _InfoRow LayoutBuilder 2',
-                          );
 
                         return DailyTemperatureRangeWidget(
                           maxTemp: item.temperatureRange.maximum.celsius

@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart'
     show ConsumerWidget, WidgetRef;
+import 'package:talker_flutter/talker_flutter.dart' show Talker;
 
 import '../../../../../../../../shared/presentation/providers/index.dart'
     show responsiveSizeServiceProvider;
@@ -66,6 +68,8 @@ class MoonInfoListWidget extends ConsumerWidget {
     ];
 
     final separatorHeight = sizeService.screenPercentage(4);
+
+    context.read<Talker>().info('MoonInfoListWidget build');
 
     return SliverList.separated(
       itemBuilder: (context, index) => DayTileWidget(data: moonData[index]),

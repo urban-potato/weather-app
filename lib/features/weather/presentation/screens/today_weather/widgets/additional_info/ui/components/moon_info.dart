@@ -1,8 +1,9 @@
 import 'package:flutter/cupertino.dart' show CupertinoIcons;
-import 'package:flutter/foundation.dart' show kDebugMode;
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:talker_flutter/talker_flutter.dart' show Talker;
 
 import '../../../../../../../../../shared/presentation/providers/index.dart'
     show navigationServiceProvider, responsiveSizeServiceProvider;
@@ -18,22 +19,23 @@ class MoonInfoWidget extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final talker = context.read<Talker>();
+    talker.info('MoonInfoWidget build');
+
     final moonPhaseAssetPath = getMoonPhaseAssetPath(moonPhase);
     final navigationService = ref.read(navigationServiceProvider);
     final sizeService = ref.read(responsiveSizeServiceProvider.notifier);
-
-    if (kDebugMode) print('MoonInfoWidget build');
 
     return GestureDetector(
       onTap: () => navigationService.push(AppRoute.moonInfo),
 
       child: LayoutBuilder(
         builder: (BuildContext context, BoxConstraints constraints) {
+          talker.info('MoonInfoWidget LayoutBuilder');
+
           final constraintsMaxWidth = constraints.maxWidth;
           final iconSize = sizeService.percentageOf(constraintsMaxWidth, 20);
           final spacing = sizeService.percentageOf(constraintsMaxWidth, 1.9);
-
-          if (kDebugMode) print('MoonInfoWidget LayoutBuilder');
 
           return Column(
             mainAxisSize: MainAxisSize.min,

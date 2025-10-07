@@ -1,7 +1,8 @@
-import 'package:flutter/foundation.dart' show kDebugMode;
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart'
     show ConsumerWidget, WidgetRef;
+import 'package:talker_flutter/talker_flutter.dart' show Talker;
 
 import '../../../../../../shared/presentation/providers/index.dart'
     show responsiveSizeServiceProvider;
@@ -18,17 +19,18 @@ class SunInfoWidget extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    if (kDebugMode) print('SunInfoWidget build');
+    final talker = context.read<Talker>();
+    talker.info('SunInfoWidget build');
 
     final sizeService = ref.read(responsiveSizeServiceProvider.notifier);
 
     return LayoutBuilder(
       builder: (BuildContext context, BoxConstraints constraints) {
+        talker.info('SunInfoWidget LayoutBuilder');
+
         final constraintsMaxWidth = constraints.maxWidth;
         final iconize = sizeService.percentageOf(constraintsMaxWidth, 20);
         final spacing = sizeService.percentageOf(constraintsMaxWidth, 1.9);
-
-        if (kDebugMode) print('SunInfoWidget LayoutBuilder');
 
         return Row(
           spacing: spacing,
@@ -65,7 +67,7 @@ class _ThemedRichText extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    if (kDebugMode) print('SunInfoWidget _InfoText');
+    context.read<Talker>().info('SunInfoWidget _ThemedRichText');
 
     return RichText(
       text: TextSpan(

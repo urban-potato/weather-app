@@ -1,9 +1,10 @@
 import 'package:flutter/cupertino.dart' show CupertinoIcons;
-import 'package:flutter/foundation.dart' show kDebugMode;
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart'
     show ConsumerWidget, WidgetRef;
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:talker_flutter/talker_flutter.dart' show Talker;
 
 import '../../../../../../../../../shared/presentation/providers/index.dart'
     show responsiveSizeServiceProvider;
@@ -52,6 +53,9 @@ class _InfoWidgetsRow extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final talker = context.read<Talker>();
+    talker.info('DayTileWidget _InfoWidgetsRow build');
+
     final moonPhaseAssetPath = getMoonPhaseAssetPath(data.moonPhase);
     final sizeService = ref.read(responsiveSizeServiceProvider.notifier);
 
@@ -61,7 +65,7 @@ class _InfoWidgetsRow extends ConsumerWidget {
         final textAreaMaxWidth = constraintsMaxWidth * 0.5;
         final spacing = sizeService.percentageOf(constraintsMaxWidth, 3.2);
 
-        if (kDebugMode) print('LayoutBuilder DayTileWidget 1');
+        talker.info('DayTileWidget _InfoWidgetsRow LayoutBuilder 1');
 
         return Row(
           spacing: spacing,
@@ -77,8 +81,9 @@ class _InfoWidgetsRow extends ConsumerWidget {
                         (BuildContext context, BoxConstraints constraints) {
                           final constraintsMaxWidth = constraints.maxWidth;
 
-                          if (kDebugMode)
-                            print('LayoutBuilder DayTileWidget 2');
+                          talker.info(
+                            'DayTileWidget _InfoWidgetsRow LayoutBuilder 2',
+                          );
 
                           return ConstrainedBox(
                             constraints: BoxConstraints(

@@ -1,8 +1,7 @@
-import 'dart:developer' show log;
-
 import 'package:auto_route/auto_route.dart' show RoutePage, AutoRouter;
-import 'package:flutter/foundation.dart' show kDebugMode;
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:talker_flutter/talker_flutter.dart' show Talker;
 
 @RoutePage()
 class HomeScreen extends StatelessWidget {
@@ -10,8 +9,7 @@ class HomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    if (kDebugMode)
-      log('------------------- MainScreen build -------------------');
+    context.read<Talker>().debug('HomeScreen build');
 
     return const AutoRouter();
   }

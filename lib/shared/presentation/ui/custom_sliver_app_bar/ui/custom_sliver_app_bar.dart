@@ -1,6 +1,7 @@
-import 'package:flutter/foundation.dart' show kDebugMode;
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:talker_flutter/talker_flutter.dart' show Talker;
 
 import '../../../providers/index.dart'
     show navigationServiceProvider, responsiveSizeServiceProvider;
@@ -30,12 +31,12 @@ class CustomSliverAppBar extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    context.read<Talker>().info('CustomSliverAppBar build');
+
     final navigationService = ref.read(navigationServiceProvider);
     final sizeService = ref.read(responsiveSizeServiceProvider.notifier);
-
     final toolbarHeight = sizeService.screenPercentage(12);
     final contentSize = sizeService.screenPercentage(5);
-
     final theme = Theme.of(context);
 
     final finalLeading = Align(
@@ -48,8 +49,6 @@ class CustomSliverAppBar extends ConsumerWidget {
     );
     final finalActions = _buildActions(contentSize: contentSize);
     final finalTitle = _buildTitle(theme: theme, contentSize: contentSize);
-
-    if (kDebugMode) print('CustomSliverAppBar build');
 
     return SliverAppBar(
       pinned: true,

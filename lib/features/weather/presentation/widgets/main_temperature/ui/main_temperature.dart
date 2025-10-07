@@ -1,5 +1,6 @@
-import 'package:flutter/foundation.dart' show kDebugMode;
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:talker_flutter/talker_flutter.dart' show Talker;
 
 import '../../../../../../shared/presentation/ui/scaled_child_box/index.dart';
 import '../../../../../../shared/presentation/ui/themed_text/index.dart';
@@ -16,7 +17,7 @@ class MainTemperatureWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    if (kDebugMode) print('MainTemperatureWidget build');
+    context.read<Talker>().info('MainTemperatureWidget build');
 
     return ScaledChildBox(
       height: 9 * sizeRatio,
@@ -32,7 +33,7 @@ class _ThemedRichText extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    if (kDebugMode) print('MainTemperatureWidget _ThemedRichText');
+    context.read<Talker>().info('MainTemperatureWidget _ThemedRichText');
 
     return RichText(
       textHeightBehavior: const TextHeightBehavior(

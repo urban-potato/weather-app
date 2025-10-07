@@ -1,12 +1,9 @@
-import 'dart:developer';
-
 import 'package:auto_route/annotations.dart';
 
-// import 'package:auto_route/auto_route.dart';
-import 'package:flutter/foundation.dart' show kDebugMode;
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:talker_flutter/talker_flutter.dart' show Talker;
 
 import '../../../../../../shared/presentation/providers/index.dart'
     show notificationServiceProvider, responsiveSizeServiceProvider;
@@ -37,10 +34,11 @@ class _TodayWeatherScreenState extends ConsumerState<TodayWeatherScreen> {
   void initState() {
     super.initState();
 
-    if (kDebugMode) log('@@@@@@@@@ TodayWeatherScreen initState @@@@@@@@@');
+    final talker = context.read<Talker>();
+    talker.info('TodayWeatherScreen initState');
 
     if (widget.navError) {
-      if (kDebugMode) log('((((( TodayWeatherScreen navError true )))))');
+      talker.info('TodayWeatherScreen navError true');
 
       WidgetsBinding.instance.addPostFrameCallback((_) {
         final notificationService = ref.read(notificationServiceProvider);
@@ -55,8 +53,9 @@ class _TodayWeatherScreenState extends ConsumerState<TodayWeatherScreen> {
 
   @override
   Widget build(BuildContext context) {
-    if (kDebugMode)
-      log('------------------- TodayWeatherScreen build -------------------');
+    final talker = context.read<Talker>();
+
+    talker.debug('TodayWeatherScreen build');
 
     final notificationService = ref.read(notificationServiceProvider);
 
@@ -72,8 +71,7 @@ class _TodayWeatherScreenState extends ConsumerState<TodayWeatherScreen> {
 
             BlocConsumer<WeatherCubit, WeatherState>(
               listener: (context, state) {
-                if (kDebugMode)
-                  print('+++++ TodayWeatherScreen BlocBuilder listener +++++');
+                talker.info('TodayWeatherScreen BlocBuilder listener');
 
                 if (state is WeatherFailure) {
                   notificationService.showMessage(
@@ -92,31 +90,25 @@ class _TodayWeatherScreenState extends ConsumerState<TodayWeatherScreen> {
                 return true;
               },
               builder: (context, state) {
-                if (kDebugMode)
-                  print('+++++ TodayWeatherScreen BlocBuilder build +++++');
+                talker.info('TodayWeatherScreen BlocBuilder build');
 
                 if (state.weather != null) {
-                  if (kDebugMode)
-                    print(
-                      '+++++ TodayWeatherScreen BlocBuilder _WeatherScreenBodyWidgets +++++',
-                    );
+                  talker.info(
+                    'TodayWeatherScreen BlocBuilder _WeatherScreenBodyWidgets',
+                  );
 
                   return const _WeatherScreenBodyWidgets();
                 } else if (state is WeatherInitial || state is WeatherLoading) {
-                  if (kDebugMode)
-                    print(
-                      '+++++ TodayWeatherScreen BlocBuilder CustomCircularProgressIndicator +++++',
-                    );
+                  talker.info(
+                    'TodayWeatherScreen BlocBuilder CustomCircularProgressIndicator',
+                  );
 
                   return const SliverFillRemaining(
                     child: CustomCircularProgressIndicator(),
                   );
                 }
 
-                if (kDebugMode)
-                  print(
-                    '+++++ TodayWeatherScreen BlocBuilder NoDataWidget +++++',
-                  );
+                talker.info('TodayWeatherScreen BlocBuilder NoDataWidget');
 
                 return const SliverFillRemaining(
                   child: ScreenPadding(child: NoDataWidget()),
@@ -135,10 +127,8 @@ class _WeatherScreenBodyWidgets extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    if (kDebugMode)
-      print(
-        '======= TodayWeatherScreen _WeatherScreenBodyWidgets build =======',
-      );
+    final talker = context.read<Talker>();
+    talker.debug('TodayWeatherScreen _WeatherScreenBodyWidgets build');
 
     return SliverList(
       delegate: SliverChildListDelegate.fixed([
@@ -146,7 +136,9 @@ class _WeatherScreenBodyWidgets extends StatelessWidget {
         // TODO: временная кнопка, потом удалить
         ElevatedButton(
           onPressed: () {
-            if (kDebugMode) print('--- onPressed ---');
+            talker.info(
+              'TodayWeatherScreen _WeatherScreenBodyWidgets onPressed',
+            );
             context.read<WeatherCubit>().loadWeather();
           },
           child: const Text('Refresh'),

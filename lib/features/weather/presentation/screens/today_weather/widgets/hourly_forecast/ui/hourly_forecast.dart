@@ -1,9 +1,9 @@
-import 'package:flutter/foundation.dart' show kDebugMode;
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart'
     show ConsumerStatefulWidget, ConsumerState;
 import 'package:intl/intl.dart';
+import 'package:talker_flutter/talker_flutter.dart' show Talker;
 
 import '../../../../../../../../shared/presentation/providers/index.dart'
     show responsiveSizeServiceProvider;
@@ -34,10 +34,10 @@ class _HourlyForecastWidgetState extends ConsumerState<HourlyForecastWidget>
   @override
   Widget build(BuildContext context) {
     super.build(context);
+    final talker = context.read<Talker>();
+    talker.info('HourlyForecastWidget build');
+
     final sizeService = ref.read(responsiveSizeServiceProvider.notifier);
-
-    if (kDebugMode) print('HourlyForecastWidget build');
-
     final scrollableAreaHeight = sizeService.screenPercentage(33);
     final separatorWidth = sizeService.screenPercentage(2.4);
 
@@ -53,16 +53,13 @@ class _HourlyForecastWidgetState extends ConsumerState<HourlyForecastWidget>
             selector: (state) => state.weather?.today.hourlyForecast,
             builder: (context, state) {
               if (state == null) {
-                if (kDebugMode)
-                  print(
-                    'HourlyForecastWidget BlocSelector return CircularProgressIndicator',
-                  );
+                talker.info(
+                  'HourlyForecastWidget BlocSelector CustomCircularProgressIndicator',
+                );
+
                 return const CustomCircularProgressIndicator();
               } else {
-                if (kDebugMode)
-                  print(
-                    'HourlyForecastWidget BlocSelector return ListView.separated',
-                  );
+                talker.info('HourlyForecastWidget BlocSelector ListView');
 
                 return ListView.separated(
                   scrollDirection: Axis.horizontal,
@@ -97,7 +94,7 @@ class _ForecastItemTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    if (kDebugMode) print('HourlyForecastWidget _ForecastItemTile build');
+    context.read<Talker>().info('HourlyForecastWidget _ForecastItemTile build');
 
     final hPadding = sizeService.screenPercentage(4.8);
     final vPadding = sizeService.screenPercentage(2.4);

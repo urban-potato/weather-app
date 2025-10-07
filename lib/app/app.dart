@@ -1,6 +1,3 @@
-import 'dart:developer';
-
-import 'package:flutter/foundation.dart' show kDebugMode;
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -35,10 +32,9 @@ class _AppState extends ConsumerState<App> with WidgetsBindingObserver {
           height: size.height,
         );
 
-        if (kDebugMode)
-          log(
-            '+++++++++ ResponsiveSize init: ${sizeService.referenceScreenSize} +++++++++',
-          );
+        context.read<Talker>().info(
+          'App ResponsiveSize init: ${sizeService.referenceScreenSize}',
+        );
       });
     }
   }
@@ -54,7 +50,7 @@ class _AppState extends ConsumerState<App> with WidgetsBindingObserver {
     super.didChangeAppLifecycleState(state);
 
     if (state == AppLifecycleState.detached) {
-      if (kDebugMode) log('+++++ App detached - disposing services +++++');
+      context.read<Talker>().info('App detached');
 
       final notificationService = ref.read(notificationServiceProvider);
       notificationService.dispose();
@@ -73,22 +69,18 @@ class _AppState extends ConsumerState<App> with WidgetsBindingObserver {
       height: size.height,
     );
 
-    if (kDebugMode)
-      log('++++++++++++++++++ didChangeMetrics ++++++++++++++++++');
+    context.read<Talker>().info('App didChangeMetrics');
   }
 
   @override
   Widget build(BuildContext context) {
-    if (kDebugMode)
-      log(
-        '++++++++++++++++++++++++++++++ App build +++++++++++++++++++++++++++++++',
-      );
+    final talker = context.read<Talker>();
+    talker.debug('App build');
 
     ref.watch(responsiveSizeServiceProvider);
 
     final sizeService = ref.read(responsiveSizeServiceProvider.notifier);
     final router = ref.read(appRouterProvider);
-    final talker = context.read<Talker>();
 
     return MaterialApp.router(
       routerConfig: router.config(

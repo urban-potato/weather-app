@@ -1,12 +1,10 @@
 import 'dart:io';
-import 'dart:developer';
 
 import 'package:dio/dio.dart';
-import 'package:flutter/foundation.dart' show kDebugMode;
-import 'package:weather_app/features/weather/domain/models/weather/weather.dart';
 
 import '../../../../shared/infrastructure/configs/api_config.dart';
 import '../../../../shared/domain/data_states/remote/index.dart';
+import '../../domain/models/index.dart' show WeatherModelDomain;
 import '../../domain/repositories/index.dart';
 import '../data_sources/remote/index.dart';
 import '../mappers/index.dart';
@@ -32,8 +30,6 @@ class WeatherRepositoryImpl implements WeatherRepository {
 
       if (httpResponse.response.statusCode == HttpStatus.ok) {
         final weatherModelData = httpResponse.data;
-
-        if (kDebugMode) log('SUCCESSFULLY GOT DATA');
 
         return RemoteDataSuccess(weatherModelData.toWeatherModelDomain());
       } else {
