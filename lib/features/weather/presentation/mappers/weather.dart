@@ -112,6 +112,7 @@ extension ConvertToWeatherModelUI on WeatherModelDomain {
         sunset: todayDomain.astro.sun.sunset,
       ),
       moon: MoonModelUI(
+        date: todayDomain.date,
         phase: todayDomain.astro.moon.moonPhase,
         moonrise: todayDomain.astro.moon.moonrise,
         moonset: todayDomain.astro.moon.moonset,
@@ -190,6 +191,7 @@ extension ConvertToWeatherModelUI on WeatherModelDomain {
 
     final weeklyMoonList = forecast.forecastDayList.map((f) {
       return MoonModelUI(
+        date: f.date,
         phase: f.astro.moon.moonPhase,
         moonrise: f.astro.moon.moonrise,
         moonset: f.astro.moon.moonset,

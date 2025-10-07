@@ -12,12 +12,12 @@ import '../../../../../../../../shared/presentation/ui/custom_circular_progress_
 import '../../../../../../../../shared/presentation/ui/themed_text/index.dart';
 import '../../../../../shared/ui/image_asset_with_network_fallback/index.dart';
 import '../../../../../shared/ui/widget_title/index.dart';
-import '../../../../../shared/utils/day_helper/index.dart';
 import '../../../../../models/index.dart';
 import '../../../../../provider/weather_cubit.dart';
 import '../../../../../provider/weather_state.dart';
 import '../../../../../widgets/daily_temperature_range/index.dart'
     show DailyTemperatureRangeWidget;
+import '../utils/cut_date_formatter.dart';
 
 class WeeklyForecastPreviewWidget extends ConsumerStatefulWidget {
   const WeeklyForecastPreviewWidget({super.key});
@@ -113,7 +113,7 @@ class _InfoRow extends StatelessWidget {
         final temperatureRowMaxWidth = constraintsMaxWidth * 0.5;
         final firstRowMaxWidth = constraintsMaxWidth - temperatureRowMaxWidth;
 
-        final day = getDay(item.dateTime);
+        final day = getCutFormattedDate(item.dateTime);
 
         return Row(
           children: [

@@ -9,37 +9,26 @@ import 'package:talker_flutter/talker_flutter.dart' show Talker;
 import '../../../../../../../../../shared/presentation/providers/index.dart'
     show responsiveSizeServiceProvider;
 import '../../../../../../../../../shared/presentation/ui/card_tile/index.dart';
+import '../../../../../../models/index.dart' show MoonModelUI;
 import '../../../../../../shared/ui/responsive_info_list/index.dart';
 import '../../../../../../shared/ui/widget_title/index.dart';
 import '../../../../../../shared/utils/assets_path_helper/index.dart';
-
-class MoonData {
-  MoonData({
-    required this.date,
-    required this.moonrise,
-    required this.moonset,
-    required this.moonPhase,
-    required this.moonIllumination,
-  });
-
-  final String date;
-  final String moonrise;
-  final String moonset;
-  final String moonPhase;
-  final int moonIllumination;
-}
+import '../../../../../../shared/utils/date_time_formatting_helper/index.dart';
+import '../../utils/moon_time_formatter.dart';
 
 class DayTileWidget extends StatelessWidget {
   const DayTileWidget({super.key, required this.data});
 
-  final MoonData data;
+  final MoonModelUI data;
 
   @override
   Widget build(BuildContext context) {
+    final date = getFormattedDate(data.date);
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        WidgetTitle(title: data.date),
+        WidgetTitle(title: date),
         CardTile(child: _InfoWidgetsRow(data: data)),
       ],
     );
@@ -49,20 +38,20 @@ class DayTileWidget extends StatelessWidget {
 class _InfoWidgetsRow extends ConsumerWidget {
   const _InfoWidgetsRow({required this.data});
 
-  final MoonData data;
+  final MoonModelUI data;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final talker = context.read<Talker>();
     talker.info('DayTileWidget _InfoWidgetsRow build');
 
-    final moonPhaseAssetPath = getMoonPhaseAssetPath(data.moonPhase);
+    final moonPhaseAssetPath = getMoonPhaseAssetPath(data.phase);
     final sizeService = ref.read(responsiveSizeServiceProvider.notifier);
 
     return LayoutBuilder(
       builder: (BuildContext context, BoxConstraints constraints) {
         final constraintsMaxWidth = constraints.maxWidth;
-        final textAreaMaxWidth = constraintsMaxWidth * 0.5;
+        final textAreaMaxWidth = constraintsMaxWidth * 0.57;
         final spacing = sizeService.percentageOf(constraintsMaxWidth, 3.2);
 
         talker.info('DayTileWidget _InfoWidgetsRow LayoutBuilder 1');
@@ -107,10 +96,16 @@ class _InfoWidgetsRow extends ConsumerWidget {
               constraints: BoxConstraints(maxWidth: textAreaMaxWidth),
               child: ResponsiveInfoList(
                 data: {
-                  'Moon phase': data.moonPhase,
-                  'Moonrise': data.moonrise,
-                  'Moonset': data.moonset,
-                  'Illumination': data.moonIllumination.toString(),
+                  'Phase': data.phase,
+                  'Moonrise': getFormattedMoonTime(
+                    dateTime: data.moonrise,
+                    ifMoonrise: true,
+                  ),
+                  'Moonset': getFormattedMoonTime(
+                    dateTime: data.moonset,
+                    ifMoonrise: false,
+                  ),
+                  'Illumination': '${data.illumination}%',
                 },
               ),
             ),

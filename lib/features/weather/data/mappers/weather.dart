@@ -70,7 +70,7 @@ extension ConvertToWeatherModelDomain on WeatherModelData {
       DateTime? moonsetDomain;
 
       try {
-        moonriseDomain = DateFormat(
+        moonsetDomain = DateFormat(
           'yyyy-MM-dd h:mm a',
         ).parse('${f.date} ${f.astro.moonset}');
       } catch (e) {}
