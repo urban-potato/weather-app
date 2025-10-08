@@ -23,6 +23,8 @@ class DayTileWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    context.read<Talker>().info('MoonInfoListWidget DayTileWidget build');
+
     final date = getFormattedDate(data.date);
 
     return Column(
@@ -43,7 +45,7 @@ class _InfoWidgetsRow extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final talker = context.read<Talker>();
-    talker.info('DayTileWidget _InfoWidgetsRow build');
+    talker.info('MoonInfoListWidget DayTileWidget _InfoWidgetsRow build');
 
     final moonPhaseAssetPath = getMoonPhaseAssetPath(data.phase);
     final sizeService = ref.read(responsiveSizeServiceProvider.notifier);
@@ -54,7 +56,9 @@ class _InfoWidgetsRow extends ConsumerWidget {
         final textAreaMaxWidth = constraintsMaxWidth * 0.57;
         final spacing = sizeService.percentageOf(constraintsMaxWidth, 3.2);
 
-        talker.info('DayTileWidget _InfoWidgetsRow LayoutBuilder 1');
+        talker.info(
+          'MoonInfoListWidget DayTileWidget _InfoWidgetsRow LayoutBuilder 1',
+        );
 
         return Row(
           spacing: spacing,
@@ -66,27 +70,26 @@ class _InfoWidgetsRow extends ConsumerWidget {
                 padding: EdgeInsets.all(spacing),
                 child: Center(
                   child: LayoutBuilder(
-                    builder:
-                        (BuildContext context, BoxConstraints constraints) {
-                          final constraintsMaxWidth = constraints.maxWidth;
+                    builder: (BuildContext context, BoxConstraints constraints) {
+                      final constraintsMaxWidth = constraints.maxWidth;
 
-                          talker.info(
-                            'DayTileWidget _InfoWidgetsRow LayoutBuilder 2',
-                          );
+                      talker.info(
+                        'MoonInfoListWidget DayTileWidget _InfoWidgetsRow LayoutBuilder 2',
+                      );
 
-                          return ConstrainedBox(
-                            constraints: BoxConstraints(
-                              maxWidth: constraintsMaxWidth,
-                              maxHeight: constraintsMaxWidth,
-                            ),
-                            child: moonPhaseAssetPath != null
-                                ? SvgPicture.asset(
-                                    moonPhaseAssetPath,
-                                    excludeFromSemantics: true,
-                                  )
-                                : const Icon(CupertinoIcons.moon),
-                          );
-                        },
+                      return ConstrainedBox(
+                        constraints: BoxConstraints(
+                          maxWidth: constraintsMaxWidth,
+                          maxHeight: constraintsMaxWidth,
+                        ),
+                        child: moonPhaseAssetPath != null
+                            ? SvgPicture.asset(
+                                moonPhaseAssetPath,
+                                excludeFromSemantics: true,
+                              )
+                            : const Icon(CupertinoIcons.moon),
+                      );
+                    },
                   ),
                 ),
               ),

@@ -19,14 +19,12 @@ class MainForecastInfoWidget extends ConsumerWidget {
     required this.condition,
     required this.maxTemp,
     required this.minTemp,
-    required this.uv,
   });
 
   final int temperature;
   final ConditionModelUI condition;
   final int maxTemp;
   final int minTemp;
-  final int uv;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
