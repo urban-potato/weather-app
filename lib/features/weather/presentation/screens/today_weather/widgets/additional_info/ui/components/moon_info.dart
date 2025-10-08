@@ -39,6 +39,8 @@ class MoonInfoTile extends ConsumerWidget {
 
         talker.info('AdditionalInfoWidget _MoonInfoCard BlocSelector CardTile');
 
+        assert(debugCheckHasMaterial(context));
+
         final moonPhase = state.phase;
         final moonPhaseAssetPath = getMoonPhaseAssetPath(moonPhase);
         final tileBorderRadius = sizeService.borderRadius;

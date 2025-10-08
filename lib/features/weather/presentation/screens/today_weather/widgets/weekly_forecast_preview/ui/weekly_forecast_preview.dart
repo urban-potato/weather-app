@@ -63,6 +63,8 @@ class _WeeklyForecastPreviewWidgetState
               'WeekForecastPreviewWidget BlocSelector GestureDetector',
             );
 
+            assert(debugCheckHasMaterial(context));
+
             final tileBorderRadius = sizeService.borderRadius;
 
             return InkWell(
