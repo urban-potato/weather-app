@@ -57,30 +57,32 @@ class _WeeklyForecastPreviewWidgetState
                 'WeekForecastPreviewWidget BlocSelector CustomCircularProgressIndicator',
               );
               return const CustomCircularProgressIndicator();
-            } else {
-              talker.info(
-                'WeekForecastPreviewWidget BlocSelector GestureDetector',
-              );
-
-              return GestureDetector(
-                onTap: () => navigationService.push(AppRoute.weeklyForecast),
-
-                child: CardTile(
-                  child: Column(
-                    children: [
-                      ...state.weeklyForecastPreviewDayList.map(
-                        (e) => _InfoRow(item: e, sizeService: sizeService),
-                      ),
-                      const ThemedText(
-                        text: 'More info...',
-                        styleType: AppTextStyle.bodySmall,
-                        textAlign: TextAlign.center,
-                      ),
-                    ],
-                  ),
-                ),
-              );
             }
+
+            talker.info(
+              'WeekForecastPreviewWidget BlocSelector GestureDetector',
+            );
+
+            final tileBorderRadius = sizeService.borderRadius;
+
+            return InkWell(
+              borderRadius: BorderRadius.circular(tileBorderRadius),
+              onTap: () => navigationService.push(AppRoute.weeklyForecast),
+              child: CardTile(
+                child: Column(
+                  children: [
+                    ...state.weeklyForecastPreviewDayList.map(
+                      (e) => _InfoRow(item: e, sizeService: sizeService),
+                    ),
+                    const ThemedText(
+                      text: 'More info...',
+                      styleType: AppTextStyle.bodySmall,
+                      textAlign: TextAlign.center,
+                    ),
+                  ],
+                ),
+              ),
+            );
           },
         ),
       ],
