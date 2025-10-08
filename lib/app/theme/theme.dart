@@ -17,6 +17,7 @@ class TAppTheme {
       // fontFamily: '',
       primaryColor: primaryColor,
       scaffoldBackgroundColor: scaffoldBackgroundColor,
+      splashColor: primaryColor,
       colorScheme: ColorScheme.fromSeed(
         seedColor: primaryColor,
         brightness: Brightness.light,
@@ -35,6 +36,7 @@ class TAppTheme {
       // fontFamily: '',
       primaryColor: primaryColor,
       scaffoldBackgroundColor: scaffoldBackgroundColor,
+      splashColor: primaryColor,
       colorScheme: ColorScheme.fromSeed(
         seedColor: primaryColor,
         brightness: Brightness.dark,
